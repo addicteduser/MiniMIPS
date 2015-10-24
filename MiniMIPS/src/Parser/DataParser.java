@@ -7,7 +7,18 @@ public class DataParser implements IParser {
 
 	@Override
 	public void parse(String input) {
-		System.out.println("INPUT: "+input);
+		String[] tokens;
+		String tempVarName;
+		
+		System.out.println("[INPUT] "+input);
+		tokens = input.split(":");
+		
+		tempVarName = tokens[0];
+		
+		tokens = tokens[1].split(",");
+		for(String token : tokens) {
+			System.out.println(token.trim());
+		}
 	}
 
 	

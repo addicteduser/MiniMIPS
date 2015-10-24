@@ -9,6 +9,42 @@ public class Data {
 	private long[] values;
 	
 	/**
+	 * @return the varName
+	 */
+	public String getVarName() {
+		return varName;
+	}
+	/**
+	 * @param varName the varName to set
+	 */
+	public void setVarName(String varName) {
+		this.varName = varName;
+	}
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+	/**
+	 * @return the values
+	 */
+	public long[] getValues() {
+		return values;
+	}
+	/**
+	 * @param values the values to set
+	 */
+	public void setValues(long[] values) {
+		this.values = values;
+	}
+	/**
 	 * @return the dataList
 	 */
 	public static ArrayList<Data> getDataList() {

@@ -1,6 +1,6 @@
 # I am a comment
 			.data
-variabe:	.word	1
+variable:	.word				1,2,3,4
 	
 	
 	
