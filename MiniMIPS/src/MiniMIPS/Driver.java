@@ -1,8 +1,8 @@
-package MiniMIPS;
+package miniMIPS;
 
 import java.io.File;
 
-import Parser.FileParser;
+import parser.FileParser;
 
 public class Driver {
 

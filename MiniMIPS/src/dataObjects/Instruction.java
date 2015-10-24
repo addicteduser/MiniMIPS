@@ -1,4 +1,4 @@
-package Parser;
+package dataObjects;
 
 public class Instruction {
 	private String input;
