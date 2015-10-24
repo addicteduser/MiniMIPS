@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import constants.Directive;
+
 public class FileParser {
 	private FileInputStream fstream;
 	private BufferedReader br;
@@ -26,36 +28,36 @@ public class FileParser {
 
 	public void parseFile() {
 		String strLine;
+		Directive directive;
 
 		// Read file per line
 		try {
 			while ((strLine = br.readLine()) != null) {
 				// Remove leading and trailing spaces
 				strLine = strLine.trim();
-
-				switch (strLine) {
-				case "":
+				
+				
+				
+				if (strLine.startsWith("#") || strLine.startsWith(";")) {
+					// If strLine is a comment
+				} else if (strLine.isEmpty()) {
 					// If strLine is a line break
-					break;
-				case ".data":
-					// If strLine is the start of .data directive
-					System.out.println("Data Parser");
-					parser = new DataParser();
-					break;
-				case ".code":
-				case ".text":
-					// If strLine is the start of the .code/.text directive
-					System.out.println("Instruction Parser");
-					parser = new InstructionParser();
-					break;
-				default:
-					if (strLine.startsWith("#") || strLine.startsWith(";")) {
-						// If strLine is a comment
-					} else {
-						// Handler for what kind of parsing to do
-						parser.parse();
+				} else if (strLine.startsWith(".")) {
+					directive = Directive.valueOf(strLine.substring(1).toUpperCase());
+					switch (directive) {
+					case DATA:
+						// If strLine is the start of .data directive
+						parser = new DataParser();
+						break;
+					case CODE: case TEXT:
+						// If strLine is the start of the .code/.text directive
+						parser = new InstructionParser();
+						break;
+					default:
+						System.out.println("default");
 					}
-					System.out.println(strLine);
+				}  else {
+					parser.parse(strLine);
 				}
 
 			}
