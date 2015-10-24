@@ -24,7 +24,7 @@ public class FileParser {
 		br = new BufferedReader(new InputStreamReader(fstream));
 	}
 
-	public void getInput() {
+	public void parseFile() {
 		String strLine;
 
 		// Read file per line
@@ -33,24 +33,26 @@ public class FileParser {
 				// Remove leading and trailing spaces
 				strLine = strLine.trim();
 
-				// Print the content on the console
-
 				switch (strLine) {
-				case "": // Do nothing
+				case "":
+					// If strLine is a line break
 					break;
 				case ".data":
+					// If strLine is the start of .data directive
 					System.out.println("Data Parser");
 					parser = new DataParser();
 					break;
 				case ".code":
 				case ".text":
+					// If strLine is the start of the .code/.text directive
 					System.out.println("Instruction Parser");
 					parser = new InstructionParser();
 					break;
 				default:
 					if (strLine.startsWith("#") || strLine.startsWith(";")) {
-						// Do nothing
+						// If strLine is a comment
 					} else {
+						// Handler for what kind of parsing to do
 						parser.parse();
 					}
 					System.out.println(strLine);
