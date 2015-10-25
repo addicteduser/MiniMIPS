@@ -1,6 +1,7 @@
 # I am a comment
 			.data
-variable:	.word				1,2,3,4
+variable:	.byte				127 ,-128
+.word 1,2
 	
 	
 	

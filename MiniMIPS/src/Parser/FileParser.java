@@ -14,14 +14,17 @@ public class FileParser {
 	private FileInputStream fstream;
 	private BufferedReader br;
 	private IParser parser;
+	private static int lineCtr;
 
 	public FileParser(File f) {
+		lineCtr = 0;
+		
 		// Open the file
 		try {
 			fstream = new FileInputStream(f);
 		} catch (FileNotFoundException e) {
 			// e.printStackTrace();
-			System.err.println("File Not Found.");
+			System.err.println("[ERROR] File Not Found.");
 		}
 		br = new BufferedReader(new InputStreamReader(fstream));
 	}
@@ -33,17 +36,26 @@ public class FileParser {
 		// Read file per line
 		try {
 			while ((strLine = br.readLine()) != null) {
-				// Remove leading and trailing spaces
-				strLine = strLine.trim();
+				lineCtr++;
+				System.out.println("[STATUS] Now at line:"+lineCtr);
 				
-				
+				// Clean input by replacing tabs with spaces and removing leading and trailing spaces
+				strLine = strLine.replace('\t', ' ').trim();
 				
 				if (strLine.startsWith("#") || strLine.startsWith(";")) {
 					// If strLine is a comment
+					System.out.println("This is a comment.");
 				} else if (strLine.isEmpty()) {
 					// If strLine is a line break
+					System.out.println("This is a line break.");
 				} else if (strLine.startsWith(".")) {
-					directive = Directive.valueOf(strLine.substring(1).toUpperCase());
+					// If strLine is a directive
+					System.out.println("This is a directive.");
+					
+					String tokens[] = strLine.split(" ", 2);			
+					directive = Directive.valueOf(tokens[0].substring(1).toUpperCase());
+					System.out.println("[DIRECTIVE] "+directive);
+					
 					switch (directive) {
 					case DATA:
 						// If strLine is the start of .data directive
@@ -54,7 +66,7 @@ public class FileParser {
 						parser = new InstructionParser();
 						break;
 					default:
-						System.out.println("default");
+						parser.parse(strLine);
 					}
 				}  else {
 					parser.parse(strLine);
@@ -71,5 +83,12 @@ public class FileParser {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * @return the lineCtr
+	 */
+	public static int getLineCtr() {
+		return lineCtr;
 	}
 }

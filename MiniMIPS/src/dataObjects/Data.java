@@ -2,11 +2,13 @@ package dataObjects;
 
 import java.util.ArrayList;
 
+import constants.Directive;
+
 public class Data {
 	private static ArrayList<Data> dataList = new ArrayList<Data>();
 	private String varName;
-	private String type;
-	private long[] values;
+	private Directive directive;
+	private ArrayList<Long> values;
 	
 	/**
 	 * @return the varName
@@ -21,27 +23,27 @@ public class Data {
 		this.varName = varName;
 	}
 	/**
-	 * @return the type
+	 * @return the directive
 	 */
-	public String getType() {
-		return type;
+	public Directive getDirective() {
+		return directive;
 	}
 	/**
-	 * @param type the type to set
+	 * @param directive the directive to set
 	 */
-	public void setType(String type) {
-		this.type = type;
+	public void setDirective(Directive directive) {
+		this.directive = directive;
 	}
 	/**
 	 * @return the values
 	 */
-	public long[] getValues() {
+	public ArrayList<Long> getValues() {
 		return values;
 	}
 	/**
 	 * @param values the values to set
 	 */
-	public void setValues(long[] values) {
+	public void setValues(ArrayList<Long> values) {
 		this.values = values;
 	}
 	/**
