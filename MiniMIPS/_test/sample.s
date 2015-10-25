@@ -1,10 +1,13 @@
 # I am a comment
 			.data
 #variable:	.byte				127 ,-128
-.word 1,2
+.word 1,2 ; comment
 	
 	
 	
 	
 .code
-DADDIU R1, R2, R3
+L1:
+DADDU R1, R2, R3
+L1: DADDU R1, R2, R3
+DADDU R1, R2, R3

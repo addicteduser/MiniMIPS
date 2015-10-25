@@ -60,7 +60,8 @@ public class DataParser implements IParser {
 	 */
 	private void parseValues() {
 		tempValues = new long[4];
-		tokens = tokens[1].trim().split(",");
+		tokens = tokens[1].trim().split("[;#]");
+		tokens = tokens[0].trim().split(",");
 		for (int i = 0; i < tokens.length; i++) {
 			tokens[i] = tokens[i].trim();
 			tempValues[i] = Long.parseLong(tokens[i]);
