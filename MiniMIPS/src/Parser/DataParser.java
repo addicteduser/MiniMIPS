@@ -8,21 +8,30 @@ import dataObjects.Data;
 // TODO values are double
 
 public class DataParser implements IParser {
-	private Data tempData;
 	private String[] tokens;
+	
+	private Data tempData;
 	private String tempVarName;
 	private Directives tempDirective;
 	private long[] tempValues;
 	
 	@Override
 	public void parse(String input) {
+		clear();
 		parseVarName(input);
 		parseDirective();
 		parseValues();
 		addData();
 	}
 
-
+	
+	/**
+	 * Resets the values to null.
+	 */
+	private void clear() {
+		tempVarName = "";
+		tempValues = new long[4];
+	}
 	
 	/**
 	 * Gets the varName from the input.
@@ -59,7 +68,6 @@ public class DataParser implements IParser {
 	 * Gets the values from tokens[1]. tokens will get the split tokens[1].
 	 */
 	private void parseValues() {
-		tempValues = new long[4];
 		tokens = tokens[1].trim().split("[;#]");
 		tokens = tokens[0].trim().split(",");
 		for (int i = 0; i < tokens.length; i++) {
