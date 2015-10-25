@@ -11,12 +11,16 @@ public class Instruction {
 	private static EnumMap<Instructions, String> instructionCode;
 	private static EnumMap<InstructionTypes, String> instructionFormat;
 	private InstructionTypes instructionType;
-	private Instructions instruction;
+	private Instructions instructionName;
+	private String label;
 	private String rd;
 	private String rs;
 	private String rt;
 	private String imm;
 	
+	/**
+	 * Creates the mappings of the instructions to their Opcodes as well as the instruction type to its format.
+	 */
 	public static void createMappings() {
 		instructionCode = new EnumMap<Instructions, String>(Instructions.class);
 		instructionFormat = new EnumMap<InstructionTypes, String>(InstructionTypes.class);
@@ -52,4 +56,148 @@ public class Instruction {
 		instructionFormat.put(InstructionTypes.J, "iCODE,IMM");
 		instructionCode.put(Instructions.J, "J,2");
 	}
+
+	
+	/**
+	 * @return the instructionList
+	 */
+	public static ArrayList<Instruction> getInstructionList() {
+		return instructionList;
+	}
+
+	/**
+	 * @param instructionList the instructionList to set
+	 */
+	public static void setInstructionList(ArrayList<Instruction> instructionList) {
+		Instruction.instructionList = instructionList;
+	}
+
+	/**
+	 * @return the instructionCode
+	 */
+	public static EnumMap<Instructions, String> getInstructionCode() {
+		return instructionCode;
+	}
+
+	/**
+	 * @param instructionCode the instructionCode to set
+	 */
+	public static void setInstructionCode(EnumMap<Instructions, String> instructionCode) {
+		Instruction.instructionCode = instructionCode;
+	}
+
+	/**
+	 * @return the instructionFormat
+	 */
+	public static EnumMap<InstructionTypes, String> getInstructionFormat() {
+		return instructionFormat;
+	}
+
+	/**
+	 * @param instructionFormat the instructionFormat to set
+	 */
+	public static void setInstructionFormat(EnumMap<InstructionTypes, String> instructionFormat) {
+		Instruction.instructionFormat = instructionFormat;
+	}
+
+	/**
+	 * @return the instructionType
+	 */
+	public InstructionTypes getInstructionType() {
+		return instructionType;
+	}
+
+	/**
+	 * @param instructionType the instructionType to set
+	 */
+	public void setInstructionType(InstructionTypes instructionType) {
+		this.instructionType = instructionType;
+	}
+
+	/**
+	 * @return the instructionName
+	 */
+	public Instructions getInstructionName() {
+		return instructionName;
+	}
+
+	/**
+	 * @param instructionName the instructionName to set
+	 */
+	public void setInstructionName(Instructions instructionName) {
+		this.instructionName = instructionName;
+	}
+
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	/**
+	 * @return the rd
+	 */
+	public String getRd() {
+		return rd;
+	}
+
+	/**
+	 * @param rd the rd to set
+	 */
+	public void setRd(String rd) {
+		this.rd = rd;
+	}
+
+	/**
+	 * @return the rs
+	 */
+	public String getRs() {
+		return rs;
+	}
+
+	/**
+	 * @param rs the rs to set
+	 */
+	public void setRs(String rs) {
+		this.rs = rs;
+	}
+
+	/**
+	 * @return the rt
+	 */
+	public String getRt() {
+		return rt;
+	}
+
+	/**
+	 * @param rt the rt to set
+	 */
+	public void setRt(String rt) {
+		this.rt = rt;
+	}
+
+	/**
+	 * @return the imm
+	 */
+	public String getImm() {
+		return imm;
+	}
+
+	/**
+	 * @param imm the imm to set
+	 */
+	public void setImm(String imm) {
+		this.imm = imm;
+	}
+
+	
+	
 }
