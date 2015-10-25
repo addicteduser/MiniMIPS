@@ -6,6 +6,8 @@ import constants.Directives;
 import dataObjects.Data;
 
 // TODO values are double
+// TODO if values are in hex
+// TODO if varName already exists
 
 public class DataParser implements IParser {
 	private String[] tokens;
@@ -143,6 +145,7 @@ public class DataParser implements IParser {
 //			break;
 		default:
 			System.err.println("[Error at line:"+FileParser.getLineCtr()+"] Invalid directive.");
+			System.exit(0);
 		}
 		
 		return validValues;
@@ -195,6 +198,7 @@ public class DataParser implements IParser {
 		} catch (Exception e) {
 			//e.printStackTrace();
 			System.err.println("[ERROR at line:"+FileParser.getLineCtr()+"]");
+			System.exit(0);
 		}
 	}
 }
