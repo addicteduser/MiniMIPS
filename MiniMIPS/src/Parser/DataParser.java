@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import constants.Directive;
 import dataObjects.Data;
 
+// TODO values are double
+
 public class DataParser implements IParser {
 	private Data tempData;
 	private String[] tokens;
@@ -14,21 +16,10 @@ public class DataParser implements IParser {
 	
 	@Override
 	public void parse(String input) {
-		System.out.println("[INPUT] "+input);
 		parseVarName(input);
 		parseDirective();
 		parseValues();
-		if (isValuesValid()) {
-			if (tempVarName.isEmpty()) {
-				appendDataToPrevious();
-			} else {
-				addData();
-				System.out.println("Added data!");
-			}
-		} else {
-			System.err.println("[ERROR at line:"+FileParser.getLineCtr()+"] Value(s) out of bounds for given directive.\nProgram will now terminate.");
-			System.exit(0);
-		}
+		addData();
 	}
 
 
@@ -45,9 +36,11 @@ public class DataParser implements IParser {
 	}
 	
 	/**
-	 * Gets the directive from tokens[1]. tokens will get the split tokens[1].
-	 * tokens[0] holds the directive
-	 * tokens[1] holds the values
+	 * Gets the directive.
+	 * If there is a varName, tokens will get the split tokens[1]
+	 * Else, tokens will get the split tokens[0]
+	 *    - tokens[0] holds the directive
+	 *    - tokens[1] holds the values
 	 */
 	private void parseDirective() {
 		try {
@@ -75,7 +68,24 @@ public class DataParser implements IParser {
 	}
 	
 	/**
-	 * Checks if the values matches the directive.
+	 * If the input is valid, adds the parsed input to the data list, else the program terminates.
+	 */
+	private void addData() {
+		if (isValuesValid()) {
+			if (tempVarName.isEmpty()) {
+				appendDataToPrevious();
+			} else {
+				addDataToList();
+				System.out.println("Added data!");
+			}
+		} else {
+			System.err.println("[ERROR at line:"+FileParser.getLineCtr()+"] Value(s) out of bounds for given directive.\nProgram will now terminate.");
+			System.exit(0);
+		}
+	}
+	
+	/**
+	 * Checks if the values match the directive.
 	 * @return TRUE if all values are within bounds of given directive
 	 */
 	private boolean isValuesValid() {
@@ -130,7 +140,7 @@ public class DataParser implements IParser {
 	}
 	
 	/**
-	 * Checks if value is within the min and max bound of the directive
+	 * Checks if value is within the min and max bound of the directive.
 	 * @param min minimum value of the directive
 	 * @param max maximum value of the directive
 	 * @param value value to compare to min and max
@@ -143,6 +153,10 @@ public class DataParser implements IParser {
 			return false;
 	}
 	
+	/**
+	 * Converts the array[] to an ArrayList.
+	 * @return ArrayList of values add to the data list
+	 */
 	private ArrayList<Long> convertArrayToList() {
 		ArrayList<Long> list = new ArrayList<Long>();
 		for (long value : tempValues) {
@@ -152,7 +166,10 @@ public class DataParser implements IParser {
 		return list;
 	}
 	
-	private void addData() {
+	/**
+	 * Adds the data who correctly follows the format 'varName: .directive v1,v2,v3,v4'.
+	 */
+	private void addDataToList() {
 		tempData = new Data();
 		tempData.setVarName(tempVarName);
 		tempData.setDirective(tempDirective);
@@ -160,12 +177,15 @@ public class DataParser implements IParser {
 		Data.getDataList().add(tempData);
 	}
 	
+	/**
+	 * Appends the data to the previous entry that followed the format 'varName: .directive v1,v2,v3,v4'.
+	 */
 	private void appendDataToPrevious() {
-		Data.getDataList().get(Data.getDataList().size()-1).getValues().addAll(convertArrayToList());
+		try {
+			Data.getDataList().get(Data.getDataList().size()-1).getValues().addAll(convertArrayToList());
+		} catch (Exception e) {
+			//e.printStackTrace();
+			System.err.println("[ERROR at line:"+FileParser.getLineCtr()+"]");
+		}
 	}
-	
-	//TODO code to handle no var name if first variable
-	//TODO type checking and error handling
-	//TODO handle succeeding lines if there is existing variable
-	//TODO values are double
 }

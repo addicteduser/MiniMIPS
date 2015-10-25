@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 import constants.Directive;
 
@@ -42,16 +41,14 @@ public class FileParser {
 				// Clean input by replacing tabs with spaces and removing leading and trailing spaces
 				strLine = strLine.replace('\t', ' ').trim();
 				
+				System.out.println("[INPUT] "+strLine);
+				
 				if (strLine.startsWith("#") || strLine.startsWith(";")) {
 					// If strLine is a comment
-					System.out.println("This is a comment.");
 				} else if (strLine.isEmpty()) {
 					// If strLine is a line break
-					System.out.println("This is a line break.");
 				} else if (strLine.startsWith(".")) {
 					// If strLine is a directive
-					System.out.println("This is a directive.");
-					
 					String tokens[] = strLine.split(" ", 2);			
 					directive = Directive.valueOf(tokens[0].substring(1).toUpperCase());
 					System.out.println("[DIRECTIVE] "+directive);
