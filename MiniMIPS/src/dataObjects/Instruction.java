@@ -10,7 +10,7 @@ public class Instruction {
 	private static ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
 	private static EnumMap<INSTRUCTIONS, String> instructionCode;
 	private static EnumMap<INSTRUCTIONTYPES, String> instructionFormat;
-	private INSTRUCTIONTYPES instructionType;
+	//private INSTRUCTIONTYPES instructionType;
 	private INSTRUCTIONS instructionName;
 	private String label;
 	private String rd;
@@ -33,31 +33,30 @@ public class Instruction {
 		instructionCode.put(INSTRUCTIONS.SLT, "R,42"); // SLT RD,RS,RT
 		
 		// R-type (Shift)
-		instructionFormat.put(INSTRUCTIONTYPES.RS, "0,0,RT,RD,SHF,iCODE");
-		instructionCode.put(INSTRUCTIONS.DSLL, "RS,56"); // DSLL RD,RS,SHF
+		instructionFormat.put(INSTRUCTIONTYPES.RS, "0,0,RS,RD,SHF,iCODE");
+		instructionCode.put(INSTRUCTIONS.DSLL, "RS,56"); // DSLL RD,RS,SHF/IMM
 		
 		// Extended R-type Instructions
 		instructionFormat.put(INSTRUCTIONTYPES.ER, "17,16,RT,RS,RD,iCODE");
-		instructionCode.put(INSTRUCTIONS.ADDS, "ER,0"); // ADD.S FD,FS,FT
-		instructionCode.put(INSTRUCTIONS.MULS, "ER,2"); // MUL.S FD,FS,FT
+		instructionCode.put(INSTRUCTIONS.ADDS, "ER,0"); // ADD.S RD,RS,RT
+		instructionCode.put(INSTRUCTIONS.MULS, "ER,2"); // MUL.S RD,RS,RT
 		
 		// I-type Instructions
 		instructionFormat.put(INSTRUCTIONTYPES.I, "iCODE,RS,RT,IMM");
-		instructionCode.put(INSTRUCTIONS.BEQ, "I,4"); // BEQ RS,RT,Offset
-		instructionCode.put(INSTRUCTIONS.LW, "I,35"); // LW RD, Offset(RS)
-		instructionCode.put(INSTRUCTIONS.LWU, "I,39"); // LWU RD, Offset(RS)
-		instructionCode.put(INSTRUCTIONS.SW, "I,43"); // SW RT, Offset(RS)
-		instructionCode.put(INSTRUCTIONS.ANDI, "I,12"); // ANDI RD,RS,IMM
-		instructionCode.put(INSTRUCTIONS.DADDIU, "I,25"); // DADDIU RD,RS,IMM
-		instructionCode.put(INSTRUCTIONS.LS, "I,49"); // L.S FD, Offset(RS)
-		instructionCode.put(INSTRUCTIONS.SS, "I,57"); // S.S FT, Offset(RS)
+		instructionCode.put(INSTRUCTIONS.BEQ, "I,4"); // BEQ RS,RT,IMM
+		instructionCode.put(INSTRUCTIONS.LW, "I,35"); // LW RT, IMM(RS)
+		instructionCode.put(INSTRUCTIONS.LWU, "I,39"); // LWU RT, IMM(RS)
+		instructionCode.put(INSTRUCTIONS.SW, "I,43"); // SW RT, IMM(RS)
+		instructionCode.put(INSTRUCTIONS.ANDI, "I,12"); // ANDI RT,RS,IMM
+		instructionCode.put(INSTRUCTIONS.DADDIU, "I,25"); // DADDIU RT,RS,IMM
+		instructionCode.put(INSTRUCTIONS.LS, "I,49"); // L.S RT, IMM(RS)
+		instructionCode.put(INSTRUCTIONS.SS, "I,57"); // S.S RT, IMM(RS)
 		
 		// J-type Instructions
 		instructionFormat.put(INSTRUCTIONTYPES.J, "iCODE,IMM");
-		instructionCode.put(INSTRUCTIONS.J, "J,2");
+		instructionCode.put(INSTRUCTIONS.J, "J,2"); // J Label
 	}
 
-	
 	/**
 	 * @return the instructionList
 	 */
@@ -98,20 +97,6 @@ public class Instruction {
 	 */
 	public static void setInstructionFormat(EnumMap<INSTRUCTIONTYPES, String> instructionFormat) {
 		Instruction.instructionFormat = instructionFormat;
-	}
-
-	/**
-	 * @return the instructionType
-	 */
-	public INSTRUCTIONTYPES getInstructionType() {
-		return instructionType;
-	}
-
-	/**
-	 * @param instructionType the instructionType to set
-	 */
-	public void setInstructionType(INSTRUCTIONTYPES instructionType) {
-		this.instructionType = instructionType;
 	}
 
 	/**
