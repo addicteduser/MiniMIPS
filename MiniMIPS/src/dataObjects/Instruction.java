@@ -27,30 +27,30 @@ public class Instruction {
 		
 		// R-type Instructions
 		instructionFormat.put(InstructionTypes.R, "0,RS,RT,RD,0,iCODE");
-		instructionCode.put(Instructions.DADDU, "R,45");
-		instructionCode.put(Instructions.DMULT, "R,28");
-		instructionCode.put(Instructions.OR, "R,37");
-		instructionCode.put(Instructions.SLT, "R,42");
+		instructionCode.put(Instructions.DADDU, "R,45"); // DADDU RD,RS,RT
+		instructionCode.put(Instructions.DMULT, "R,28"); // DMULT RS,RT
+		instructionCode.put(Instructions.OR, "R,37"); // OR RD,RS,RT
+		instructionCode.put(Instructions.SLT, "R,42"); // SLT RD,RS,RT
 		
 		// R-type (Shift)
 		instructionFormat.put(InstructionTypes.RS, "0,0,RT,RD,SHF,iCODE");
-		instructionCode.put(Instructions.DSLL, "RS,56");
+		instructionCode.put(Instructions.DSLL, "RS,56"); // DSLL RD,RS,SHF
 		
 		// Extended R-type Instructions
 		instructionFormat.put(InstructionTypes.ER, "17,16,RT,RS,RD,iCODE");
-		instructionCode.put(Instructions.ADDS, "ER,0");
-		instructionCode.put(Instructions.MULS, "ER,2");
+		instructionCode.put(Instructions.ADDS, "ER,0"); // ADD.S FD,FS,FT
+		instructionCode.put(Instructions.MULS, "ER,2"); // MUL.S FD,FS,FT
 		
 		// I-type Instructions
 		instructionFormat.put(InstructionTypes.I, "iCODE,RS,RT,IMM");
-		instructionCode.put(Instructions.BEQ, "I,4");
-		instructionCode.put(Instructions.LW, "I,35");
-		instructionCode.put(Instructions.LWU, "I,39");
-		instructionCode.put(Instructions.SW, "I,43");
-		instructionCode.put(Instructions.ANDI, "I,12");
-		instructionCode.put(Instructions.DADDIU, "I,25");
-		instructionCode.put(Instructions.LS, "I,49");
-		instructionCode.put(Instructions.SS, "I,57");
+		instructionCode.put(Instructions.BEQ, "I,4"); // BEQ RS,RT,Offset
+		instructionCode.put(Instructions.LW, "I,35"); // LW RD, Offset(RS)
+		instructionCode.put(Instructions.LWU, "I,39"); // LWU RD, Offset(RS)
+		instructionCode.put(Instructions.SW, "I,43"); // SW RT, Offset(RS)
+		instructionCode.put(Instructions.ANDI, "I,12"); // ANDI RD,RS,IMM
+		instructionCode.put(Instructions.DADDIU, "I,25"); // DADDIU RD,RS,IMM
+		instructionCode.put(Instructions.LS, "I,49"); // L.S FD, Offset(RS)
+		instructionCode.put(Instructions.SS, "I,57"); // S.S FT, Offset(RS)
 		
 		// J-type Instructions
 		instructionFormat.put(InstructionTypes.J, "iCODE,IMM");
