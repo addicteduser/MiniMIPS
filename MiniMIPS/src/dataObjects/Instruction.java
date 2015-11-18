@@ -3,15 +3,15 @@ package dataObjects;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
-import constants.InstructionTypes;
-import constants.Instructions;
+import constants.INSTRUCTIONTYPES;
+import constants.INSTRUCTIONS;
 
 public class Instruction {
 	private static ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
-	private static EnumMap<Instructions, String> instructionCode;
-	private static EnumMap<InstructionTypes, String> instructionFormat;
-	private InstructionTypes instructionType;
-	private Instructions instructionName;
+	private static EnumMap<INSTRUCTIONS, String> instructionCode;
+	private static EnumMap<INSTRUCTIONTYPES, String> instructionFormat;
+	private INSTRUCTIONTYPES instructionType;
+	private INSTRUCTIONS instructionName;
 	private String label;
 	private String rd;
 	private String rs;
@@ -22,39 +22,39 @@ public class Instruction {
 	 * Creates the mappings of the instructions to their Opcodes as well as the instruction type to its format.
 	 */
 	public static void createMappings() {
-		instructionCode = new EnumMap<Instructions, String>(Instructions.class);
-		instructionFormat = new EnumMap<InstructionTypes, String>(InstructionTypes.class);
+		instructionCode = new EnumMap<INSTRUCTIONS, String>(INSTRUCTIONS.class);
+		instructionFormat = new EnumMap<INSTRUCTIONTYPES, String>(INSTRUCTIONTYPES.class);
 		
 		// R-type Instructions
-		instructionFormat.put(InstructionTypes.R, "0,RS,RT,RD,0,iCODE");
-		instructionCode.put(Instructions.DADDU, "R,45"); // DADDU RD,RS,RT
-		instructionCode.put(Instructions.DMULT, "R,28"); // DMULT RS,RT
-		instructionCode.put(Instructions.OR, "R,37"); // OR RD,RS,RT
-		instructionCode.put(Instructions.SLT, "R,42"); // SLT RD,RS,RT
+		instructionFormat.put(INSTRUCTIONTYPES.R, "0,RS,RT,RD,0,iCODE");
+		instructionCode.put(INSTRUCTIONS.DADDU, "R,45"); // DADDU RD,RS,RT
+		instructionCode.put(INSTRUCTIONS.DMULT, "R,28"); // DMULT RS,RT
+		instructionCode.put(INSTRUCTIONS.OR, "R,37"); // OR RD,RS,RT
+		instructionCode.put(INSTRUCTIONS.SLT, "R,42"); // SLT RD,RS,RT
 		
 		// R-type (Shift)
-		instructionFormat.put(InstructionTypes.RS, "0,0,RT,RD,SHF,iCODE");
-		instructionCode.put(Instructions.DSLL, "RS,56"); // DSLL RD,RS,SHF
+		instructionFormat.put(INSTRUCTIONTYPES.RS, "0,0,RT,RD,SHF,iCODE");
+		instructionCode.put(INSTRUCTIONS.DSLL, "RS,56"); // DSLL RD,RS,SHF
 		
 		// Extended R-type Instructions
-		instructionFormat.put(InstructionTypes.ER, "17,16,RT,RS,RD,iCODE");
-		instructionCode.put(Instructions.ADDS, "ER,0"); // ADD.S FD,FS,FT
-		instructionCode.put(Instructions.MULS, "ER,2"); // MUL.S FD,FS,FT
+		instructionFormat.put(INSTRUCTIONTYPES.ER, "17,16,RT,RS,RD,iCODE");
+		instructionCode.put(INSTRUCTIONS.ADDS, "ER,0"); // ADD.S FD,FS,FT
+		instructionCode.put(INSTRUCTIONS.MULS, "ER,2"); // MUL.S FD,FS,FT
 		
 		// I-type Instructions
-		instructionFormat.put(InstructionTypes.I, "iCODE,RS,RT,IMM");
-		instructionCode.put(Instructions.BEQ, "I,4"); // BEQ RS,RT,Offset
-		instructionCode.put(Instructions.LW, "I,35"); // LW RD, Offset(RS)
-		instructionCode.put(Instructions.LWU, "I,39"); // LWU RD, Offset(RS)
-		instructionCode.put(Instructions.SW, "I,43"); // SW RT, Offset(RS)
-		instructionCode.put(Instructions.ANDI, "I,12"); // ANDI RD,RS,IMM
-		instructionCode.put(Instructions.DADDIU, "I,25"); // DADDIU RD,RS,IMM
-		instructionCode.put(Instructions.LS, "I,49"); // L.S FD, Offset(RS)
-		instructionCode.put(Instructions.SS, "I,57"); // S.S FT, Offset(RS)
+		instructionFormat.put(INSTRUCTIONTYPES.I, "iCODE,RS,RT,IMM");
+		instructionCode.put(INSTRUCTIONS.BEQ, "I,4"); // BEQ RS,RT,Offset
+		instructionCode.put(INSTRUCTIONS.LW, "I,35"); // LW RD, Offset(RS)
+		instructionCode.put(INSTRUCTIONS.LWU, "I,39"); // LWU RD, Offset(RS)
+		instructionCode.put(INSTRUCTIONS.SW, "I,43"); // SW RT, Offset(RS)
+		instructionCode.put(INSTRUCTIONS.ANDI, "I,12"); // ANDI RD,RS,IMM
+		instructionCode.put(INSTRUCTIONS.DADDIU, "I,25"); // DADDIU RD,RS,IMM
+		instructionCode.put(INSTRUCTIONS.LS, "I,49"); // L.S FD, Offset(RS)
+		instructionCode.put(INSTRUCTIONS.SS, "I,57"); // S.S FT, Offset(RS)
 		
 		// J-type Instructions
-		instructionFormat.put(InstructionTypes.J, "iCODE,IMM");
-		instructionCode.put(Instructions.J, "J,2");
+		instructionFormat.put(INSTRUCTIONTYPES.J, "iCODE,IMM");
+		instructionCode.put(INSTRUCTIONS.J, "J,2");
 	}
 
 	
@@ -75,56 +75,56 @@ public class Instruction {
 	/**
 	 * @return the instructionCode
 	 */
-	public static EnumMap<Instructions, String> getInstructionCode() {
+	public static EnumMap<INSTRUCTIONS, String> getInstructionCode() {
 		return instructionCode;
 	}
 
 	/**
 	 * @param instructionCode the instructionCode to set
 	 */
-	public static void setInstructionCode(EnumMap<Instructions, String> instructionCode) {
+	public static void setInstructionCode(EnumMap<INSTRUCTIONS, String> instructionCode) {
 		Instruction.instructionCode = instructionCode;
 	}
 
 	/**
 	 * @return the instructionFormat
 	 */
-	public static EnumMap<InstructionTypes, String> getInstructionFormat() {
+	public static EnumMap<INSTRUCTIONTYPES, String> getInstructionFormat() {
 		return instructionFormat;
 	}
 
 	/**
 	 * @param instructionFormat the instructionFormat to set
 	 */
-	public static void setInstructionFormat(EnumMap<InstructionTypes, String> instructionFormat) {
+	public static void setInstructionFormat(EnumMap<INSTRUCTIONTYPES, String> instructionFormat) {
 		Instruction.instructionFormat = instructionFormat;
 	}
 
 	/**
 	 * @return the instructionType
 	 */
-	public InstructionTypes getInstructionType() {
+	public INSTRUCTIONTYPES getInstructionType() {
 		return instructionType;
 	}
 
 	/**
 	 * @param instructionType the instructionType to set
 	 */
-	public void setInstructionType(InstructionTypes instructionType) {
+	public void setInstructionType(INSTRUCTIONTYPES instructionType) {
 		this.instructionType = instructionType;
 	}
 
 	/**
 	 * @return the instructionName
 	 */
-	public Instructions getInstructionName() {
+	public INSTRUCTIONS getInstructionName() {
 		return instructionName;
 	}
 
 	/**
 	 * @param instructionName the instructionName to set
 	 */
-	public void setInstructionName(Instructions instructionName) {
+	public void setInstructionName(INSTRUCTIONS instructionName) {
 		this.instructionName = instructionName;
 	}
 

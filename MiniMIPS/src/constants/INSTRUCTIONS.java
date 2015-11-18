@@ -1,6 +1,6 @@
 package constants;
 
-public enum Instructions {
+public enum INSTRUCTIONS {
 	DADDU, DMULT, OR, SLT, // R-type Instructions
 	DSLL, // R-type (Shift)
 	ADDS, MULS, // Extended R-type Instructions

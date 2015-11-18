@@ -2,12 +2,12 @@ package dataObjects;
 
 import java.util.ArrayList;
 
-import constants.Directives;
+import constants.DIRECTIVES;
 
 public class Data {
 	private static ArrayList<Data> dataList = new ArrayList<Data>();
 	private String varName;
-	private Directives directive;
+	private DIRECTIVES directive;
 	private ArrayList<Long> values;
 	
 	/**
@@ -25,13 +25,13 @@ public class Data {
 	/**
 	 * @return the directive
 	 */
-	public Directives getDirective() {
+	public DIRECTIVES getDirective() {
 		return directive;
 	}
 	/**
 	 * @param directive the directive to set
 	 */
-	public void setDirective(Directives directive) {
+	public void setDirective(DIRECTIVES directive) {
 		this.directive = directive;
 	}
 	/**

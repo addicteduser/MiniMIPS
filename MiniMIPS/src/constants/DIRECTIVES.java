@@ -1,6 +1,6 @@
 package constants;
 
-public enum Directives {
+public enum DIRECTIVES {
 	DATA, TEXT, CODE, 
 	BYTE, WORD16, WORD32, WORD, 
 	DOUBLE

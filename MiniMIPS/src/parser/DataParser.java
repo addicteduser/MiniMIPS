@@ -2,7 +2,7 @@ package parser;
 
 import java.util.ArrayList;
 
-import constants.Directives;
+import constants.DIRECTIVES;
 import dataObjects.Data;
 
 // TODO values are double
@@ -14,7 +14,7 @@ public class DataParser implements IParser {
 	
 	private Data tempData;
 	private String tempVarName;
-	private Directives tempDirective;
+	private DIRECTIVES tempDirective;
 	private long[] tempValues;
 	
 	@Override
@@ -62,7 +62,7 @@ public class DataParser implements IParser {
 			tokens[0] = tokens[0].trim();
 			tokens = tokens[0].split(" ", 2);
 		} finally {
-			tempDirective = Directives.valueOf(tokens[0].substring(1).toUpperCase());
+			tempDirective = DIRECTIVES.valueOf(tokens[0].substring(1).toUpperCase());
 		}
 	}
 	

@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import constants.Directives;
+import constants.DIRECTIVES;
 
 public class FileParser {
 	private FileInputStream fstream;
@@ -30,7 +30,7 @@ public class FileParser {
 
 	public void parseFile() {
 		String strLine;
-		Directives directive;
+		DIRECTIVES directive;
 
 		// Read file per line
 		try {
@@ -50,7 +50,7 @@ public class FileParser {
 				} else if (strLine.startsWith(".")) {
 					// If strLine is a directive
 					String tokens[] = strLine.split(" ", 2);			
-					directive = Directives.valueOf(tokens[0].substring(1).toUpperCase());
+					directive = DIRECTIVES.valueOf(tokens[0].substring(1).toUpperCase());
 					System.out.println("[DIRECTIVE] "+directive);
 					
 					switch (directive) {

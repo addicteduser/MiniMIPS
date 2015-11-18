@@ -1,5 +1,5 @@
 package constants;
 
-public enum InstructionTypes {
+public enum INSTRUCTIONTYPES {
 	R, RS, ER, I, J
 }

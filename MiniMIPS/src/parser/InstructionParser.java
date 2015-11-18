@@ -1,8 +1,8 @@
 package parser;
 
-import constants.Directives;
-import constants.InstructionTypes;
-import constants.Instructions;
+import constants.DIRECTIVES;
+import constants.INSTRUCTIONTYPES;
+import constants.INSTRUCTIONS;
 import dataObjects.Instruction;
 
 //TODO if label already exists
@@ -12,8 +12,8 @@ public class InstructionParser implements IParser{
 	//private String input;
 
 	private Instruction tempInstruction;
-	private InstructionTypes tempInstructionType;
-	private Instructions tempInstructionName;
+	private INSTRUCTIONTYPES tempInstructionType;
+	private INSTRUCTIONS tempInstructionName;
 	private String tempLabel;
 	private String tempRD;
 	private String tempRS;
@@ -69,7 +69,7 @@ public class InstructionParser implements IParser{
 			tokens[0] = tokens[0].trim();
 			tokens = tokens[0].split(" ", 2);
 		} finally {
-			tempInstructionName = Instructions.valueOf(tokens[0].toUpperCase());
+			tempInstructionName = INSTRUCTIONS.valueOf(tokens[0].toUpperCase());
 		}
 	}
 
@@ -79,19 +79,19 @@ public class InstructionParser implements IParser{
 	private void parseInstructionType() {
 		switch(tempInstructionName) {
 			case DADDU: case DMULT: case OR: case SLT:
-				tempInstructionType = InstructionTypes.R;
+				tempInstructionType = INSTRUCTIONTYPES.R;
 				break;
 			case DSLL:
-				tempInstructionType = InstructionTypes.RS;
+				tempInstructionType = INSTRUCTIONTYPES.RS;
 				break;
 			case ADDS: case MULS:
-				tempInstructionType = InstructionTypes.ER;
+				tempInstructionType = INSTRUCTIONTYPES.ER;
 				break;
 			case BEQ: case LW: case LWU: case SW: case ANDI: case DADDIU: case LS: case SS:
-				tempInstructionType = InstructionTypes.I;
+				tempInstructionType = INSTRUCTIONTYPES.I;
 				break;
 			case J:
-				tempInstructionType = InstructionTypes.J;
+				tempInstructionType = INSTRUCTIONTYPES.J;
 				break;
 		}
 	}
