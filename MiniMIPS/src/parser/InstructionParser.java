@@ -12,14 +12,12 @@ public class InstructionParser implements IParser{
 	//private String input;
 
 	private Instruction tempInstruction;
-	private INSTRUCTIONTYPES tempInstructionType;
+	//private INSTRUCTIONTYPES tempInstructionType;
 	private INSTRUCTIONS tempInstructionName;
 	private String tempLabel;
-	private String tempRD;
-	private String tempRS;
-	private String tempRT;
-	private String tempIMM;
-
+	private String tempV1;
+	private String tempV2;
+	private String tempV3;
 
 	public InstructionParser() {
 		Instruction.createMappings();
@@ -32,15 +30,16 @@ public class InstructionParser implements IParser{
 		clear();
 		parseLabel(input);
 		parseInstructionName();
-		parseInstructionType();
+		parseRegImm();
+		addInstruction();
+		System.out.println(Instruction.getInstructionList().toString());
 	}
 
 	private void clear() {
 		tempLabel = "";
-		tempRD = "";
-		tempRS = "";
-		tempRT = "";
-		tempIMM = "";
+		tempV1 = "";
+		tempV2 = "";
+		tempV3 = "";
 	}
 
 	/**
@@ -69,34 +68,75 @@ public class InstructionParser implements IParser{
 			tokens[0] = tokens[0].trim();
 			tokens = tokens[0].split(" ", 2);
 		} finally {
-			tempInstructionName = INSTRUCTIONS.valueOf(tokens[0].toUpperCase());
+			try {
+				tempInstructionName = INSTRUCTIONS.valueOf(tokens[0].toUpperCase());
+			} catch (IllegalArgumentException e) {
+				System.err.println("[ERROR at line:"+FileParser.getLineCtr()+"] Unknown instruction.");
+				System.exit(0);
+			}
 		}
 	}
 
 	/**
-	 * Gets the instructionType based on the instructionName.
+	 * Gets the registers and/or immediate.
 	 */
-	private void parseInstructionType() {
+	private void parseRegImm() {
+		tokens = tokens[1].trim().split("[;#]"); // removes comments
+
 		switch(tempInstructionName) {
-			case DADDU: case DMULT: case OR: case SLT:
-				tempInstructionType = INSTRUCTIONTYPES.R;
-				break;
-			case DSLL:
-				tempInstructionType = INSTRUCTIONTYPES.RS;
-				break;
-			case ADDS: case MULS:
-				tempInstructionType = INSTRUCTIONTYPES.ER;
-				break;
-			case BEQ: case LW: case LWU: case SW: case ANDI: case DADDIU: case LS: case SS:
-				tempInstructionType = INSTRUCTIONTYPES.I;
-				break;
-			case J:
-				tempInstructionType = INSTRUCTIONTYPES.J;
-				break;
+		case DADDU: case DMULT: case OR: case SLT: case ADDS: case MULS: // RD,RS,RT
+		case DSLL: // RD,RS,SHF/IMM
+		case BEQ: // RS,RT,IMM
+		case ANDI: case DADDIU: // RT,RS,IMM
+			tokens = tokens[0].trim().split(",");
+			if (tempInstructionName.toString().matches("DMULT"))
+				tempV1 = "0";
+			else
+				tempV1 = tokens[0].trim();
+			tempV2 = tokens[1].trim();
+			tempV3 = tokens[2].trim();
+			break;
+		case LW: case LWU: case SW: case LS: case SS: // RT,IMM(RS)
+			tokens = tokens[0].trim().split(",");
+			tempV1 = tokens[0].trim();
+			tokens = tokens[1].trim().split("\\(");
+			tempV2 = tokens[0].trim();
+			tempV3 = tokens[1].substring(0, tokens[1].length()-1);
+			break;
+		case J: // Label
+			tempV1 = tokens[0].trim();
 		}
 	}
 	
-	private void parseRegImm() {
+	/**
+	 * If input is valid, adds the parsed instruction to the instruction list.
+	 */
+	private void addInstruction() {
+		if(isLabelValid()) {
+			tempInstruction = new Instruction();
+			tempInstruction.setInstructionName(tempInstructionName);
+			tempInstruction.setLabel(tempLabel);
+			tempInstruction.setV1(tempV1);
+			tempInstruction.setV2(tempV2);
+			tempInstruction.setV3(tempV3);
+			Instruction.getInstructionList().add(tempInstruction);
+		} else {
+			System.err.println("[ERROR at line:"+FileParser.getLineCtr()+"] Label already exits.");
+			System.exit(0);
+		}
+	}
+	
+	/**
+	 * Checks whether the label is already existing.
+	 * @return TRUE if label is valid, FALSE if label is already in use.
+	 */
+	private boolean isLabelValid() {
+		for (int i = 0; i < Instruction.getInstructionList().size(); i++) {
+			if(!tempLabel.isEmpty())
+				if (Instruction.getInstructionList().get(i).getLabel().matches(tempLabel))
+					return false;
+		}
 		
+		return true;
 	}
 }

@@ -84,13 +84,12 @@ public class DataParser implements IParser {
 	private void addData() {
 		if (isValuesValid()) {
 			if (tempVarName.isEmpty()) {
-				appendDataToPrevious();
+				appendToPrevious();
 			} else {
-				addDataToList();
-				System.out.println("Added data!");
+				addToList();
 			}
 		} else {
-			System.err.println("[ERROR at line:"+FileParser.getLineCtr()+"] Value(s) out of bounds for given directive.\nProgram will now terminate.");
+			System.err.println("[ERROR at line:"+FileParser.getLineCtr()+"] Value(s) out of bounds for given directive.");
 			System.exit(0);
 		}
 	}
@@ -181,7 +180,7 @@ public class DataParser implements IParser {
 	/**
 	 * Adds the data who correctly follows the format 'varName: .directive v1,v2,v3,v4'.
 	 */
-	private void addDataToList() {
+	private void addToList() {
 		tempData = new Data();
 		tempData.setVarName(tempVarName);
 		tempData.setDirective(tempDirective);
@@ -192,7 +191,7 @@ public class DataParser implements IParser {
 	/**
 	 * Appends the data to the previous entry that followed the format 'varName: .directive v1,v2,v3,v4'.
 	 */
-	private void appendDataToPrevious() {
+	private void appendToPrevious() {
 		try {
 			Data.getDataList().get(Data.getDataList().size()-1).getValues().addAll(convertArrayToList());
 		} catch (Exception e) {

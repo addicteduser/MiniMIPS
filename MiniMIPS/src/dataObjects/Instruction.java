@@ -85,6 +85,20 @@ public class Instruction {
 	}
 
 	/**
+	 * @return the instructionName
+	 */
+	public INSTRUCTIONS getInstructionName() {
+		return instructionName;
+	}
+
+	/**
+	 * @param instructionName the instructionName to set
+	 */
+	public void setInstructionName(INSTRUCTIONS instructionName) {
+		this.instructionName = instructionName;
+	}
+
+	/**
 	 * @return the v1
 	 */
 	public String getV1() {
