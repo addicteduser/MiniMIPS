@@ -70,7 +70,7 @@ public class DataParser implements IParser {
 	 * Gets the values from tokens[1]. tokens will get the split tokens[1].
 	 */
 	private void parseValues() {
-		tokens = tokens[1].trim().split("[;#]");
+		tokens = tokens[1].trim().split("[;#]"); // removes comments
 		tokens = tokens[0].trim().split(",");
 		for (int i = 0; i < tokens.length; i++) {
 			tokens[i] = tokens[i].trim();
