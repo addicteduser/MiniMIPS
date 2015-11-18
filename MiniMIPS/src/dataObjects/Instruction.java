@@ -55,4 +55,74 @@ public class Instruction {
 		instructionFormat.put(INSTRUCTIONTYPES.J, "iCODE,IMM");
 		instructionCode.put(INSTRUCTIONS.J, "J,2"); // J Label
 	}
+
+	/**
+	 * @return the instructionList
+	 */
+	public static ArrayList<Instruction> getInstructionList() {
+		return instructionList;
+	}
+
+	/**
+	 * @param instructionList the instructionList to set
+	 */
+	public static void setInstructionList(ArrayList<Instruction> instructionList) {
+		Instruction.instructionList = instructionList;
+	}
+
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	/**
+	 * @return the v1
+	 */
+	public String getV1() {
+		return v1;
+	}
+
+	/**
+	 * @param v1 the v1 to set
+	 */
+	public void setV1(String v1) {
+		this.v1 = v1;
+	}
+
+	/**
+	 * @return the v2
+	 */
+	public String getV2() {
+		return v2;
+	}
+
+	/**
+	 * @param v2 the v2 to set
+	 */
+	public void setV2(String v2) {
+		this.v2 = v2;
+	}
+
+	/**
+	 * @return the v3
+	 */
+	public String getV3() {
+		return v3;
+	}
+
+	/**
+	 * @param v3 the v3 to set
+	 */
+	public void setV3(String v3) {
+		this.v3 = v3;
+	}
 }
