@@ -1,6 +1,6 @@
 ;			.data
 ;var:	.byte				127 ,-128
-;.word 1,2 ; comment
+		#.word 1,2 ; comment
 	
 .code
 L1:

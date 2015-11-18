@@ -66,12 +66,18 @@ public class FileParser {
 						parser.parse(strLine);
 					}
 				}  else {
-					parser.parse(strLine);
+					try {
+						parser.parse(strLine);
+					} catch(NullPointerException e) {
+						System.err.println("[ERROR at line:"+getLineCtr()+"]");
+						System.exit(0);
+					}
 				}
 
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.err.println("[ERROR at line:"+getLineCtr()+"]");
 		} finally {
 			// Close the input stream
 			try {
