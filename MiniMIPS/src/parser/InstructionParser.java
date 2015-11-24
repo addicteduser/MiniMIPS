@@ -3,11 +3,6 @@ package parser;
 import constants.INSTRUCTIONS;
 import dataObjects.Instruction;
 
-import java.io.IOException;
-
-import Helper.Validate;
-
-//TODO if label already exists
 public class InstructionParser implements IParser {
 
 	private String tokens[];
@@ -100,7 +95,7 @@ public class InstructionParser implements IParser {
 				if (tempInstructionName.toString().matches("DMULT")) {
 					tempV1 = "0";
 				} else {
-					if (Validator.isRegisterValid(tempVal))
+					if (Validator.isGeneralRegisterValid(tempVal))
 						tempV1 = tempVal;
 					else {
 						System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
@@ -110,7 +105,7 @@ public class InstructionParser implements IParser {
 
 				// 2nd Value
 				tempVal = tokens[1].trim();
-				if (Validator.isRegisterValid(tempVal))
+				if (Validator.isGeneralRegisterValid(tempVal))
 					tempV2 = tempVal;
 				else {
 					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
@@ -119,11 +114,15 @@ public class InstructionParser implements IParser {
 
 				// 3rd Value
 				tempVal = tokens[2].trim();
-				if (Validator.isRegisterValid(tempVal))
+				if (tempInstructionName.toString().matches("DSLL|BEQ|ANDI|DADDIU"))
 					tempV3 = tempVal;
 				else {
-					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
-					System.exit(0);
+					if (Validator.isGeneralRegisterValid(tempVal))
+						tempV3 = tempVal;
+					else {
+						System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+						System.exit(0);
+					}
 				}
 			} catch (NumberFormatException e) {
 				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
@@ -132,85 +131,72 @@ public class InstructionParser implements IParser {
 
 			break;
 
-		case ADDS:
-		case MULS: // FD,FS,FT
+		case ADDS: case MULS: // FD,FS,FT
 			tokens = tokens[0].trim().split(",");
-			/**
-			 * Validation starts here.
-			 */
-			if (Validate.isFloatRegister(tokens[1].trim())) {
-				tempV2 = tokens[1].trim();
-			} else {
-				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Unknown instruction.");
-				System.out.println("here at InstructionParser");
+
+			// 1st Value
+			tempVal = tokens[0].trim();
+			if (Validator.isFloatRegisterValid(tempVal))
+				tempV1 = tempVal;
+			else {
+				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
 				System.exit(0);
 			}
 
-			if (Validate.isFloatRegister(tokens[2].trim())) {
-				tempV3 = tokens[2].trim();
-			} else {
-				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Unknown instruction.");
-				System.err.println("here at InstructionParser");
+			// 2nd Value
+			tempVal = tokens[1].trim();
+			if (Validator.isFloatRegisterValid(tempVal))
+				tempV2 = tempVal;
+			else {
+				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+				System.exit(0);
+			}
+
+			// 3rd Value
+			tempVal = tokens[2].trim();
+			if (Validator.isFloatRegisterValid(tempVal))
+				tempV3 = tempVal;
+			else {
+				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
 				System.exit(0);
 			}
 			break;
 
-		case LW:
-		case LWU:
-		case SW:
-			tokens = tokens[0].trim().split(",");
-			/**
-			 * Validation starts here.
-
-                if (Validate.isRegister(tokens[0].trim())) {
-                    tempV1 = tokens[0].trim();
-                } else {
-                    System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Unknown instruction.");
-                    System.err.println("here at InstructionParser");
-                    System.exit(0);
-                }
-                tokens = tokens[1].trim().split("\\(");
-                tempV2 = tokens[0].trim();
-                System.out.println("v2: " + tempV2);
-                if (Validate.isRegister(tokens[1].substring(0, tokens[1].length() - 1))) {
-                    tempV3 = tokens[1].substring(0, tokens[1].length() - 1);
-                    System.out.println("v3: " + tempV3);
-                } else {
-                    System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Unknown instruction.");
-                    System.err.println("here at InstructionParser");
-                    System.exit(0);
-
-                }*/
-			break;
-
-			/**
-			 * Validation starts here.
-			 */
-		case LS: // FDDDDDDDD,IMM(RSSSSSSSSSS)
-		case SS: // FTTTTTTTT, IMM(RSSSSSSSSS)
+		case LW: case LWU: case SW: // RT, IMM(RS)
+		case LS: case SS: // FT, IMM(RS)
 			tokens = tokens[0].trim().split(",");
 
-			if (Validate.isFloatRegister(tokens[0].trim())) {
-				tempV1 = tokens[0].trim();
-			} else {
-				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Unknown instruction.");
-				System.err.println("here at InstructionParser");
-				System.exit(0);
+			// 1st Value
+			tempVal = tokens[0].trim();
+			if (tempInstructionName.toString().matches("LW|LWU|SW")) {
+				if (Validator.isGeneralRegisterValid(tempVal))
+					tempV1 = tempVal;
+				else {
+					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+					System.exit(0);
+				}
+			} else if (tempInstructionName.toString().matches("LS|SS")) {
+				if (Validator.isFloatRegisterValid(tempVal))
+					tempV1 = tempVal;
+				else {
+					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+					System.exit(0);
+				}
 			}
 
 			tokens = tokens[1].trim().split("\\(");
+
+			// 2nd Value
 			tempV2 = tokens[0].trim();
-			System.out.println("v2: " + tempV2);
 
-			/**if (Validate.isRegister(tokens[1].substring(0, tokens[1].length() - 1))) {
-                    tempV3 = tokens[1].substring(0, tokens[1].length() - 1);
-                    System.out.println("v3: " + tempV3);
-                } else {
-                    System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Unknown instruction.");
-                    System.err.println("here at InstructionParser");
-                    System.exit(0);
-
-                }*/
+			// 3rd Value
+			tempVal = tokens[1].trim();
+			if (Validator.isGeneralRegisterValid(tempVal))
+				tempV3 = tempVal;
+			else {
+				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+				System.exit(0);
+			}
 			break;
 
 		case J: // Label
@@ -257,12 +243,25 @@ public class InstructionParser implements IParser {
 		}
 
 		/**
-		 * Checks whether the input register is valid or not.
+		 * Checks whether the input register is a valid general register or not.
 		 * @param register
 		 * @return TRUE if register input is valid, FALSE if not.
 		 */
-		private static boolean isRegisterValid(String register) throws NumberFormatException {
+		private static boolean isGeneralRegisterValid(String register) throws NumberFormatException {
 			int regNumber = Integer.parseInt(register.replace("R", "").replace("r", ""));
+			if (regNumber >= 0 && regNumber <= 31)
+				return true;
+			else
+				return false;
+		}
+
+		/**
+		 * Checks whether the input register is valid floating point register or not.
+		 * @param register
+		 * @return TRUE if register input is valid, FALSE if not.
+		 */
+		private static boolean isFloatRegisterValid(String register) throws NumberFormatException {
+			int regNumber = Integer.parseInt(register.replace("F", "").replace("f", ""));
 			if (regNumber >= 0 && regNumber <= 31)
 				return true;
 			else
