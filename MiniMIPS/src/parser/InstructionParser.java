@@ -30,9 +30,6 @@ public class InstructionParser implements IParser {
 		parseInstructionName();
 		parseRegImm();
 		addInstruction();
-		System.out.println(Instruction.getInstructionList().toString());
-		for (Instruction x : Instruction.getInstructionList()) {
-		}
 	}
 
 	private void clear() {
@@ -87,7 +84,7 @@ public class InstructionParser implements IParser {
 		case DADDU: case OR: case SLT: // RD,RS,RT
 		case DMULT: // RS,RT
 		case DSLL: // RD,RS,SHF/IMM
-		case BEQ: case ANDI: case DADDIU: // RS,RT,IMM
+		case BEQ: case ANDI: case DADDIU: // RS,RT,Label/IMM
 			tokens = tokens[0].trim().split(",");
 
 			try {
@@ -116,16 +113,27 @@ public class InstructionParser implements IParser {
 				// 3rd Value
 				tempVal = tokens[2].trim();
 				if (tempInstructionName.toString().matches("DSLL|ANDI|DADDIU"))
-					tempV3 = tempVal;
-				else if (tempInstruction.toString().matches("BEQ")) {
+					try {
+					if(Validator.isImmediateValid(tempVal)) {
+						if(tempVal.contains("0x"))
+							tempVal = tempVal.substring(2);
+						tempV3 = String.valueOf((short) Integer.parseInt(tempVal, 16));
+					} else {
+						System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid immediate/offset value.");
+						System.exit(0);
+					}
+					} catch(NumberFormatException e) {
+						System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid immediate/offset value.");
+						System.exit(0);
+					}
+				else if (tempInstructionName.toString().matches("BEQ")) {
 					if(Validator.doesLabelExist(tempVal))
 						tempV3 = tempVal;
 					else {
 						System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Label '"+tempVal+"' does not exist.");
 						System.exit(0);
 					}
-				}
-				else {
+				} else {
 					if (Validator.isGeneralRegisterValid(tempVal))
 						tempV3 = tempVal;
 					else {
@@ -273,14 +281,11 @@ public class InstructionParser implements IParser {
 		 * @return TRUE if label exists, FALSE if label does NOT exists.    	 
 		 */
 		private static boolean doesLabelExist(String label) throws NullPointerException {
-			for (int i = 0; i < Instruction.getInstructionList().size(); i++) {
-				if (!label.isEmpty()) {
-					if (Instruction.getInstructionList().get(i).getLabel().matches(label)) {
+			for (int i = 0; i < Instruction.getInstructionList().size(); i++)
+				if (!label.isEmpty())
+					if (Instruction.getInstructionList().get(i).getLabel().matches(label))
 						return true;
-					}
-				}
-			}
-
+			
 			return false;
 		}
 
@@ -310,16 +315,35 @@ public class InstructionParser implements IParser {
 				return false;
 		}
 
+		/**
+		 * Checks whether the data varName already exists.
+		 * @param varName
+		 * @return TRUE if varName exists, FALSE if not.
+		 */
 		private static boolean doesVarNameExist(String varName) {
-			for (int i = 0; i < Data.getDataList().size(); i++) {
-				if (!varName.isEmpty()) {
-					if (Data.getDataList().get(i).getVarName().matches(varName)) {
+			for (int i = 0; i < Data.getDataList().size(); i++)
+				if (!varName.isEmpty())
+					if (Data.getDataList().get(i).getVarName().matches(varName))
 						return true;
-					}
-				}
-			}
 
 			return false;
+		}
+		
+		/**
+		 * Checks if the input immediate/offest is valid.
+		 * @param imm
+		 * @return TRUE if immediate/offset is valid, FALSE if not.
+		 */
+		private static boolean isImmediateValid(String imm) {
+			try {
+				int x = Long.compareUnsigned(Long.decode(imm), Long.decode("0xFFFF"));
+				if (x > 0)
+					return false;
+			} catch(NumberFormatException e) {
+				return false;
+			}
+			
+			return true;
 		}
 	}
 }
