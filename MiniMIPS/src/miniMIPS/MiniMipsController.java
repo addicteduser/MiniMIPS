@@ -26,6 +26,7 @@ public class MiniMipsController {
 			if (result == JFileChooser.APPROVE_OPTION) {
 				fileparser = new FileParser(fileChooser.getSelectedFile());
 				fileparser.parseFile();
+				GuiUpdater.loadCodeTable();
 			}
 		}
 		

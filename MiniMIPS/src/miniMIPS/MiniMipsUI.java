@@ -21,7 +21,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class MiniMipsUI extends JFrame {
-
     private JPanel contentPane;
     private JLabel lblTitle;
     private JPanel pnlCode;
@@ -53,7 +52,7 @@ public class MiniMipsUI extends JFrame {
     private JScrollPane scpCodeSeg;
     private JScrollPane scpMemory;
 
-    private JTable tblCode;
+    private static JTable tblCode;
     private JTable tblCodeSeg;
     private JTable tblOpcode;
     private JTable tblPipeline;
@@ -63,7 +62,7 @@ public class MiniMipsUI extends JFrame {
     private JTable tblClock;
 
     private boolean hasRegisterSet = false;
-
+    private static UneditableTableModel tblmodCode;
     /**
      * Launch the application.
      */
@@ -81,14 +80,6 @@ public class MiniMipsUI extends JFrame {
         });
     }
 
-    class UneditableTableModel extends DefaultTableModel {
-
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    }
-
     /**
      * Create the frame.
      */
@@ -98,8 +89,9 @@ public class MiniMipsUI extends JFrame {
 
     private void initGUI() {
         // ******************* TABLES FOR GUI - START *******************
-        UneditableTableModel tblmodCode = new UneditableTableModel();
-        Object codeRow[][] = {{"TEST", "LH", "R1", "R5(1000)", "--"},
+        tblmodCode = new UneditableTableModel();
+        Object codeRow[][] = {};
+        	/*{{"TEST", "LH", "R1", "R5(1000)", "--"},
         {"--", "DADDU", "R1", "R5", "R3"},
         {"--", "DADDU", "R1", "R5", "R3"},
         {"--", "DADDU", "R1", "R5", "R3"},
@@ -109,8 +101,8 @@ public class MiniMipsUI extends JFrame {
         {"--", "DADDU", "R1", "R5", "R3"},
         {"--", "DADDU", "R1", "R5", "R3"},
         {"--", "DADDU", "R1", "R5", "R3"},
-        {"--", "DADDU", "R1", "R5", "R3"}};
-        Object codeCol[] = {"LABEL", "INSTRUCTION", "RD", "RS", "RT"};
+        {"--", "DADDU", "R1", "R5", "R3"}};*/
+        Object codeCol[] = {"LABEL", "INSTRUCTION"};
         tblmodCode.setDataVector(codeRow, codeCol);
 
         UneditableTableModel tblmodOpcode = new UneditableTableModel();
@@ -244,12 +236,7 @@ public class MiniMipsUI extends JFrame {
         scpCode.setViewportView(tblCode);
         pnlCodeInput.add(scpCode);
 
-        btnLoadMipsCode = new JButton("Load MIPS Code");
-        btnLoadMipsCode.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //LOAD MIPS CODE HERE HIHI
-            }
-        });
+        btnLoadMipsCode = new JButton("Load");
         btnLoadMipsCode.setBounds(331, 75, 121, 38);
         pnlCodeInput.add(btnLoadMipsCode);
 
@@ -426,4 +413,29 @@ public class MiniMipsUI extends JFrame {
 
         pnlCycle.add(scpClock);
     }
+
+	public void addBtnLoadMipsCodeActionListener(ActionListener l) {
+		btnLoadMipsCode.addActionListener(l);
+	}
+	
+	class UneditableTableModel extends DefaultTableModel {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    }
+
+	/**
+	 * @return the tblCode
+	 */
+	public static UneditableTableModel getTblCode() {
+		return tblmodCode;
+	}
+
+	/**
+	 * @param tblCode the tblCode to set
+	 */
+	public void setTblCode(JTable tblCode) {
+		this.tblCode = tblCode;
+	}
 }
