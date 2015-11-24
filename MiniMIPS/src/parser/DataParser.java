@@ -62,7 +62,12 @@ public class DataParser implements IParser {
 			tokens[0] = tokens[0].trim();
 			tokens = tokens[0].split(" ", 2);
 		} finally {
-			tempDirective = DIRECTIVES.valueOf(tokens[0].substring(1).toUpperCase());
+			if (tokens[0].startsWith("."))
+				tempDirective = DIRECTIVES.valueOf(tokens[0].substring(1).toUpperCase());
+			else {
+				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid data segment.");
+                System.exit(0);
+			}
 		}
 	}
 	
