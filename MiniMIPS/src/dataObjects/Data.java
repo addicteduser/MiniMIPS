@@ -10,6 +10,10 @@ public class Data {
 	private DIRECTIVES directive;
 	private ArrayList<Long> values;
 	
+	public static void resetDataList() {
+		dataList.clear();
+	}
+	
 	/**
 	 * @return the varName
 	 */

@@ -9,7 +9,7 @@ public class GuiUpdater {
 		for(Instruction i : Instruction.getInstructionList()) {
 			String label = i.getLabel();
 			String instruction = instructionBuilder(i);
-			MiniMipsUI.getTblCode().addRow(new Object[]{label,instruction});
+			MiniMipsUI.getTblModCode().addRow(new Object[]{label,instruction});
 		}
 
 	}

@@ -233,6 +233,7 @@ public class MiniMipsUI extends JFrame {
         scpCode.setBounds(16, 21, 310, 145);
         tblCode = new JTable(tblmodCode);
         tblCode.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tblCode.getColumnModel().getColumn(1).setPreferredWidth(200);
         scpCode.setViewportView(tblCode);
         pnlCodeInput.add(scpCode);
 
@@ -428,14 +429,15 @@ public class MiniMipsUI extends JFrame {
 	/**
 	 * @return the tblCode
 	 */
-	public static UneditableTableModel getTblCode() {
+	public static UneditableTableModel getTblModCode() {
 		return tblmodCode;
 	}
-
-	/**
-	 * @param tblCode the tblCode to set
-	 */
-	public void setTblCode(JTable tblCode) {
-		this.tblCode = tblCode;
+	
+	public static void resetTblModCode() {
+		Object codeRow[][] = {};
+		Object codeCol[] = {"LABEL", "INSTRUCTION"};
+		tblmodCode.setDataVector(codeRow, codeCol);
+		tblCode.setModel(tblmodCode);
+		tblCode.getColumnModel().getColumn(1).setPreferredWidth(200);
 	}
 }

@@ -54,6 +54,10 @@ public class Instruction {
 		instructionFormat.put(INSTRUCTIONTYPES.J, "iCODE,IMM");
 		instructionCode.put(INSTRUCTIONS.J, "J,2"); // J Label
 	}
+	
+	public static void resetInstructionList() {
+		instructionList.clear();
+	}
 
 	/**
 	 * @return the instructionList
