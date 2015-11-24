@@ -222,7 +222,7 @@ public class InstructionParser implements IParser {
 				}
 
 				// 3rd Value
-				tempVal = tokens[1].trim();
+				tempVal = tokens[1].trim().substring(0, tokens[1].length()-1);
 				if (Validator.isGeneralRegisterValid(tempVal))
 					tempV3 = tempVal;
 				else {

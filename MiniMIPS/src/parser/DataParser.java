@@ -43,7 +43,12 @@ public class DataParser implements IParser {
 	 */
 	private void parseVarName(String input) {
 		tokens = input.split(":", 2);
-		tempVarName = tokens[0];
+		if (!Validator.doesVarNameExist(tokens[0]))
+			tempVarName = tokens[0];
+		else {
+			System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Variable name '"+tokens[0]+"' already exists.");
+            System.exit(0);
+		}
 	}
 	
 	/**
@@ -87,7 +92,7 @@ public class DataParser implements IParser {
 	 * If the input is valid, adds the parsed input to the data list, else the program terminates.
 	 */
 	private void addData() {
-		if (isValuesValid()) {
+		if (areValuesValid()) {
 			if (tempVarName.isEmpty()) {
 				appendToPrevious();
 			} else {
@@ -103,7 +108,7 @@ public class DataParser implements IParser {
 	 * Checks if the values match the directive.
 	 * @return TRUE if all values are within bounds of given directive
 	 */
-	private boolean isValuesValid() {
+	private boolean areValuesValid() {
 		boolean validValues = true;
 		
 		switch(tempDirective) {
@@ -111,7 +116,7 @@ public class DataParser implements IParser {
 			System.out.println("[BYTE]");			
 			for (long value : tempValues) {				
 				//System.out.println("[COMPARING] "+Byte.MIN_VALUE+" <= "+value+" <= "+Byte.MAX_VALUE);
-				if (!isValueValid(Byte.MIN_VALUE, Byte.MAX_VALUE, value))
+				if (!Validator.isValueValid(Byte.MIN_VALUE, Byte.MAX_VALUE, value))
 					validValues = false;
 			}
 			break;
@@ -119,7 +124,7 @@ public class DataParser implements IParser {
 			System.out.println("[WORD16]");
 			for (long value : tempValues) {				
 				//System.out.println("[COMPARING] "+Short.MIN_VALUE+" <= "+value+" <= "+Short.MAX_VALUE);
-				if (!isValueValid(Short.MIN_VALUE, Short.MAX_VALUE, value))
+				if (!Validator.isValueValid(Short.MIN_VALUE, Short.MAX_VALUE, value))
 					validValues = false;
 			}
 			break;
@@ -127,7 +132,7 @@ public class DataParser implements IParser {
 			System.out.println("[WORD32]");
 			for (long value : tempValues) {				
 				//System.out.println("[COMPARING] "+Integer.MIN_VALUE+" <= "+value+" <= "+Integer.MAX_VALUE);
-				if (!isValueValid(Integer.MIN_VALUE, Integer.MAX_VALUE, value))
+				if (!Validator.isValueValid(Integer.MIN_VALUE, Integer.MAX_VALUE, value))
 					validValues = false;
 			}
 			break;
@@ -135,7 +140,7 @@ public class DataParser implements IParser {
 			System.out.println("[WORD]");
 			for (long value : tempValues) {				
 				//System.out.println("[COMPARING] "+Long.MIN_VALUE+" <= "+value+" <= "+Long.MAX_VALUE);
-				if (!isValueValid(Long.MIN_VALUE, Long.MAX_VALUE, value))
+				if (!Validator.isValueValid(Long.MIN_VALUE, Long.MAX_VALUE, value))
 					validValues = false;
 			}
 			break;
@@ -153,20 +158,6 @@ public class DataParser implements IParser {
 		}
 		
 		return validValues;
-	}
-	
-	/**
-	 * Checks if value is within the min and max bound of the directive.
-	 * @param min minimum value of the directive
-	 * @param max maximum value of the directive
-	 * @param value value to compare to min and max
-	 * @return TRUE if the value is within the min and max bound of the directive
-	 */
-	private boolean isValueValid(long min, long max, long value) {
-		if (min <= value && value <= max)
-			return true;
-		else
-			return false;
 	}
 	
 	/**
@@ -203,6 +194,36 @@ public class DataParser implements IParser {
 			//e.printStackTrace();
 			System.err.println("[ERROR at line:"+FileParser.getLineCtr()+"]");
 			System.exit(0);
+		}
+	}
+	
+	private static class Validator {
+		/**
+		 * Checks whether the data varName already exists.
+		 * @param varName
+		 * @return TRUE if varName exists, FALSE if not.
+		 */
+		private static boolean doesVarNameExist(String varName) {
+			for (int i = 0; i < Data.getDataList().size(); i++)
+				if (!varName.isEmpty())
+					if (Data.getDataList().get(i).getVarName().matches(varName))
+						return true;
+
+			return false;
+		}
+		
+		/**
+		 * Checks if value is within the min and max bound of the directive.
+		 * @param min minimum value of the directive
+		 * @param max maximum value of the directive
+		 * @param value value to compare to min and max
+		 * @return TRUE if the value is within the min and max bound of the directive
+		 */
+		private static boolean isValueValid(long min, long max, long value) {
+			if (min <= value && value <= max)
+				return true;
+			else
+				return false;
 		}
 	}
 }
