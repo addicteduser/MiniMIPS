@@ -11,21 +11,7 @@ package Helper;
  */
 public class Validate {
 
-    public static boolean isRegister(String register) {
-
-        try {
-            int regNumber = Integer.parseInt(register.replace("R", "").replace("r", ""));
-            if (regNumber >= 0 && regNumber <= 31) {
-                return true;
-            }
-
-        } catch (Exception e) {
-            System.err.println("MUST BE NORMAL REG INPUT! "+register);
-            System.exit(0);
-            return false;
-        }
-        return false;
-    }
+    
 
     public static boolean isFloatRegister(String register) {
         try {

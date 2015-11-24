@@ -10,7 +10,6 @@ public class Instruction {
 	private static ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
 	private static EnumMap<INSTRUCTIONS, String> instructionCode;
 	private static EnumMap<INSTRUCTIONTYPES, String> instructionFormat;
-	//private INSTRUCTIONTYPES instructionType;
 	private INSTRUCTIONS instructionName;
 	private String label;
 	private String v1;

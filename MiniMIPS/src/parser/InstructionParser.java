@@ -2,6 +2,9 @@ package parser;
 
 import constants.INSTRUCTIONS;
 import dataObjects.Instruction;
+
+import java.io.IOException;
+
 import Helper.Validate;
 
 //TODO if label already exists
@@ -84,39 +87,42 @@ public class InstructionParser implements IParser {
         tokens = tokens[1].trim().split("[;#]"); // removes comments
 
         switch (tempInstructionName) {
-            case DADDU:
-            case DMULT:
-            case OR:
-            case SLT:
+            case DADDU: case OR: case SLT: // RD,RS,RT
+            case DMULT: // RS,RT
             case DSLL: // RD,RS,SHF/IMM
-            case BEQ: // RS,RT,IMM
-            case ANDI:
-            case DADDIU: // RT,RS,IMM
+            case BEQ: case ANDI: case DADDIU: // RS,RT,IMM
                 tokens = tokens[0].trim().split(",");
                 if (tempInstructionName.toString().matches("DMULT")) {
                     tempV1 = "0";
                 } else {
-                    tempV1 = tokens[0].trim();
+                	try {
+						if (Validator.isRegister(tokens[0].trim()))
+							tempV1 = tokens[0].trim();
+						else {
+							System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tokens[0].trim()+".");
+							System.exit(0);
+						}
+					} catch (NumberFormatException e) {
+						System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tokens[0].trim()+".");
+						System.exit(0);
+					}
                 }
-                /**
-                 * Validation starts here.
-                 */
-                if (Validate.isRegister(tokens[1].trim())) {
-                    tempV2 = tokens[1].trim();
-                    System.out.println(tempV2);
-                } else {
-                    System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Unknown instruction.");
-                    System.err.println("here at InstructionParser");
-                    System.exit(0);
-                }
-
-                if (Validate.isRegister(tokens[2].trim())) {
-                    tempV3 = tokens[2].trim();
-                } else {
-                    System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Unknown instruction.");
-                    System.err.println("here at InstructionParser");
-                    System.exit(0);
-                }
+                
+                
+                if (Validator.isRegister(tokens[1].trim()))
+					tempV2 = tokens[1].trim();
+				else {
+					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tokens[0].trim()+".");
+					System.exit(0);
+				}
+                
+                if (Validator.isRegister(tokens[2].trim()))
+					tempV2 = tokens[2].trim();
+				else {
+					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tokens[0].trim()+".");
+					System.exit(0);
+				}
+				
                 break;
 
             case ADDS:
@@ -148,7 +154,7 @@ public class InstructionParser implements IParser {
                 tokens = tokens[0].trim().split(",");
                 /**
                  * Validation starts here.
-                 */
+                 
                 if (Validate.isRegister(tokens[0].trim())) {
                     tempV1 = tokens[0].trim();
                 } else {
@@ -167,7 +173,7 @@ public class InstructionParser implements IParser {
                     System.err.println("here at InstructionParser");
                     System.exit(0);
 
-                }
+                }*/
                 break;
 
             /**
@@ -189,7 +195,7 @@ public class InstructionParser implements IParser {
                 tempV2 = tokens[0].trim();
                 System.out.println("v2: " + tempV2);
 
-                if (Validate.isRegister(tokens[1].substring(0, tokens[1].length() - 1))) {
+                /**if (Validate.isRegister(tokens[1].substring(0, tokens[1].length() - 1))) {
                     tempV3 = tokens[1].substring(0, tokens[1].length() - 1);
                     System.out.println("v3: " + tempV3);
                 } else {
@@ -197,7 +203,7 @@ public class InstructionParser implements IParser {
                     System.err.println("here at InstructionParser");
                     System.exit(0);
 
-                }
+                }*/
                 break;
 
             case J: // Label
@@ -209,7 +215,7 @@ public class InstructionParser implements IParser {
      * If input is valid, adds the parsed instruction to the instruction list.
      */
     private void addInstruction() {
-        if (isLabelValid()) {
+        if (Validator.isLabelValid(tempLabel)) {
             tempInstruction = new Instruction();
             tempInstruction.setInstructionName(tempInstructionName);
             tempInstruction.setLabel(tempLabel);
@@ -223,20 +229,37 @@ public class InstructionParser implements IParser {
         }
     }
 
-    /**
-     * Checks whether the label is already existing.
-     *
-     * @return TRUE if label is valid, FALSE if label is already in use.
-     */
-    private boolean isLabelValid() {
-        for (int i = 0; i < Instruction.getInstructionList().size(); i++) {
-            if (!tempLabel.isEmpty()) {
-                if (Instruction.getInstructionList().get(i).getLabel().matches(tempLabel)) {
-                    return false;
+    
+    
+    private static class Validator {
+    	/**
+    	 * Checks whether the label is already existing.
+         * @param label
+         * @return TRUE if label is valid, FALSE if label is already in use.    	 
+    	 */
+        private static boolean isLabelValid(String label) {
+            for (int i = 0; i < Instruction.getInstructionList().size(); i++) {
+                if (!label.isEmpty()) {
+                    if (Instruction.getInstructionList().get(i).getLabel().matches(label)) {
+                        return false;
+                    }
                 }
             }
-        }
 
-        return true;
+            return true;
+        }
+        
+        /**
+         * Checks whether the input register is valid or not.
+         * @param register
+         * @return TRUE if register input is valid, FALSE if not.
+         */
+        public static boolean isRegister(String register) throws NumberFormatException {
+        	int regNumber = Integer.parseInt(register.replace("R", "").replace("r", ""));
+            if (regNumber >= 0 && regNumber <= 31)
+                return true;
+            else
+            	return false; 
+        }
     }
 }
