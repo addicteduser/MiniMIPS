@@ -1,6 +1,7 @@
 package parser;
 
 import constants.INSTRUCTIONS;
+import dataObjects.Data;
 import dataObjects.Instruction;
 
 public class InstructionParser implements IParser {
@@ -114,8 +115,16 @@ public class InstructionParser implements IParser {
 
 				// 3rd Value
 				tempVal = tokens[2].trim();
-				if (tempInstructionName.toString().matches("DSLL|BEQ|ANDI|DADDIU"))
+				if (tempInstructionName.toString().matches("DSLL|ANDI|DADDIU"))
 					tempV3 = tempVal;
+				else if (tempInstruction.toString().matches("BEQ")) {
+					if(Validator.doesLabelExist(tempVal))
+						tempV3 = tempVal;
+					else {
+						System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Label '"+tempVal+"' does not exist.");
+						System.exit(0);
+					}
+				}
 				else {
 					if (Validator.isGeneralRegisterValid(tempVal))
 						tempV3 = tempVal;
@@ -127,6 +136,9 @@ public class InstructionParser implements IParser {
 			} catch (NumberFormatException e) {
 				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
 				System.exit(0);
+			} catch(NullPointerException e) {
+				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Label '"+tempVal+"' does not exist.");
+				System.exit(0);
 			}
 
 			break;
@@ -134,29 +146,34 @@ public class InstructionParser implements IParser {
 		case ADDS: case MULS: // FD,FS,FT
 			tokens = tokens[0].trim().split(",");
 
-			// 1st Value
-			tempVal = tokens[0].trim();
-			if (Validator.isFloatRegisterValid(tempVal))
-				tempV1 = tempVal;
-			else {
-				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
-				System.exit(0);
-			}
+			try {
+				// 1st Value
+				tempVal = tokens[0].trim();
+				if (Validator.isFloatRegisterValid(tempVal))
+					tempV1 = tempVal;
+				else {
+					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+					System.exit(0);
+				}
 
-			// 2nd Value
-			tempVal = tokens[1].trim();
-			if (Validator.isFloatRegisterValid(tempVal))
-				tempV2 = tempVal;
-			else {
-				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
-				System.exit(0);
-			}
+				// 2nd Value
+				tempVal = tokens[1].trim();
+				if (Validator.isFloatRegisterValid(tempVal))
+					tempV2 = tempVal;
+				else {
+					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+					System.exit(0);
+				}
 
-			// 3rd Value
-			tempVal = tokens[2].trim();
-			if (Validator.isFloatRegisterValid(tempVal))
-				tempV3 = tempVal;
-			else {
+				// 3rd Value
+				tempVal = tokens[2].trim();
+				if (Validator.isFloatRegisterValid(tempVal))
+					tempV3 = tempVal;
+				else {
+					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+					System.exit(0);
+				}
+			} catch (NumberFormatException e) {
 				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
 				System.exit(0);
 			}
@@ -166,41 +183,66 @@ public class InstructionParser implements IParser {
 		case LS: case SS: // FT, IMM(RS)
 			tokens = tokens[0].trim().split(",");
 
-			// 1st Value
-			tempVal = tokens[0].trim();
-			if (tempInstructionName.toString().matches("LW|LWU|SW")) {
+			try {
+				// 1st Value
+				tempVal = tokens[0].trim();
+				if (tempInstructionName.toString().matches("LW|LWU|SW")) {
+					if (Validator.isGeneralRegisterValid(tempVal))
+						tempV1 = tempVal;
+					else {
+						System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+						System.exit(0);
+					}
+				} else if (tempInstructionName.toString().matches("LS|SS")) {
+					if (Validator.isFloatRegisterValid(tempVal))
+						tempV1 = tempVal;
+					else {
+						System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+						System.exit(0);
+					}
+				}
+
+				tokens = tokens[1].trim().split("\\(");
+
+				// 2nd Value
+				tempVal = tokens[0].trim();
+				if(Validator.doesVarNameExist(tempVal))
+					tempV2 = tempVal;
+				else {
+					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Variable data '"+tempVal+"' does not exist.");
+					System.exit(0);
+				}
+
+				// 3rd Value
+				tempVal = tokens[1].trim();
 				if (Validator.isGeneralRegisterValid(tempVal))
-					tempV1 = tempVal;
+					tempV3 = tempVal;
 				else {
 					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
 					System.exit(0);
 				}
-			} else if (tempInstructionName.toString().matches("LS|SS")) {
-				if (Validator.isFloatRegisterValid(tempVal))
-					tempV1 = tempVal;
-				else {
-					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
-					System.exit(0);
-				}
-			}
-
-			tokens = tokens[1].trim().split("\\(");
-
-			// 2nd Value
-			tempV2 = tokens[0].trim();
-
-			// 3rd Value
-			tempVal = tokens[1].trim();
-			if (Validator.isGeneralRegisterValid(tempVal))
-				tempV3 = tempVal;
-			else {
+			} catch (NumberFormatException e) {
 				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid register: "+tempVal+".");
+				System.exit(0);
+			} catch(NullPointerException e) {
+				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Label '"+tempVal+"' does not exist.");
 				System.exit(0);
 			}
 			break;
 
 		case J: // Label
-			tempV1 = tokens[0].trim();
+			try {
+				tempVal = tokens[0].trim();
+				if(Validator.doesLabelExist(tempVal))
+					tempV1 = tempVal;
+				else {
+					System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Label '"+tempVal+"' does not exist.");
+					System.exit(0);
+				}
+			} catch(NullPointerException e) {
+				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Label '"+tempVal+"' does not exist.");
+				System.exit(0);
+			}
 		}
 	}
 
@@ -208,7 +250,7 @@ public class InstructionParser implements IParser {
 	 * If input is valid, adds the parsed instruction to the instruction list.
 	 */
 	private void addInstruction() {
-		if (Validator.isLabelValid(tempLabel)) {
+		if (!Validator.doesLabelExist(tempLabel)) {
 			tempInstruction = new Instruction();
 			tempInstruction.setInstructionName(tempInstructionName);
 			tempInstruction.setLabel(tempLabel);
@@ -228,18 +270,18 @@ public class InstructionParser implements IParser {
 		/**
 		 * Checks whether the label is already existing.
 		 * @param label
-		 * @return TRUE if label is valid, FALSE if label is already in use.    	 
+		 * @return TRUE if label exists, FALSE if label does NOT exists.    	 
 		 */
-		private static boolean isLabelValid(String label) {
+		private static boolean doesLabelExist(String label) throws NullPointerException {
 			for (int i = 0; i < Instruction.getInstructionList().size(); i++) {
 				if (!label.isEmpty()) {
 					if (Instruction.getInstructionList().get(i).getLabel().matches(label)) {
-						return false;
+						return true;
 					}
 				}
 			}
 
-			return true;
+			return false;
 		}
 
 		/**
@@ -266,6 +308,18 @@ public class InstructionParser implements IParser {
 				return true;
 			else
 				return false;
+		}
+
+		private static boolean doesVarNameExist(String varName) {
+			for (int i = 0; i < Data.getDataList().size(); i++) {
+				if (!varName.isEmpty()) {
+					if (Data.getDataList().get(i).getVarName().matches(varName)) {
+						return true;
+					}
+				}
+			}
+
+			return false;
 		}
 	}
 }
