@@ -115,9 +115,12 @@ public class InstructionParser implements IParser {
 				if (tempInstructionName.toString().matches("DSLL|ANDI|DADDIU"))
 					try {
 					if(Validator.isImmediateValid(tempVal)) {
-						if(tempVal.contains("0x"))
+						if(tempVal.contains("0x")) {
 							tempVal = tempVal.substring(2);
-						tempV3 = String.valueOf((short) Integer.parseInt(tempVal, 16));
+							tempV3 = String.valueOf((long) Integer.parseInt(tempVal, 16));
+						} else {
+							tempV3 = String.valueOf((long) Integer.parseInt(tempVal));
+						}
 					} else {
 						System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Invalid immediate/offset value.");
 						System.exit(0);

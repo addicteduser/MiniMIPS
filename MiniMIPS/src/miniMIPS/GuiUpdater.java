@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import dataObjects.Data;
 import dataObjects.Instruction;
+import dataObjects.NumberBuilder;
 
 public class GuiUpdater {
 	// update code input panel
@@ -48,12 +49,12 @@ public class GuiUpdater {
 	
 	public static void createInitialMemory() {
 		for(int i = 0; i <= Short.toUnsignedInt(Short.parseShort("1FFF", 16)); i+=8) {
-			String address = String.format("%04X", i);
+			String address = NumberBuilder.paddedHexBuilder(4, i);
 			MiniMipsUI.getTblModMemory().addRow(new Object[]{address,"0000000000000000",""});
 		}
 		
 		for (int i = Short.toUnsignedInt(Short.parseShort("2000", 16)); i < Short.toUnsignedInt(Short.parseShort("3FFF", 16)); i+=4) {
-			String address = String.format("%04X", i);
+			String address = NumberBuilder.paddedHexBuilder(4, i);
 			MiniMipsUI.getTblModCodeSeg().addRow(new Object[]{address,"","",""});
 		}
 	}
