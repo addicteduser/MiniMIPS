@@ -6,6 +6,7 @@ public class GeneralPurposeRegister {
 	private static ArrayList<Register> gpr = new ArrayList<Register>();
 	
 	public static void initializeGPR() {
+		gpr.clear();
 		Register tempReg;
 		
 		for(int i = 0; i <= 31; i++) {

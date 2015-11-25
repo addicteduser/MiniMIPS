@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import constants.DIRECTIVES;
 
 public class Data {
-	private static ArrayList<Data> dataList = new ArrayList<Data>();
+	private String address;
 	private String varName;
 	private DIRECTIVES directive;
-	private ArrayList<Long> values;
+	private long value;
 	
-	public static void resetDataList() {
-		dataList.clear();
+	public Data(String address) {
+		this.address = address;
 	}
 	
 	/**
@@ -41,25 +41,27 @@ public class Data {
 	/**
 	 * @return the values
 	 */
-	public ArrayList<Long> getValues() {
-		return values;
+	public long getValue() {
+		return value;
 	}
 	/**
 	 * @param values the values to set
 	 */
-	public void setValues(ArrayList<Long> values) {
-		this.values = values;
+	public void setValue(long value) {
+		this.value = value;
 	}
+
 	/**
-	 * @return the dataList
+	 * @return the address
 	 */
-	public static ArrayList<Data> getDataList() {
-		return dataList;
+	public String getAddress() {
+		return address;
 	}
+
 	/**
-	 * @param dataList the dataList to set
+	 * @param address the address to set
 	 */
-	public static void setDataList(ArrayList<Data> dataList) {
-		Data.dataList = dataList;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }

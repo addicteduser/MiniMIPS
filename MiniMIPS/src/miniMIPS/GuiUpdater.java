@@ -6,6 +6,7 @@ import dataObjects.Data;
 import dataObjects.FloatingPointRegister;
 import dataObjects.GeneralPurposeRegister;
 import dataObjects.Instruction;
+import dataObjects.MemoryData;
 import dataObjects.NumberBuilder;
 import dataObjects.Register;
 
@@ -20,23 +21,22 @@ public class GuiUpdater {
 		}
 
 	}
-	
+
 	public static void loadDataTable() {
 		int i = 0;
-		for(Data d : Data.getDataList()) {
+		for(Data d : MemoryData.getDataList()) {
 			String varName = d.getVarName();
-			ArrayList<Long> values = d.getValues();
-			for(Long v : values) {
-				MiniMipsUI.getTblModMemory().setValueAt(v, i, 1);
-				MiniMipsUI.getTblModMemory().setValueAt(varName, i, 2);
-				varName = "";
-				i++;
-			}
+			long value = d.getValue();
+
+			MiniMipsUI.getTblModMemory().setValueAt(NumberBuilder.paddedHexBuilder(16,value), i, 1);
+			MiniMipsUI.getTblModMemory().setValueAt(varName, i, 2);
+			varName = "";
+			i++;
 		}
 	}
-	
+
 	public static void loadOpcodeTable() {
-		
+
 	}
 
 	public static void createInitialRegisterMonitor() {
@@ -46,7 +46,7 @@ public class GuiUpdater {
 			String regValue = NumberBuilder.paddedHexBuilder(16, r.getRegValue());
 			MiniMipsUI.getTblModGPR().addRow(new Object[]{regName,regValue});
 		}
-		
+
 		FloatingPointRegister.initializeFPR();
 		for(Register r : FloatingPointRegister.getFpr()) {
 			String regName = r.getRegName();
@@ -54,13 +54,18 @@ public class GuiUpdater {
 			MiniMipsUI.getTblModFPR().addRow(new Object[]{regName,regValue});
 		}
 	}
-	
+
 	public static void createInitialMemory() {
-		for(int i = 0; i <= Short.toUnsignedInt(Short.parseShort("1FFF", 16)); i+=8) {
+		MemoryData.initializeDataList();
+		for(Data d : MemoryData.getDataList()) {
+			String address = d.getAddress();
+			MiniMipsUI.getTblModMemory().addRow(new Object[]{address,NumberBuilder.paddedHexBuilder(16, 0),""});
+		}
+		/*for(int i = 0; i <= Short.toUnsignedInt(Short.parseShort("1FFF", 16)); i+=8) {
 			String address = NumberBuilder.paddedHexBuilder(4, i);
 			MiniMipsUI.getTblModMemory().addRow(new Object[]{address,"0000000000000000",""});
-		}
-		
+		}*/
+
 		for (int i = Short.toUnsignedInt(Short.parseShort("2000", 16)); i < Short.toUnsignedInt(Short.parseShort("3FFF", 16)); i+=4) {
 			String address = NumberBuilder.paddedHexBuilder(4, i);
 			MiniMipsUI.getTblModCodeSeg().addRow(new Object[]{address,"","",""});

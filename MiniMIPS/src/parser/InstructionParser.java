@@ -3,6 +3,7 @@ package parser;
 import constants.INSTRUCTIONS;
 import dataObjects.Data;
 import dataObjects.Instruction;
+import dataObjects.MemoryData;
 
 public class InstructionParser implements IParser {
 
@@ -324,9 +325,9 @@ public class InstructionParser implements IParser {
 		 * @return TRUE if varName exists, FALSE if not.
 		 */
 		private static boolean doesVarNameExist(String varName) {
-			for (int i = 0; i < Data.getDataList().size(); i++)
+			for (int i = 0; i < MemoryData.getDataList().size(); i++)
 				if (!varName.isEmpty())
-					if (Data.getDataList().get(i).getVarName().matches(varName))
+					if (MemoryData.getDataList().get(i).getVarName().matches(varName))
 						return true;
 
 			return false;

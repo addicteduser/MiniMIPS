@@ -72,6 +72,7 @@ public class FileParser {
                     try {
                         parser.parse(strLine);
                     } catch (NullPointerException e) {
+                    	e.printStackTrace();
                         System.err.println("[ERROR at line:" + getLineCtr() + "]");
                         System.exit(0);
                     }
