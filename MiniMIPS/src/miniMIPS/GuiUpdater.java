@@ -13,10 +13,33 @@ public class GuiUpdater {
 		}
 
 	}
+
+	public static void createInitialRegisterMonitor() {
+		for(int i = 0; i <= 31; i++) {
+			String gpr = "R"+i;
+			String fpr = "F"+i;
+			MiniMipsUI.getTblModGPR().addRow(new Object[]{gpr,"0000000000000000"});
+			MiniMipsUI.getTblModFPR().addRow(new Object[]{fpr,"0000000000000000"});
+		}
+		MiniMipsUI.getTblModGPR().addRow(new Object[]{"HI","0000000000000000"});
+		MiniMipsUI.getTblModGPR().addRow(new Object[]{"LO","0000000000000000"});
+	}
 	
+	public static void createInitialMemory() {
+		for(int i = 0; i <= Short.toUnsignedInt(Short.parseShort("1FFF", 16)); i+=8) {
+			String address = String.format("%04X", i);
+			MiniMipsUI.getTblModMemory().addRow(new Object[]{address,"0000000000000000",""});
+		}
+		
+		for (int i = Short.toUnsignedInt(Short.parseShort("2000", 16)); i < Short.toUnsignedInt(Short.parseShort("3FFF", 16)); i+=4) {
+			String address = String.format("%04X", i);
+			MiniMipsUI.getTblModCodeSeg().addRow(new Object[]{address,"","",""});
+		}
+	}
+
 	private static String instructionBuilder(Instruction i) {
 		String instruction = i.getInstructionName().toString()+" ";
-		
+
 		switch(i.getInstructionName()) {
 		case DADDU: case OR: case SLT: // RD,RS,RT
 		case ADDS: case MULS: // FD,FS,FT
@@ -35,7 +58,7 @@ public class GuiUpdater {
 			instruction = instruction.concat(i.getV1());
 			break;
 		}
-		
+
 		return instruction.toUpperCase();
 	}
 }

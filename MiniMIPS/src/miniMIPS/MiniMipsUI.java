@@ -1,7 +1,5 @@
 package miniMIPS;
 
-import Helper.Gui_Data;
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -50,7 +48,7 @@ public class MiniMipsUI extends JFrame {
 	private JButton btnRun;
 	private JButton btnPipelineSomething;
 	private JScrollPane scpPipeline;
-	private JScrollPane scpGRP;
+	private JScrollPane scpGPR;
 	private JScrollPane scpFPR;
 	private JScrollPane scpClock;
 	private JScrollPane scpCodeSeg;
@@ -62,13 +60,19 @@ public class MiniMipsUI extends JFrame {
 	private JTable tblCodeSeg;
 	private JTable tblOpcode;
 	private JTable tblPipeline;
-	private JTable tblGRP;
+	private JTable tblGPR;
 	private JTable tblFPR;
 	private JTable tblMemory;
 	private JTable tblClock;
 
-	private boolean hasRegisterSet = false;
 	private static UneditableTableModel tblmodCode;
+	private static UneditableTableModel tblmodOpcode;
+	private static UneditableTableModel tblmodPipeline;
+	private static PartialEditableTableModel tblmodGPR;
+	private static PartialEditableTableModel tblmodFPR;
+	private static PartialEditableTableModel tblmodMemory;
+	private static UneditableTableModel tblmodCodeSeg;
+	private static UneditableTableModel tblmodClock;
 
 	/**
 	 * Launch the application.
@@ -91,113 +95,14 @@ public class MiniMipsUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MiniMipsUI() {
-		initGUI();
+		createTables();
+		createFrame();
+		createMipsAssemblyCodePanel();
+		createRegisterMonitorPanel();
+		createMipsAssemblySimulationPanel();
 	}
 
-	private void initGUI() {
-		// ******************* TABLES FOR GUI - START *******************
-		tblmodCode = new UneditableTableModel();
-		Object codeRow[][] = {};
-		Object codeCol[] = {"LABEL", "INSTRUCTION"};
-		tblmodCode.setDataVector(codeRow, codeCol);
-
-		UneditableTableModel tblmodOpcode = new UneditableTableModel();
-		Object opcodeRow[][] = {{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"}};
-		Object opcodeCol[] = {"INSTRUCTION", "OPCODE", "IR(0..5)", "IR(6..10)", "IR(11..15)", "IR(16..31)"};
-		tblmodOpcode.setDataVector(opcodeRow, opcodeCol);
-
-		UneditableTableModel tblmodPipeline = new UneditableTableModel();
-		Object pipelineRow[][] = {{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
-				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
-				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
-				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
-				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
-				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
-				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
-				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"}};
-		Object pipelineCol[] = {"INSTRUCTION", "Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4", "Cycle 5"};
-		tblmodPipeline.setDataVector(pipelineRow, pipelineCol);
-
-		DefaultTableModel tblmodGRP = new DefaultTableModel();
-		Object grpRow[][] = {{"R0", "00000000"},
-				{"R1", "00000000"}, {"R2", "00000000"}, {"R3", "00000000"}, {"R4", "00000000"},
-				{"R5", "00000000"}, {"R6", "00000000"}, {"R7", "00000000"}, {"R8", "00000000"},
-				{"R9", "00000000"}, {"R10", "00000000"}, {"R11", "00000000"}, {"R12", "00000000"},
-				{"R13", "00000000"}, {"R14", "00000000"}, {"R15", "00000000"}, {"R16", "00000000"},
-				{"R17", "00000000"}, {"R18", "00000000"}, {"R19", "00000000"}, {"R20", "00000000"},
-				{"R21", "00000000"}, {"R22", "00000000"}, {"R23", "00000000"}, {"R24", "00000000"},
-				{"R25", "00000000"}, {"R26", "00000000"}, {"R27", "00000000"}, {"R28", "00000000"},
-				{"R29", "00000000"}, {"R30", "00000000"}, {"R31", "00000000"},
-				{"LO", "00000000"}, {"HI", "00000000"}
-		};
-		Object grpCol[] = {"REGISTER", "CONTENTS"};
-		tblmodGRP.setDataVector(grpRow, grpCol);
-
-		DefaultTableModel tblmodFPR = new DefaultTableModel();
-		Object fprRow[][] = {{"F0", "00000000"},
-				{"F1", "00000000"}, {"F2", "00000000"}, {"F3", "00000000"}, {"F4", "00000000"},
-				{"F5", "00000000"}, {"F6", "00000000"}, {"F7", "00000000"}, {"F8", "00000000"},
-				{"F9", "00000000"}, {"F10", "00000000"}, {"F11", "00000000"}, {"F12", "00000000"},
-				{"F13", "00000000"}, {"F14", "00000000"}, {"F15", "00000000"}, {"F16", "00000000"},
-				{"F17", "00000000"}, {"F18", "00000000"}, {"F19", "00000000"}, {"F20", "00000000"},
-				{"F21", "00000000"}, {"F22", "00000000"}, {"F23", "00000000"}, {"F24", "00000000"},
-				{"F25", "00000000"}, {"F26", "00000000"}, {"F27", "00000000"}, {"F28", "00000000"},
-				{"F29", "00000000"}, {"F30", "00000000"}, {"F31", "00000000"}};
-		Object fprCol[] = {"REGISTER", "CONTENTS"};
-		tblmodFPR.setDataVector(fprRow, fprCol);
-
-		UneditableTableModel tblmodMemory = new UneditableTableModel();
-		Object memoryRow[][] = {{"00000000", "00000000", "00000004"},
-				{"00000000", "00000000", "00000004"},
-				{"00000000", "00000000", "00000004"},
-				{"00000000", "00000000", "00000004"},
-				{"00000000", "00000000", "00000004"},
-				{"00000000", "00000000", "00000004"},
-				{"00000000", "00000000", "00000004"},
-				{"00000000", "00000000", "00000004"},
-				{"00000000", "00000000", "00000004"},
-				{"00000000", "00000000", "00000004"}};
-		Object memoryCol[] = {"ADDRESS", "BEFORE EXECUTION", "AFTER EXECUTION"};
-		tblmodMemory.setDataVector(memoryRow, memoryCol);
-
-		UneditableTableModel tblmodCodeSeg = new UneditableTableModel();
-		Object codesegRow[][] = {{"00000000", "DC091100", "--", "DADDU R1,R2,R3"},
-				{"00000000", "DC091100", "--", "DADDU R1,R2,R3"},
-				{"00000000", "DC091100", "--", "DADDU R1,R2,R3"},
-				{"00000000", "DC091100", "--", "DADDU R1,R2,R3"},
-				{"00000000", "DC091100", "--", "DADDU R1,R2,R3"},
-				{"00000000", "DC091100", "--", "DADDU R1,R2,R3"},
-				{"00000000", "DC091100", "--", "DADDU R1,R2,R3"},
-				{"00000000", "DC091100", "--", "DADDU R1,R2,R3"},
-				{"00000000", "DC091100", "--", "DADDU R1,R2,R3"},
-				{"00000000", "DC091100", "--", "DADDU R1,R2,R3"},
-				{"00000000", "DC091100", "--", "DADDU R1,R2,R3"}};
-		Object codesegCol[] = {"ADDRESS", "REPRESENTATION", "LABEL", "INSTRUCTION"};
-		tblmodCodeSeg.setDataVector(codesegRow, codesegCol);
-
-		UneditableTableModel tblmodClock = new UneditableTableModel();
-		Object clockRow[][] = {{"IF", "", "", "", ""},
-				{"IF/ID.IR", "", "", "", ""},
-				{"IF/ID.NPC", "", "", "", ""},
-				{"PC", "", "", "", ""},
-				{"ID/EX.IR", "", "", "", ""},
-				{"ID/EX.A", "", "", "", ""},
-				{"ID/EX.B", "", "", "", ""},
-				{"ID/EX.Imm", "", "", "", ""}};
-		Object clockCol[] = {"", "Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4", "Cycle 5"};
-		tblmodClock.setDataVector(clockRow, clockCol);
-
-		// ******************* TABLES FOR GUI - START *******************
+	private void createFrame() {
 		setTitle("MIPS 2K: A mini MIPS Pipeline Simulator");
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -212,24 +117,29 @@ public class MiniMipsUI extends JFrame {
 		lblTitle.setFont(new Font("Lucida Grande", Font.BOLD, 25));
 		lblTitle.setBounds(16, 6, 549, 31);
 		contentPane.add(lblTitle);
-
+	}
+	
+	private void createMipsAssemblyCodePanel() {
 		pnlCode = new JPanel();
 		pnlCode.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "MIPS Assembly Code", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlCode.setBounds(16, 42, 499, 643);
 		contentPane.add(pnlCode);
 		pnlCode.setLayout(null);
-
+		
+		createCodeInputPanel();
+		createCodeOpcodePanel();
+		createPipelinePanel();
+	}
+	
+	private void createCodeInputPanel() {
 		pnlCodeInput = new JPanel();
 		pnlCodeInput.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Code Input Panel", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		pnlCodeInput.setBounds(16, 23, 465, 206);
 		pnlCode.add(pnlCodeInput);
 		pnlCodeInput.setLayout(null);
-
+		
 		scpCode = new JScrollPane();
 		scpCode.setBounds(18, 21, 430, 115);
-		tblCode = new JTable(tblmodCode);
-		tblCode.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		tblCode.getColumnModel().getColumn(1).setPreferredWidth(200);
 		scpCode.setViewportView(tblCode);
 		pnlCodeInput.add(scpCode);
 
@@ -274,11 +184,13 @@ public class MiniMipsUI extends JFrame {
 
 		txtImmediate = new JTextField();
 		txtImmediate.setEnabled(false);
-		txtImmediate.setText("-- IMMEDIATE --");
+		txtImmediate.setText("IMM");
 		txtImmediate.setColumns(10);
 		txtImmediate.setBounds(290, 169, 80, 26);
 		pnlCodeInput.add(txtImmediate);
-
+	}
+	
+	private void createCodeOpcodePanel() {
 		pnlOpcode = new JPanel();
 		pnlOpcode.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Code Opcode Representation Panel", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlOpcode.setBounds(16, 241, 465, 175);
@@ -287,11 +199,11 @@ public class MiniMipsUI extends JFrame {
 
 		scpOpcode = new JScrollPane();
 		scpOpcode.setBounds(18, 24, 429, 134);
-		tblOpcode = new JTable(tblmodOpcode);
-		tblOpcode.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scpOpcode.setViewportView(tblOpcode);
 		pnlOpcode.add(scpOpcode);
-
+	}
+	
+	private void createPipelinePanel() {
 		pnlPipeline = new JPanel();
 		pnlPipeline.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Code Pipeline Map Panel", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlPipeline.setBounds(16, 428, 465, 198);
@@ -301,13 +213,6 @@ public class MiniMipsUI extends JFrame {
 		btnStep = new JButton("Step");
 		btnStep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				if (hasRegisterSet == false) {
-					hasRegisterSet = true;
-					Gui_Data.setFPointRegister(tblFPR.getModel());
-					Gui_Data.setGenRegister(tblGRP.getModel());
-				}
-
 				// STEP EXECUTION CODE HERE
 			}
 		});
@@ -317,15 +222,6 @@ public class MiniMipsUI extends JFrame {
 		btnRun = new JButton("Run");
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				/**
-				 * Make sure that register is set once.
-				 */
-				if (hasRegisterSet == false) {
-					hasRegisterSet = true;
-					Gui_Data.setFPointRegister(tblFPR.getModel());
-					Gui_Data.setGenRegister(tblGRP.getModel());
-				}
 				// RUN EXECUTION CODE HERE
 			}
 		});
@@ -343,29 +239,35 @@ public class MiniMipsUI extends JFrame {
 
 		scpPipeline = new JScrollPane();
 		scpPipeline.setBounds(19, 27, 426, 134);
-		tblPipeline = new JTable(tblmodPipeline);
-		tblPipeline.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scpPipeline.setViewportView(tblPipeline);
 		pnlPipeline.add(scpPipeline);
-
+	}
+	
+	private void createRegisterMonitorPanel() {
 		pnlRegister = new JPanel();
 		pnlRegister.setLayout(null);
 		pnlRegister.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Register Monitors", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlRegister.setBounds(527, 42, 233, 643);
 		contentPane.add(pnlRegister);
-
+		
+		createGprPanel();
+		createFprPanel();
+	}
+	
+	private void createGprPanel() {
 		pnlGPR = new JPanel();
 		pnlGPR.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "General Purpose Registers", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlGPR.setBounds(16, 23, 200, 291);
 		pnlRegister.add(pnlGPR);
 		pnlGPR.setLayout(null);
 
-		scpGRP = new JScrollPane();
-		scpGRP.setBounds(17, 24, 165, 250);
-		tblGRP = new JTable(tblmodGRP);
-		scpGRP.setViewportView(tblGRP);
-		pnlGPR.add(scpGRP);
-
+		scpGPR = new JScrollPane();
+		scpGPR.setBounds(17, 24, 165, 250);
+		scpGPR.setViewportView(tblGPR);
+		pnlGPR.add(scpGPR);
+	}
+	
+	private void createFprPanel() {
 		pnlFPR = new JPanel();
 		pnlFPR.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Floating Point Registers", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlFPR.setBounds(16, 320, 200, 306);
@@ -374,16 +276,23 @@ public class MiniMipsUI extends JFrame {
 
 		scpFPR = new JScrollPane();
 		scpFPR.setBounds(18, 23, 165, 263);
-		tblFPR = new JTable(tblmodFPR);
 		scpFPR.setViewportView(tblFPR);
 		pnlFPR.add(scpFPR);
-
+	}
+	
+	private void createMipsAssemblySimulationPanel() {
 		pnlSimulation = new JPanel();
 		pnlSimulation.setLayout(null);
 		pnlSimulation.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "MIPS Assembly Simulation", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlSimulation.setBounds(772, 42, 460, 643);
 		contentPane.add(pnlSimulation);
-
+		
+		createMemoryAddressingPanel();
+		createCodeSegmentPanel();
+		createClockCyclePanel();
+	}
+	
+	private void createMemoryAddressingPanel() {
 		pnlAddress = new JPanel();
 		pnlAddress.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Memory Addressing Simulation", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlAddress.setBounds(16, 23, 426, 183);
@@ -392,10 +301,11 @@ public class MiniMipsUI extends JFrame {
 
 		scpMemory = new JScrollPane();
 		scpMemory.setBounds(17, 22, 389, 143);
-		tblMemory = new JTable(tblmodMemory);
 		scpMemory.setViewportView(tblMemory);
 		pnlAddress.add(scpMemory);
-
+	}
+	
+	private void createCodeSegmentPanel() {
 		pnlCodeSeg = new JPanel();
 		pnlCodeSeg.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Code Segment Simulation", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlCodeSeg.setBounds(16, 218, 426, 183);
@@ -404,11 +314,11 @@ public class MiniMipsUI extends JFrame {
 
 		scpCodeSeg = new JScrollPane();
 		scpCodeSeg.setBounds(17, 21, 389, 143);
-		tblCodeSeg = new JTable(tblmodCodeSeg);
-		tblCodeSeg.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scpCodeSeg.setViewportView(tblCodeSeg);
 		pnlCodeSeg.add(scpCodeSeg);
-
+	}
+	
+	private void createClockCyclePanel() {
 		pnlCycle = new JPanel();
 		pnlCycle.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Clock Cycle Simulation", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlCycle.setBounds(16, 413, 426, 213);
@@ -417,33 +327,128 @@ public class MiniMipsUI extends JFrame {
 
 		scpClock = new JScrollPane();
 		scpClock.setBounds(18, 23, 389, 172);
-		tblClock = new JTable(tblmodClock);
-		tblClock.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scpClock.setViewportView(tblClock);
-
 		pnlCycle.add(scpClock);
 	}
 
-	public void addBtnLoadMipsCodeActionListener(ActionListener l) {
-		btnLoadMipsCode.addActionListener(l);
-	}
-
-	public void addCbInstructionActionListener(ActionListener l) {
-		cbInstruction.addActionListener(l);
-	}
-
-	public static UneditableTableModel getTblModCode() {
-		return tblmodCode;
+	private void createTables() {
+		tblmodCode = new UneditableTableModel();
+		tblCode = new JTable(tblmodCode);
+		resetTblModCode();
+		
+		tblmodOpcode = new UneditableTableModel();
+		tblOpcode = new JTable(tblmodOpcode);
+		resetTblModOpcode();
+		
+		tblmodPipeline = new UneditableTableModel();
+		tblPipeline = new JTable(tblmodPipeline);
+		resetTblModPipeline();
+		
+		tblmodGPR = new PartialEditableTableModel(new boolean[]{false,true});
+		tblGPR = new JTable(tblmodGPR);
+		tblmodFPR = new PartialEditableTableModel(new boolean[]{false,true});
+		tblFPR = new JTable(tblmodFPR);
+		resetRegisterMonitor();
+		
+		tblmodMemory = new PartialEditableTableModel(new boolean[]{false,true,true});
+		tblMemory = new JTable(tblmodMemory);
+		tblmodCodeSeg = new UneditableTableModel();
+		tblCodeSeg = new JTable(tblmodCodeSeg);
+		resetMemory();
+		
+		tblmodClock = new UneditableTableModel();
+		tblClock = new JTable(tblmodClock);
+		resetTblModClock();
 	}
 
 	public void resetTblModCode() {
 		Object codeRow[][] = {};
 		Object codeCol[] = {"LABEL", "INSTRUCTION"};
-		tblmodCode.setDataVector(codeRow, codeCol);
+		tblmodCode.setDataVector(codeRow, codeCol);		
 		tblCode.setModel(tblmodCode);
+		tblCode.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tblCode.getColumnModel().getColumn(1).setPreferredWidth(200);
 	}
+	
+	public void resetTblModOpcode() {		
+		Object opcodeRow[][] = {{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"}};
+		Object opcodeCol[] = {"INSTRUCTION", "OPCODE", "IR(0..5)", "IR(6..10)", "IR(11..15)", "IR(16..31)"};
+		tblmodOpcode.setDataVector(opcodeRow, opcodeCol);
+		tblOpcode.setModel(tblmodOpcode);
+		tblOpcode.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	}
+	
+	public void resetTblModPipeline() {
+		Object pipelineRow[][] = {{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
+				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
+				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
+				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
+				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
+				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
+				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
+				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"}};
+		Object pipelineCol[] = {"INSTRUCTION", "Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4", "Cycle 5"};
+		tblmodPipeline.setDataVector(pipelineRow, pipelineCol);
+		tblPipeline.setModel(tblmodPipeline);
+		tblPipeline.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+	}
+	
+	public void resetRegisterMonitor() {
+		Object gprRow[][] = {};
+		Object gprCol[] = {"REGISTER", "CONTENT"};
+		tblmodGPR.setDataVector(gprRow, gprCol);
+		tblGPR.setModel(tblmodGPR);
+		
+		Object fprRow[][] = {};
+		Object fprCol[] = {"REGISTER", "CONTENTS"};
+		tblmodFPR.setDataVector(fprRow, fprCol);
+		tblFPR.setModel(tblmodFPR);
+		
+		GuiUpdater.createInitialRegisterMonitor();
+	}
+
+	public void resetMemory() {
+		Object memoryRow[][] = {};
+		Object memoryCol[] = {"ADDRESS", "DATA", "VARIABLE"};
+		tblmodMemory.setDataVector(memoryRow, memoryCol);
+		tblMemory.setModel(tblmodMemory);
+		
+		Object codesegRow[][] = {};
+		Object codesegCol[] = {"ADDRESS", "REPRESENTATION", "LABEL", "INSTRUCTION"};
+		tblmodCodeSeg.setDataVector(codesegRow, codesegCol);
+		tblCodeSeg.setModel(tblmodCodeSeg);
+		tblCodeSeg.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		GuiUpdater.createInitialMemory();
+	}
+	
+	public void resetTblModClock() {
+		Object clockRow[][] = {{"IF", "", "", "", ""},
+				{"IF/ID.IR", "", "", "", ""},
+				{"IF/ID.NPC", "", "", "", ""},
+				{"PC", "", "", "", ""},
+				{"ID/EX.IR", "", "", "", ""},
+				{"ID/EX.A", "", "", "", ""},
+				{"ID/EX.B", "", "", "", ""},
+				{"ID/EX.Imm", "", "", "", ""}};
+		Object clockCol[] = {"", "Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4", "Cycle 5"};
+		tblmodClock.setDataVector(clockRow, clockCol);
+		tblClock.setModel(tblmodClock);
+		tblClock.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+	}
+	
 	public String getCbInstructionSelected() {
 		return cbInstruction.getSelectedItem().toString().toUpperCase();
 	}
@@ -461,11 +466,51 @@ public class MiniMipsUI extends JFrame {
 		cbRT.setEnabled(false);
 		cbRT.setVisible(false);
 	}
+	
+	public void addBtnLoadMipsCodeActionListener(ActionListener l) {
+		btnLoadMipsCode.addActionListener(l);
+	}
+
+	public void addCbInstructionActionListener(ActionListener l) {
+		cbInstruction.addActionListener(l);
+	}
+
+	public static UneditableTableModel getTblModCode() {
+		return tblmodCode;
+	}
+	
+	public static PartialEditableTableModel getTblModGPR() {
+		return tblmodGPR;
+	}
+	
+	public static PartialEditableTableModel getTblModFPR() {
+		return tblmodFPR;
+	}
+	
+	public static PartialEditableTableModel getTblModMemory() {
+		return tblmodMemory;
+	}
+	
+	public static UneditableTableModel getTblModCodeSeg() {
+		return tblmodCodeSeg;
+	}
 
 	class UneditableTableModel extends DefaultTableModel {
 		@Override
 		public boolean isCellEditable(int row, int column) {
 			return false;
+		}
+	}
+	
+	class PartialEditableTableModel extends DefaultTableModel {
+		boolean[] canEdit;
+		
+		public PartialEditableTableModel(boolean[] canEdit) {
+			this.canEdit = canEdit;
+		}
+		@Override
+		public boolean isCellEditable(int row, int col) {
+			return canEdit[col];
 		}
 	}
 }
