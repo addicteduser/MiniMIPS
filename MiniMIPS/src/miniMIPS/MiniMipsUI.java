@@ -371,7 +371,8 @@ public class MiniMipsUI extends JFrame {
 	}
 	
 	public void resetTblModOpcode() {		
-		Object opcodeRow[][] = {{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
+		Object opcodeRow[][] = {};
+		/*{{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
 				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
 				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
 				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
@@ -381,7 +382,7 @@ public class MiniMipsUI extends JFrame {
 				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
 				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
 				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
-				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"}};
+				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"}};*/
 		Object opcodeCol[] = {"INSTRUCTION", "OPCODE", "IR(0..5)", "IR(6..10)", "IR(11..15)", "IR(16..31)"};
 		tblmodOpcode.setDataVector(opcodeRow, opcodeCol);
 		tblOpcode.setModel(tblmodOpcode);
@@ -389,14 +390,15 @@ public class MiniMipsUI extends JFrame {
 	}
 	
 	public void resetTblModPipeline() {
-		Object pipelineRow[][] = {{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
+		Object pipelineRow[][] = {};
+		/*{{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
 				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
 				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
 				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
 				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
 				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
 				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
-				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"}};
+				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"}};*/
 		Object pipelineCol[] = {"INSTRUCTION", "Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4", "Cycle 5"};
 		tblmodPipeline.setDataVector(pipelineRow, pipelineCol);
 		tblPipeline.setModel(tblmodPipeline);
@@ -446,7 +448,6 @@ public class MiniMipsUI extends JFrame {
 		tblmodClock.setDataVector(clockRow, clockCol);
 		tblClock.setModel(tblmodClock);
 		tblClock.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
 	}
 	
 	public String getCbInstructionSelected() {

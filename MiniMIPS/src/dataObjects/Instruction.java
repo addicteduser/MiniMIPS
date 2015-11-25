@@ -15,6 +15,7 @@ public class Instruction {
 	private String v1;
 	private String v2;
 	private String v3;
+	private static Opcode opcode;
 	
 	/**
 	 * Creates the mappings of the instructions to their Opcodes as well as the instruction type to its format.
@@ -55,6 +56,15 @@ public class Instruction {
 		instructionCode.put(INSTRUCTIONS.J, "J,2"); // J Label
 	}
 	
+	public static void generateAllOpcode() {
+		for (Instruction i : instructionList) {
+			opcode = Opcode.getOpcode(i);
+		}
+	}
+	
+	/**
+	 * Clears the contents of the instruction list.
+	 */
 	public static void resetInstructionList() {
 		instructionList.clear();
 	}
@@ -141,5 +151,47 @@ public class Instruction {
 	 */
 	public void setV3(String v3) {
 		this.v3 = v3;
+	}
+
+	/**
+	 * @return the instructionCode
+	 */
+	public static EnumMap<INSTRUCTIONS, String> getInstructionCode() {
+		return instructionCode;
+	}
+
+	/**
+	 * @param instructionCode the instructionCode to set
+	 */
+	public static void setInstructionCode(EnumMap<INSTRUCTIONS, String> instructionCode) {
+		Instruction.instructionCode = instructionCode;
+	}
+
+	/**
+	 * @return the instructionFormat
+	 */
+	public static EnumMap<INSTRUCTIONTYPES, String> getInstructionFormat() {
+		return instructionFormat;
+	}
+
+	/**
+	 * @param instructionFormat the instructionFormat to set
+	 */
+	public static void setInstructionFormat(EnumMap<INSTRUCTIONTYPES, String> instructionFormat) {
+		Instruction.instructionFormat = instructionFormat;
+	}
+
+	/**
+	 * @return the opcode
+	 */
+	public static Opcode getOpcode() {
+		return opcode;
+	}
+
+	/**
+	 * @param opcode the opcode to set
+	 */
+	public static void setOpcode(Opcode opcode) {
+		Instruction.opcode = opcode;
 	}
 }

@@ -1,5 +1,8 @@
 package miniMIPS;
 
+import java.util.ArrayList;
+
+import dataObjects.Data;
 import dataObjects.Instruction;
 
 public class GuiUpdater {
@@ -12,6 +15,24 @@ public class GuiUpdater {
 			MiniMipsUI.getTblModCode().addRow(new Object[]{label,instruction});
 		}
 
+	}
+	
+	public static void loadDataTable() {
+		int i = 0;
+		for(Data d : Data.getDataList()) {
+			String varName = d.getVarName();
+			ArrayList<Long> values = d.getValues();
+			for(Long v : values) {
+				MiniMipsUI.getTblModMemory().setValueAt(v, i, 1);
+				MiniMipsUI.getTblModMemory().setValueAt(varName, i, 2);
+				varName = "";
+				i++;
+			}
+		}
+	}
+	
+	public static void loadOpcodeTable() {
+		
 	}
 
 	public static void createInitialRegisterMonitor() {
