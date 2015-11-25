@@ -3,8 +3,11 @@ package miniMIPS;
 import java.util.ArrayList;
 
 import dataObjects.Data;
+import dataObjects.FloatingPointRegister;
+import dataObjects.GeneralPurposeRegister;
 import dataObjects.Instruction;
 import dataObjects.NumberBuilder;
+import dataObjects.Register;
 
 public class GuiUpdater {
 	// update code input panel
@@ -37,14 +40,19 @@ public class GuiUpdater {
 	}
 
 	public static void createInitialRegisterMonitor() {
-		for(int i = 0; i <= 31; i++) {
-			String gpr = "R"+i;
-			String fpr = "F"+i;
-			MiniMipsUI.getTblModGPR().addRow(new Object[]{gpr,"0000000000000000"});
-			MiniMipsUI.getTblModFPR().addRow(new Object[]{fpr,"0000000000000000"});
+		GeneralPurposeRegister.initializeGPR();
+		for(Register r : GeneralPurposeRegister.getGpr()) {
+			String regName = r.getRegName();
+			String regValue = NumberBuilder.paddedHexBuilder(16, r.getRegValue());
+			MiniMipsUI.getTblModGPR().addRow(new Object[]{regName,regValue});
 		}
-		MiniMipsUI.getTblModGPR().addRow(new Object[]{"HI","0000000000000000"});
-		MiniMipsUI.getTblModGPR().addRow(new Object[]{"LO","0000000000000000"});
+		
+		FloatingPointRegister.initializeFPR();
+		for(Register r : FloatingPointRegister.getFpr()) {
+			String regName = r.getRegName();
+			String regValue = NumberBuilder.paddedHexBuilder(16, r.getRegValue());
+			MiniMipsUI.getTblModFPR().addRow(new Object[]{regName,regValue});
+		}
 	}
 	
 	public static void createInitialMemory() {
