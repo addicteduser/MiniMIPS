@@ -7,6 +7,7 @@ import dataObjects.FloatingPointRegister;
 import dataObjects.GeneralPurposeRegister;
 import dataObjects.Instruction;
 import dataObjects.MemoryData;
+import dataObjects.MemoryInstruction;
 import dataObjects.NumberBuilder;
 import dataObjects.Register;
 
@@ -14,7 +15,7 @@ public class GuiUpdater {
 	// update code input panel
 	// update memory
 	public static void loadCodeTable() {
-		for(Instruction i : Instruction.getInstructionList()) {
+		for(Instruction i : MemoryInstruction.getInstructionList()) {
 			String label = i.getLabel();
 			String instruction = instructionBuilder(i);
 			MiniMipsUI.getTblModCode().addRow(new Object[]{label,instruction});
@@ -61,10 +62,6 @@ public class GuiUpdater {
 			String address = d.getAddress();
 			MiniMipsUI.getTblModMemory().addRow(new Object[]{address,NumberBuilder.paddedHexBuilder(16, 0),""});
 		}
-		/*for(int i = 0; i <= Short.toUnsignedInt(Short.parseShort("1FFF", 16)); i+=8) {
-			String address = NumberBuilder.paddedHexBuilder(4, i);
-			MiniMipsUI.getTblModMemory().addRow(new Object[]{address,"0000000000000000",""});
-		}*/
 
 		for (int i = Short.toUnsignedInt(Short.parseShort("2000", 16)); i < Short.toUnsignedInt(Short.parseShort("3FFF", 16)); i+=4) {
 			String address = NumberBuilder.paddedHexBuilder(4, i);

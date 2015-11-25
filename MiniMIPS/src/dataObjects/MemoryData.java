@@ -26,6 +26,6 @@ public class MemoryData {
 	 * @param dataList the dataList to set
 	 */
 	public static void setDataList(ArrayList<Data> dataList) {
-		dataList = dataList;
+		MemoryData.dataList = dataList;
 	}
 }

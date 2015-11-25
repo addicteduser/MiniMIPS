@@ -7,7 +7,7 @@ import constants.INSTRUCTIONTYPES;
 import constants.INSTRUCTIONS;
 
 public class Instruction {
-	private static ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
+	private String address;
 	private static EnumMap<INSTRUCTIONS, String> instructionCode;
 	private static EnumMap<INSTRUCTIONTYPES, String> instructionFormat;
 	private INSTRUCTIONS instructionName;
@@ -57,30 +57,9 @@ public class Instruction {
 	}
 	
 	public static void generateAllOpcode() {
-		for (Instruction i : instructionList) {
+		for (Instruction i : MemoryInstruction.getInstructionList()) {
 			opcode = Opcode.getOpcode(i);
 		}
-	}
-	
-	/**
-	 * Clears the contents of the instruction list.
-	 */
-	public static void resetInstructionList() {
-		instructionList.clear();
-	}
-
-	/**
-	 * @return the instructionList
-	 */
-	public static ArrayList<Instruction> getInstructionList() {
-		return instructionList;
-	}
-
-	/**
-	 * @param instructionList the instructionList to set
-	 */
-	public static void setInstructionList(ArrayList<Instruction> instructionList) {
-		Instruction.instructionList = instructionList;
 	}
 
 	/**
