@@ -38,10 +38,6 @@ public class MiniMipsUI extends JFrame {
 	private JPanel pnlCycle;
 	private JScrollPane scpCode;
 	private JButton btnLoadMipsCode;
-	private JComboBox cbRT;
-	private JComboBox cbRS;
-	private JComboBox cbRD;
-	private JComboBox cbInstruction;
 	private JButton btnAdd;
 	private JScrollPane scpOpcode;
 	private JButton btnStep;
@@ -53,8 +49,7 @@ public class MiniMipsUI extends JFrame {
 	private JScrollPane scpClock;
 	private JScrollPane scpCodeSeg;
 	private JScrollPane scpMemory;
-	private JTextField txtLabel;
-	private JTextField txtImmediate;
+	private JTextField txtInput;
 
 	private static JTable tblCode;
 	private static JTable tblCodeSeg;
@@ -139,33 +134,13 @@ public class MiniMipsUI extends JFrame {
 		pnlCodeInput.setLayout(null);
 		
 		scpCode = new JScrollPane();
-		scpCode.setBounds(18, 21, 430, 115);
+		scpCode.setBounds(18, 21, 430, 137);
 		scpCode.setViewportView(tblCode);
 		pnlCodeInput.add(scpCode);
 
 		btnLoadMipsCode = new JButton("Load");
-		btnLoadMipsCode.setBounds(373, 141, 82, 27);
+		btnLoadMipsCode.setBounds(18, 169, 82, 27);
 		pnlCodeInput.add(btnLoadMipsCode);
-
-		cbRT = new JComboBox();
-		cbRT.setModel(new DefaultComboBoxModel(new String[]{"R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31", "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19", "F20", "F21", "F22", "F23", "F24", "F25", "F26", "F27", "F28", "F29", "F30", "F31"}));
-		cbRT.setBounds(290, 169, 80, 27);
-		pnlCodeInput.add(cbRT);
-
-		cbRS = new JComboBox();
-		cbRS.setModel(new DefaultComboBoxModel(new String[]{"R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31", "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19", "F20", "F21", "F22", "F23", "F24", "F25", "F26", "F27", "F28", "F29", "F30", "F31"}));
-		cbRS.setBounds(208, 169, 80, 27);
-		pnlCodeInput.add(cbRS);
-
-		cbRD = new JComboBox();
-		cbRD.setModel(new DefaultComboBoxModel(new String[]{"R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31", "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19", "F20", "F21", "F22", "F23", "F24", "F25", "F26", "F27", "F28", "F29", "F30", "F31"}));
-		cbRD.setBounds(126, 169, 80, 27);
-		pnlCodeInput.add(cbRD);
-
-		cbInstruction = new JComboBox();
-		cbInstruction.setModel(new DefaultComboBoxModel(new String[]{"DADDU", "DADDIU", "DSUBU", "DMULT", "DDIV", "LW", "SW"}));
-		cbInstruction.setBounds(12, 169, 108, 27);
-		pnlCodeInput.add(cbInstruction);
 
 		btnAdd = new JButton("Add");
 		btnAdd.addActionListener(new ActionListener() {
@@ -173,21 +148,13 @@ public class MiniMipsUI extends JFrame {
 				// ADD INSTRUCTION CODE HERE
 			}
 		});
-		btnAdd.setBounds(373, 169, 82, 27);
+		btnAdd.setBounds(366, 169, 82, 27);
 		pnlCodeInput.add(btnAdd);
 
-		txtLabel = new JTextField();
-		txtLabel.setText("-- LABEL --");
-		txtLabel.setBounds(16, 141, 171, 26);
-		pnlCodeInput.add(txtLabel);
-		txtLabel.setColumns(10);
-
-		txtImmediate = new JTextField();
-		txtImmediate.setEnabled(false);
-		txtImmediate.setText("IMM");
-		txtImmediate.setColumns(10);
-		txtImmediate.setBounds(290, 169, 80, 26);
-		pnlCodeInput.add(txtImmediate);
+		txtInput = new JTextField();
+		txtInput.setBounds(134, 169, 229, 26);
+		pnlCodeInput.add(txtInput);
+		txtInput.setColumns(10);
 	}
 	
 	private void createCodeOpcodePanel() {
@@ -450,30 +417,8 @@ public class MiniMipsUI extends JFrame {
 		tblClock.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
 	
-	public String getCbInstructionSelected() {
-		return cbInstruction.getSelectedItem().toString().toUpperCase();
-	}
-
-	public void inputRType() {
-		txtImmediate.setEnabled(false);
-		txtImmediate.setVisible(false);
-		cbRT.setEnabled(true);
-		cbRT.setVisible(true);
-	}
-	
-	public void inputIType() {
-		txtImmediate.setEnabled(true);
-		txtImmediate.setVisible(true);
-		cbRT.setEnabled(false);
-		cbRT.setVisible(false);
-	}
-	
 	public void addBtnLoadMipsCodeActionListener(ActionListener l) {
 		btnLoadMipsCode.addActionListener(l);
-	}
-
-	public void addCbInstructionActionListener(ActionListener l) {
-		cbInstruction.addActionListener(l);
 	}
 
 	public static UneditableTableModel getTblModCode() {

@@ -19,7 +19,6 @@ public class MiniMipsController {
 	public MiniMipsController() {
 		frame = new MiniMipsUI();
 		frame.addBtnLoadMipsCodeActionListener(new LoadMipsCodeActionLister());
-		frame.addCbInstructionActionListener(new CbInstructionActionListener());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -36,29 +35,6 @@ public class MiniMipsController {
 				GuiUpdater.loadCodeTable();
 				GuiUpdater.loadDataTable();
 				
-			}
-		}
-
-	}
-
-	private class CbInstructionActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			INSTRUCTIONS instruction = INSTRUCTIONS.valueOf(frame.getCbInstructionSelected());
-
-			switch(instruction) {
-			case DADDU: case OR: case SLT: // RD,RS,RT
-			case ADDS: case MULS: // FD,FS,FT
-				frame.inputRType();
-			case DSLL: // RD,RS,SHF/IMM
-			case ANDI: case DADDIU: // RS,RT,IMM
-			case LW: case LWU: case SW: // RT, IMM(RS)
-			case LS: case SS: // FT, IMM(RS)
-				frame.inputIType();
-				break;
-			case DMULT: // RS,RT
-				break;
-			case BEQ: case J: // Label
-				break;
 			}
 		}
 	}
