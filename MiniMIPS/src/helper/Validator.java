@@ -1,7 +1,9 @@
 package helper;
 
+import java.lang.management.MemoryType;
 import java.util.ArrayList;
 
+import constants.INSTRUCTIONS;
 import dataObjects.MemoryData;
 import dataObjects.MemoryInstruction;
 
@@ -95,34 +97,47 @@ public class Validator {
 		ArrayList<String> labels = new ArrayList<String>();
 		ArrayList<String> varNames = new ArrayList<String>();
 		
+		// get all varname
 		for(int i = 0; i < MemoryData.getdCtr(); i++) {
 			String tempVarName = MemoryData.getDataList().get(i).getVarName();
-			if(!tempVarName.isEmpty()) {
-				for (String v : varNames) {
-					if(!tempVarName.matches(v))
-						varNames.add(tempVarName);
-					else
-						return false;
-				}
-			}
+			if(!tempVarName.isEmpty())
+				varNames.add(tempVarName);
 		}
 		
+		// get all label
 		for(int i = 0; i < MemoryInstruction.getiCtr(); i++) {
 			String tempLabel = MemoryInstruction.getInstructionList().get(i).getLabel();
 			if(!tempLabel.isEmpty())
-				if(!tempLabel.isEmpty()) {
-					for (String l : labels) {
-						if(!tempLabel.matches(l))
-							labels.add(tempLabel);
-						return false;
-					}
-				}
+				labels.add(tempLabel);
+		}
+		
+		for(int i = 0; i < MemoryInstruction.getiCtr(); i++) {
+			INSTRUCTIONS iName = MemoryInstruction.getInstructionList().get(i).getInstructionName();
+			String temp = "";
+
+			if(iName.toString().matches("J")) { // v1
+				temp = MemoryInstruction.getInstructionList().get(i).getV1();
+				return checkValAgainstList(temp, labels);
+			} else if(iName.toString().matches("LW|LWU|SW|LS|SS")) { // v2
+				temp = MemoryInstruction.getInstructionList().get(i).getV2();
+				return checkValAgainstList(temp, varNames);
+			} else if(iName.toString().matches("BEQ")) { // v3
+				temp = MemoryInstruction.getInstructionList().get(i).getV3();
+				return checkValAgainstList(temp, labels);
+			}
 		}
 		
 		return true;
+	}
+	
+	private static boolean checkValAgainstList(String val, ArrayList<String> list) {
+		if(list.isEmpty())
+			return false;
 		
-		// Jump labels
-		// beq labels
-		// load/store address varname
+		for(String l : list)
+			if(!l.contains(val))
+				return false;
+		
+		return true;
 	}
 }
