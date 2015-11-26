@@ -2,6 +2,8 @@ package miniMIPS;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -24,8 +26,15 @@ public class MiniMipsController {
 		frame.addMemoryTblCellListener(new MemoryTableEditListener());
 		frame.addGprTblCellListener(new GprTableEditListener());
 		frame.addFprTblCellListener(new FprTableEditListener());
+		frame.addTextAreaFocusListener(new TextAreaFocusListener());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+	}
+
+	private class TextAreaFocusListener extends WindowAdapter {
+		public void windowGainedFocus(WindowEvent e) {
+			frame.getTxtCode().requestFocusInWindow();
+		}
 	}
 
 	private class LoadMipsCodeActionLister implements ActionListener {
@@ -38,7 +47,7 @@ public class MiniMipsController {
 			}
 		}
 	}
-	
+
 	private class StartActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// save register content
@@ -47,7 +56,7 @@ public class MiniMipsController {
 			for(String s :frame.getTxtInput().split("\\n")) {
 				parser.parseInput(s);
 			}
-			
+
 			if (Validator.validateInput()) {
 				GuiUpdater.loadDataTable();
 				GuiUpdater.loadOpcodeTable();
@@ -58,34 +67,34 @@ public class MiniMipsController {
 			}
 		}
 	}
-	
+
 	private class MemoryTableEditListener extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
 			TableCellListener tcl = (TableCellListener)e.getSource();
-	        System.out.println("Row   : " + tcl.getRow());
-	        System.out.println("Column: " + tcl.getColumn());
-	        System.out.println("Old   : " + tcl.getOldValue());
-	        System.out.println("New   : " + tcl.getNewValue());	
+			System.out.println("Row   : " + tcl.getRow());
+			System.out.println("Column: " + tcl.getColumn());
+			System.out.println("Old   : " + tcl.getOldValue());
+			System.out.println("New   : " + tcl.getNewValue());	
 		}		
 	}
-	
+
 	private class GprTableEditListener extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
 			TableCellListener tcl = (TableCellListener)e.getSource();
-	        System.out.println("Row   : " + tcl.getRow());
-	        System.out.println("Column: " + tcl.getColumn());
-	        System.out.println("Old   : " + tcl.getOldValue());
-	        System.out.println("New   : " + tcl.getNewValue());	
+			System.out.println("Row   : " + tcl.getRow());
+			System.out.println("Column: " + tcl.getColumn());
+			System.out.println("Old   : " + tcl.getOldValue());
+			System.out.println("New   : " + tcl.getNewValue());	
 		}		
 	}
-	
+
 	private class FprTableEditListener extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
 			TableCellListener tcl = (TableCellListener)e.getSource();
-	        System.out.println("Row   : " + tcl.getRow());
-	        System.out.println("Column: " + tcl.getColumn());
-	        System.out.println("Old   : " + tcl.getOldValue());
-	        System.out.println("New   : " + tcl.getNewValue());	
+			System.out.println("Row   : " + tcl.getRow());
+			System.out.println("Column: " + tcl.getColumn());
+			System.out.println("Old   : " + tcl.getOldValue());
+			System.out.println("New   : " + tcl.getNewValue());	
 		}		
 	}
 }

@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -442,8 +443,13 @@ public class MiniMipsUI extends JFrame {
 	public void addGprTblCellListener(Action l) {
 		new TableCellListener(tblGPR, l);
 	}
+	
 	public void addFprTblCellListener(Action l) {
 		new TableCellListener(tblFPR, l);
+	}
+	
+	public void addTextAreaFocusListener(WindowAdapter l) {
+		this.addWindowFocusListener(l);		
 	}
 
 //	public static UneditableTableModel getTblModCode() {
@@ -499,5 +505,19 @@ public class MiniMipsUI extends JFrame {
 
 	public static void resetTxtInput() {
 		txtCode.setText("");
+	}
+
+	/**
+	 * @return the txtCode
+	 */
+	public JTextArea getTxtCode() {
+		return txtCode;
+	}
+
+	/**
+	 * @param txtCode the txtCode to set
+	 */
+	public static void setTxtCode(JTextArea txtCode) {
+		MiniMipsUI.txtCode = txtCode;
 	}
 }
