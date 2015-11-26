@@ -59,11 +59,13 @@ public class FileParser {
                         case DATA:
                             // If strLine is the start of .data directive
                             parser = new DataParser();
+                            parser.resetCtr();
                             break;
                         case CODE:
                         case TEXT:
                             // If strLine is the start of the .code/.text directive
                             parser = new InstructionParser();
+                            parser.resetCtr();
                             break;
                         default:
                             parser.parse(strLine);

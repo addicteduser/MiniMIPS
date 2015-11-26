@@ -28,6 +28,10 @@ public class DataParser implements IParser {
 		addData();
 		ctr++;
 	}
+	
+	public void resetCtr() {
+		ctr = 0;
+	}
 
 
 	/**
@@ -150,6 +154,7 @@ public class DataParser implements IParser {
 		tempData.setVarName(tempVarName);
 		tempData.setDirective(tempDirective);
 		tempData.setValue(tempValue);
+		MemoryData.incrementCtr();
 	}
 
 	private static class Validator {

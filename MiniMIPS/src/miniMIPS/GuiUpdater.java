@@ -1,7 +1,5 @@
 package miniMIPS;
 
-import java.util.ArrayList;
-
 import dataObjects.Data;
 import dataObjects.FloatingPointRegister;
 import dataObjects.GeneralPurposeRegister;
@@ -12,27 +10,37 @@ import dataObjects.NumberBuilder;
 import dataObjects.Register;
 
 public class GuiUpdater {
-	// update code input panel
-	// update memory
+	public static void resetUI() {
+		MemoryData.resetCtr();
+		MemoryInstruction.resetCtr();
+		MiniMipsUI.resetMemory();
+		MiniMipsUI.resetRegisterMonitor();
+		MiniMipsUI.resetTblModClock();
+		MiniMipsUI.resetTblModCode();
+		MiniMipsUI.resetTblModOpcode();
+		MiniMipsUI.resetTblModPipeline();
+	}
+	
 	public static void loadCodeTable() {
-		for(Instruction i : MemoryInstruction.getInstructionList()) {
-			String label = i.getLabel();
-			String instruction = instructionBuilder(i);
-			MiniMipsUI.getTblModCode().addRow(new Object[]{label,instruction});
+		for (int i = 0; i < MemoryInstruction.getiCtr(); i++) {
+			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
+			String label = instruction.getLabel();
+			String instructionStr = instructionBuilder(instruction);
+			MiniMipsUI.getTblModCode().addRow(new Object[]{label,instructionStr});
 		}
-
 	}
 
 	public static void loadDataTable() {
-		int i = 0;
-		for(Data d : MemoryData.getDataList()) {
+		int ctr = 0;
+		for (int i = 0; i < MemoryData.getdCtr(); i++) {
+			Data d = MemoryData.getDataList().get(i);
 			String varName = d.getVarName();
 			long value = d.getValue();
 
-			MiniMipsUI.getTblModMemory().setValueAt(NumberBuilder.paddedHexBuilder(16,value), i, 1);
-			MiniMipsUI.getTblModMemory().setValueAt(varName, i, 2);
+			MiniMipsUI.getTblModMemory().setValueAt(NumberBuilder.paddedHexBuilder(16,value), ctr, 1);
+			MiniMipsUI.getTblModMemory().setValueAt(varName, ctr, 2);
 			varName = "";
-			i++;
+			ctr++;
 		}
 	}
 
@@ -63,8 +71,9 @@ public class GuiUpdater {
 			MiniMipsUI.getTblModMemory().addRow(new Object[]{address,NumberBuilder.paddedHexBuilder(16, 0),""});
 		}
 
-		for (int i = Short.toUnsignedInt(Short.parseShort("2000", 16)); i < Short.toUnsignedInt(Short.parseShort("3FFF", 16)); i+=4) {
-			String address = NumberBuilder.paddedHexBuilder(4, i);
+		MemoryInstruction.initializeInstructionList();
+		for (Instruction i : MemoryInstruction.getInstructionList()) {
+			String address = i.getAddress();
 			MiniMipsUI.getTblModCodeSeg().addRow(new Object[]{address,"","",""});
 		}
 	}

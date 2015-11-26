@@ -1,17 +1,15 @@
 package parser;
 
 import constants.INSTRUCTIONS;
-import dataObjects.Data;
 import dataObjects.Instruction;
 import dataObjects.MemoryData;
+import dataObjects.MemoryInstruction;
 
 public class InstructionParser implements IParser {
-
+	private static int ctr = 0;
 	private String tokens[];
-	//private String input;
 
 	private Instruction tempInstruction;
-	//private INSTRUCTIONTYPES tempInstructionType;
 	private INSTRUCTIONS tempInstructionName;
 	private String tempLabel;
 	private String tempV1;
@@ -24,13 +22,16 @@ public class InstructionParser implements IParser {
 
 	@Override
 	public void parse(String input) {
-		//this.input = input;
-
 		clear();
 		parseLabel(input);
 		parseInstructionName();
 		parseRegImm();
 		addInstruction();
+		ctr++;
+	}
+	
+	public void resetCtr() {
+		ctr = 0;
 	}
 
 	private void clear() {
@@ -262,17 +263,27 @@ public class InstructionParser implements IParser {
 	 * If input is valid, adds the parsed instruction to the instruction list.
 	 */
 	private void addInstruction() {
-		if (!Validator.doesLabelExist(tempLabel)) {
-			tempInstruction = new Instruction();
+		try {
+			if (!Validator.doesLabelExist(tempLabel)) {
+				tempInstruction = MemoryInstruction.getInstructionList().get(ctr);
+				tempInstruction.setInstructionName(tempInstructionName);
+				tempInstruction.setLabel(tempLabel);
+				tempInstruction.setV1(tempV1);
+				tempInstruction.setV2(tempV2);
+				tempInstruction.setV3(tempV3);
+				MemoryInstruction.incrementCtr();
+			} else {
+				System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Label already exits.");
+				System.exit(0);
+			}
+		} catch (NullPointerException e) {
+			tempInstruction = MemoryInstruction.getInstructionList().get(ctr);
 			tempInstruction.setInstructionName(tempInstructionName);
 			tempInstruction.setLabel(tempLabel);
 			tempInstruction.setV1(tempV1);
 			tempInstruction.setV2(tempV2);
 			tempInstruction.setV3(tempV3);
-			Instruction.getInstructionList().add(tempInstruction);
-		} else {
-			System.err.println("[ERROR at line:" + FileParser.getLineCtr() + "] Label already exits.");
-			System.exit(0);
+			MemoryInstruction.incrementCtr();
 		}
 	}
 
@@ -285,9 +296,9 @@ public class InstructionParser implements IParser {
 		 * @return TRUE if label exists, FALSE if label does NOT exists.    	 
 		 */
 		private static boolean doesLabelExist(String label) throws NullPointerException {
-			for (int i = 0; i < Instruction.getInstructionList().size(); i++)
+			for (int i = 0; i < MemoryInstruction.getInstructionList().size(); i++)
 				if (!label.isEmpty())
-					if (Instruction.getInstructionList().get(i).getLabel().matches(label))
+					if (MemoryInstruction.getInstructionList().get(i).getLabel().matches(label))
 						return true;
 			
 			return false;

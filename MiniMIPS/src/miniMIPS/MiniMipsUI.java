@@ -57,13 +57,13 @@ public class MiniMipsUI extends JFrame {
 	private JTextField txtImmediate;
 
 	private static JTable tblCode;
-	private JTable tblCodeSeg;
-	private JTable tblOpcode;
-	private JTable tblPipeline;
-	private JTable tblGPR;
-	private JTable tblFPR;
-	private JTable tblMemory;
-	private JTable tblClock;
+	private static JTable tblCodeSeg;
+	private static JTable tblOpcode;
+	private static JTable tblPipeline;
+	private static JTable tblGPR;
+	private static JTable tblFPR;
+	private static JTable tblMemory;
+	private static JTable tblClock;
 
 	private static UneditableTableModel tblmodCode;
 	private static UneditableTableModel tblmodOpcode;
@@ -361,7 +361,7 @@ public class MiniMipsUI extends JFrame {
 		resetTblModClock();
 	}
 
-	public void resetTblModCode() {
+	public static void resetTblModCode() {
 		Object codeRow[][] = {};
 		Object codeCol[] = {"LABEL", "INSTRUCTION"};
 		tblmodCode.setDataVector(codeRow, codeCol);		
@@ -370,7 +370,7 @@ public class MiniMipsUI extends JFrame {
 		tblCode.getColumnModel().getColumn(1).setPreferredWidth(200);
 	}
 	
-	public void resetTblModOpcode() {		
+	public static void resetTblModOpcode() {		
 		Object opcodeRow[][] = {};
 		/*{{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
 				{"DADDU R5,R6,R7", "DC081111", "00001", "10110", "010100", "1111111"},
@@ -389,7 +389,7 @@ public class MiniMipsUI extends JFrame {
 		tblOpcode.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
 	
-	public void resetTblModPipeline() {
+	public static void resetTblModPipeline() {
 		Object pipelineRow[][] = {};
 		/*{{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
 				{"DADDU R5,R6,R7", "IF", "ID", "EX", "MEM", "WB"},
@@ -406,7 +406,7 @@ public class MiniMipsUI extends JFrame {
 
 	}
 	
-	public void resetRegisterMonitor() {
+	public static void resetRegisterMonitor() {
 		Object gprRow[][] = {};
 		Object gprCol[] = {"REGISTER", "CONTENT"};
 		tblmodGPR.setDataVector(gprRow, gprCol);
@@ -420,7 +420,7 @@ public class MiniMipsUI extends JFrame {
 		GuiUpdater.createInitialRegisterMonitor();
 	}
 
-	public void resetMemory() {
+	public static void resetMemory() {
 		Object memoryRow[][] = {};
 		Object memoryCol[] = {"ADDRESS", "DATA", "VARIABLE"};
 		tblmodMemory.setDataVector(memoryRow, memoryCol);
@@ -435,7 +435,7 @@ public class MiniMipsUI extends JFrame {
 		GuiUpdater.createInitialMemory();
 	}
 	
-	public void resetTblModClock() {
+	public static void resetTblModClock() {
 		Object clockRow[][] = {{"IF", "", "", "", ""},
 				{"IF/ID.IR", "", "", "", ""},
 				{"IF/ID.NPC", "", "", "", ""},

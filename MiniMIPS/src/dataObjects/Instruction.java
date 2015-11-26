@@ -1,10 +1,9 @@
 package dataObjects;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
 
-import constants.INSTRUCTIONTYPES;
 import constants.INSTRUCTIONS;
+import constants.INSTRUCTIONTYPES;
 
 public class Instruction {
 	private String address;
@@ -16,6 +15,10 @@ public class Instruction {
 	private String v2;
 	private String v3;
 	private static Opcode opcode;
+	
+	public Instruction(String address) {
+		this.address = address;
+	}
 	
 	/**
 	 * Creates the mappings of the instructions to their Opcodes as well as the instruction type to its format.
@@ -57,8 +60,9 @@ public class Instruction {
 	}
 	
 	public static void generateAllOpcode() {
-		for (Instruction i : MemoryInstruction.getInstructionList()) {
-			opcode = Opcode.getOpcode(i);
+		for (int i = 0; i < MemoryInstruction.getiCtr(); i++) {
+			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
+			opcode = Opcode.getOpcode(instruction);
 		}
 	}
 
@@ -172,5 +176,19 @@ public class Instruction {
 	 */
 	public static void setOpcode(Opcode opcode) {
 		Instruction.opcode = opcode;
+	}
+
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }

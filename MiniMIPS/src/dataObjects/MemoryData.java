@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class MemoryData {
 	private static ArrayList<Data> dataList = new ArrayList<Data>();
+	private static int dCtr = 0;
 	
 	public static void initializeDataList() {
 		dataList.clear();
@@ -13,6 +14,14 @@ public class MemoryData {
 			tempData = new Data(address);
 			dataList.add(tempData);
 		}
+	}
+	
+	public static void resetCtr() {
+		dCtr = 0;
+	}
+	
+	public static void incrementCtr() {
+		dCtr++;
 	}
 	
 	/**
@@ -27,5 +36,19 @@ public class MemoryData {
 	 */
 	public static void setDataList(ArrayList<Data> dataList) {
 		MemoryData.dataList = dataList;
+	}
+
+	/**
+	 * @return the dCtr
+	 */
+	public static int getdCtr() {
+		return dCtr;
+	}
+
+	/**
+	 * @param dCtr the dCtr to set
+	 */
+	public static void setdCtr(int dCtr) {
+		MemoryData.dCtr = dCtr;
 	}
 }

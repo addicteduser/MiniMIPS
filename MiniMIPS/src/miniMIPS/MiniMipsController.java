@@ -26,10 +26,10 @@ public class MiniMipsController {
 
 	private class LoadMipsCodeActionLister implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			frame.resetTblModCode();
 			JFileChooser fileChooser = new JFileChooser(".\\_test");
 			int result = fileChooser.showOpenDialog(frame);
 			if (result == JFileChooser.APPROVE_OPTION) {
+				GuiUpdater.resetUI();
 				fileparser = new FileParser(fileChooser.getSelectedFile());
 				fileparser.parseFile();
 				Instruction.generateAllOpcode();
