@@ -21,14 +21,18 @@ public class MiniMipsController {
 		frame = new MiniMipsUI();
 		parser = new Parser();
 		Instruction.createMappings();
+		addEventHandlers();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
+	
+	private void addEventHandlers() {
 		frame.addBtnLoadMipsCodeActionListener(new LoadMipsCodeActionLister());
 		frame.addBtnStartActionListener(new StartActionListener());
 		frame.addMemoryTblCellListener(new MemoryTableEditListener());
 		frame.addGprTblCellListener(new GprTableEditListener());
 		frame.addFprTblCellListener(new FprTableEditListener());
 		frame.addTextAreaFocusListener(new TextAreaFocusListener());
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
 	}
 
 	private class TextAreaFocusListener extends WindowAdapter {
