@@ -2,28 +2,38 @@ package dataObjects;
 
 import java.util.ArrayList;
 
+import helper.NumberBuilder;
+
 public class MemoryInstruction {
 	private static ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
 	private static int iCtr = 0;
-	
+
 	public static void initializeInstructionList() {
 		instructionList.clear();
 		Instruction tempInstruction;
-		for (int i = Short.toUnsignedInt(Short.parseShort("2000", 16)); i < Short.toUnsignedInt(Short.parseShort("3FFF", 16)); i+=4) {
-			String address = NumberBuilder.paddedHexBuilder(4, i);
+		for (int i = NumberBuilder.hexStringToIntBuilder("2000"); i < NumberBuilder.hexStringToIntBuilder("3FFF"); i+=4) {
+			String address = NumberBuilder.paddedHexStringBuilder(4, i);
 			tempInstruction = new Instruction(address);
 			instructionList.add(tempInstruction);
 		}
 	}
-	
+
 	public static void resetCtr() {
 		iCtr = 0;
 	}
-	
+
 	public static void incrementCtr() {
 		iCtr++;
 	}
-	
+
+	public static String getAddress(String label) {
+		for(int i = 0; i < iCtr; i++) {
+			if (instructionList.get(i).getLabel().equalsIgnoreCase(label))
+				return instructionList.get(i).getAddress();
+		}
+		return null;
+	}
+
 	/**
 	 * @return the instructionList
 	 */

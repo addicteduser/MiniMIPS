@@ -14,35 +14,35 @@ public class Instruction {
 	private String v1;
 	private String v2;
 	private String v3;
-	private static Opcode opcode;
-	
+	private Opcode opcode;
+
 	public Instruction(String address) {
 		this.address = address;
 	}
-	
+
 	/**
 	 * Creates the mappings of the instructions to their Opcodes as well as the instruction type to its format.
 	 */
 	public static void createMappings() {
 		instructionCode = new EnumMap<INSTRUCTIONS, String>(INSTRUCTIONS.class);
 		instructionFormat = new EnumMap<INSTRUCTIONTYPES, String>(INSTRUCTIONTYPES.class);
-		
+
 		// R-type Instructions
 		instructionFormat.put(INSTRUCTIONTYPES.R, "0,RS,RT,RD,0,iCODE");
 		instructionCode.put(INSTRUCTIONS.DADDU, "R,45"); // DADDU RD,RS,RT
 		instructionCode.put(INSTRUCTIONS.DMULT, "R,28"); // DMULT RS,RT
 		instructionCode.put(INSTRUCTIONS.OR, "R,37"); // OR RD,RS,RT
 		instructionCode.put(INSTRUCTIONS.SLT, "R,42"); // SLT RD,RS,RT
-		
+
 		// R-type (Shift)
 		instructionFormat.put(INSTRUCTIONTYPES.RS, "0,0,RS,RD,SHF,iCODE");
 		instructionCode.put(INSTRUCTIONS.DSLL, "RS,56"); // DSLL RD,RS,SHF(IMM)
-		
+
 		// Extended R-type Instructions
 		instructionFormat.put(INSTRUCTIONTYPES.ER, "17,16,RT,RS,RD,iCODE");
 		instructionCode.put(INSTRUCTIONS.ADDS, "ER,0"); // ADD.S RD,RS,RT
 		instructionCode.put(INSTRUCTIONS.MULS, "ER,2"); // MUL.S RD,RS,RT
-		
+
 		// I-type Instructions
 		instructionFormat.put(INSTRUCTIONTYPES.I, "iCODE,RS,RT,IMM");
 		instructionCode.put(INSTRUCTIONS.BEQ, "I,4"); // BEQ RS,RT,IMM
@@ -53,16 +53,16 @@ public class Instruction {
 		instructionCode.put(INSTRUCTIONS.DADDIU, "I,25"); // DADDIU RT,RS,IMM
 		instructionCode.put(INSTRUCTIONS.LS, "I,49"); // L.S RT,IMM(RS)
 		instructionCode.put(INSTRUCTIONS.SS, "I,57"); // S.S RT,IMM(RS)
-		
+
 		// J-type Instructions
 		instructionFormat.put(INSTRUCTIONTYPES.J, "iCODE,IMM");
 		instructionCode.put(INSTRUCTIONS.J, "J,2"); // J Label
 	}
-	
+
 	public static void generateAllOpcode() {
 		for (int i = 0; i < MemoryInstruction.getiCtr(); i++) {
 			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
-			opcode = Opcode.fetchOpcode(instruction);
+			instruction.setOpcode(new Opcode(instruction));
 		}
 	}
 
@@ -167,15 +167,15 @@ public class Instruction {
 	/**
 	 * @return the opcode
 	 */
-	public static Opcode getOpcode() {
+	public Opcode getOpcode() {
 		return opcode;
 	}
 
 	/**
 	 * @param opcode the opcode to set
 	 */
-	public static void setOpcode(Opcode opcode) {
-		Instruction.opcode = opcode;
+	public void setOpcode(Opcode opcode) {
+		this.opcode = opcode;
 	}
 
 	/**

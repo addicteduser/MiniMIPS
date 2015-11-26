@@ -1,7 +1,5 @@
 package dataObjects;
 
-import java.util.ArrayList;
-
 import constants.DIRECTIVES;
 
 public class Data {
@@ -9,11 +7,11 @@ public class Data {
 	private String varName;
 	private DIRECTIVES directive;
 	private long value;
-	
+
 	public Data(String address) {
 		this.address = address;
 	}
-	
+
 	/**
 	 * @return the varName
 	 */

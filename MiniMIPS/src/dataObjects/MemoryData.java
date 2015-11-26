@@ -2,35 +2,37 @@ package dataObjects;
 
 import java.util.ArrayList;
 
+import helper.NumberBuilder;
+
 public class MemoryData {
 	private static ArrayList<Data> dataList = new ArrayList<Data>();
 	private static int dCtr = 0;
-	
+
 	public static void initializeDataList() {
 		dataList.clear();
 		Data tempData;
-		for(int i = 0; i <= Short.toUnsignedInt(Short.parseShort("1FFF", 16)); i+=8) {
-			String address = NumberBuilder.paddedHexBuilder(4, i);
+		for(int i = 0; i <= NumberBuilder.hexStringToIntBuilder("1FFF"); i+=8) {
+			String address = NumberBuilder.paddedHexStringBuilder(4, i);
 			tempData = new Data(address);
 			dataList.add(tempData);
 		}
 	}
-	
+
 	public static void resetCtr() {
 		dCtr = 0;
 	}
-	
+
 	public static void incrementCtr() {
 		dCtr++;
 	}
-	
+
 	/**
 	 * @return the dataList
 	 */
 	public static ArrayList<Data> getDataList() {
 		return dataList;
 	}
-	
+
 	/**
 	 * @param dataList the dataList to set
 	 */
@@ -50,5 +52,13 @@ public class MemoryData {
 	 */
 	public static void setdCtr(int dCtr) {
 		MemoryData.dCtr = dCtr;
+	}
+
+	public static String getAddress(String varName) {
+		for(int i = 0; i < dCtr; i++) {
+			if (dataList.get(i).getVarName().equalsIgnoreCase(varName))
+				return dataList.get(i).getAddress();
+		}
+		return null;
 	}
 }

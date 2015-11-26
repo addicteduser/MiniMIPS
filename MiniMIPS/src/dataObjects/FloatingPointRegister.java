@@ -3,8 +3,8 @@ package dataObjects;
 import java.util.ArrayList;
 
 public class FloatingPointRegister {
-private static ArrayList<Register> fpr = new ArrayList<Register>();
-	
+	private static ArrayList<Register> fpr = new ArrayList<Register>();
+
 	public static void initializeFPR() {
 		fpr.clear();
 		Register tempReg;

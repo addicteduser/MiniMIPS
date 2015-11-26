@@ -1,52 +1,45 @@
 package miniMIPS;
 
+import java.util.ArrayList;
+
 import dataObjects.Data;
 import dataObjects.FloatingPointRegister;
 import dataObjects.GeneralPurposeRegister;
 import dataObjects.Instruction;
 import dataObjects.MemoryData;
 import dataObjects.MemoryInstruction;
-import dataObjects.NumberBuilder;
-import dataObjects.Opcode;
 import dataObjects.Register;
+import helper.NumberBuilder;
 
 public class GuiUpdater {
-	public static void resetUI() {
+	public static void resetUI(boolean isTotalReset) {
+		if(isTotalReset)
+			MiniMipsUI.resetTxtInput();
+
 		MemoryData.resetCtr();
 		MemoryInstruction.resetCtr();
 		MiniMipsUI.resetMemory();
+		MiniMipsUI.resetTblModOpcode();
 		MiniMipsUI.resetRegisterMonitor();
 		MiniMipsUI.resetTblModClock();
-		MiniMipsUI.resetTblModCode();
-		MiniMipsUI.resetTblModOpcode();
 		MiniMipsUI.resetTblModPipeline();
-	}
-	
-	public static void loadCodeTable() {
-		for (int i = 0; i < MemoryInstruction.getiCtr(); i++) {
-			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
-			String label = instruction.getLabel();
-			String instructionStr = instructionBuilder(instruction);
-			MiniMipsUI.getTblModCode().addRow(new Object[]{label,instructionStr});
-		}
+
 	}
 
-	public static void loadDataTable() {
-		for (int i = 0; i < MemoryData.getdCtr(); i++) {
-			Data d = MemoryData.getDataList().get(i);
-			String varName = d.getVarName();
-			long value = d.getValue();
-
-			MiniMipsUI.getTblModMemory().setValueAt(NumberBuilder.paddedHexBuilder(16,value), i, 1);
-			MiniMipsUI.getTblModMemory().setValueAt(varName, i, 2);
-			varName = "";
-		}
+	public static void loadCode(ArrayList<String> code) {
+		for (String s : code)
+			MiniMipsUI.appendTxtInput(s);
 	}
 
 	public static void loadOpcodeTable() {
+		Instruction.generateAllOpcode();
 		for (int i = 0; i < MemoryInstruction.getiCtr(); i++) {
 			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
-			String instructionStr = instruction.getLabel()+": "+instructionBuilder(instruction);
+			String instructionStr;
+			if (instruction.getLabel().isEmpty())
+				instructionStr = instructionBuilder(instruction);
+			else			
+				instructionStr = instruction.getLabel()+": "+instructionBuilder(instruction);
 			String opcodeHex = instruction.getOpcode().getOpcodeHex();
 			String ir0_5 = instruction.getOpcode().getIR0_5();
 			String ir6_10 = instruction.getOpcode().getIR6_10();
@@ -56,18 +49,43 @@ public class GuiUpdater {
 		}
 	}
 
+	public static void loadDataTable() {
+		for (int i = 0; i < MemoryData.getdCtr(); i++) {
+			Data d = MemoryData.getDataList().get(i);
+			String varName = d.getVarName();
+			long value = d.getValue();
+
+			MiniMipsUI.getTblModMemory().setValueAt(NumberBuilder.paddedHexStringBuilder(16,value), i, 1);
+			MiniMipsUI.getTblModMemory().setValueAt(varName, i, 2);
+			varName = "";
+		}
+	}
+
+	public static void loadCodSegTable() {
+		for(int i = 0; i < MemoryInstruction.getiCtr(); i++) {
+			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
+			String opcodeHex = instruction.getOpcode().getOpcodeHex();
+			String label = instruction.getLabel();
+			String instructionStr = instructionBuilder(instruction);
+			MiniMipsUI.getTblModCodeSeg().setValueAt(opcodeHex, i, 1);
+			MiniMipsUI.getTblModCodeSeg().setValueAt(label, i, 2);
+			MiniMipsUI.getTblModCodeSeg().setValueAt(instructionStr, i, 3);
+		}
+	}
+
+
 	public static void createInitialRegisterMonitor() {
 		GeneralPurposeRegister.initializeGPR();
 		for(Register r : GeneralPurposeRegister.getGpr()) {
 			String regName = r.getRegName();
-			String regValue = NumberBuilder.paddedHexBuilder(16, r.getRegValue());
+			String regValue = NumberBuilder.paddedHexStringBuilder(16, r.getRegValue());
 			MiniMipsUI.getTblModGPR().addRow(new Object[]{regName,regValue});
 		}
 
 		FloatingPointRegister.initializeFPR();
 		for(Register r : FloatingPointRegister.getFpr()) {
 			String regName = r.getRegName();
-			String regValue = NumberBuilder.paddedHexBuilder(16, r.getRegValue());
+			String regValue = NumberBuilder.paddedHexStringBuilder(16, r.getRegValue());
 			MiniMipsUI.getTblModFPR().addRow(new Object[]{regName,regValue});
 		}
 	}
@@ -76,7 +94,7 @@ public class GuiUpdater {
 		MemoryData.initializeDataList();
 		for(Data d : MemoryData.getDataList()) {
 			String address = d.getAddress();
-			MiniMipsUI.getTblModMemory().addRow(new Object[]{address,NumberBuilder.paddedHexBuilder(16, 0),""});
+			MiniMipsUI.getTblModMemory().addRow(new Object[]{address,NumberBuilder.paddedHexStringBuilder(16, 0),""});
 		}
 
 		MemoryInstruction.initializeInstructionList();
