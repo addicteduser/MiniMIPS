@@ -7,6 +7,7 @@ import dataObjects.Instruction;
 import dataObjects.MemoryData;
 import dataObjects.MemoryInstruction;
 import dataObjects.NumberBuilder;
+import dataObjects.Opcode;
 import dataObjects.Register;
 
 public class GuiUpdater {
@@ -31,21 +32,28 @@ public class GuiUpdater {
 	}
 
 	public static void loadDataTable() {
-		int ctr = 0;
 		for (int i = 0; i < MemoryData.getdCtr(); i++) {
 			Data d = MemoryData.getDataList().get(i);
 			String varName = d.getVarName();
 			long value = d.getValue();
 
-			MiniMipsUI.getTblModMemory().setValueAt(NumberBuilder.paddedHexBuilder(16,value), ctr, 1);
-			MiniMipsUI.getTblModMemory().setValueAt(varName, ctr, 2);
+			MiniMipsUI.getTblModMemory().setValueAt(NumberBuilder.paddedHexBuilder(16,value), i, 1);
+			MiniMipsUI.getTblModMemory().setValueAt(varName, i, 2);
 			varName = "";
-			ctr++;
 		}
 	}
 
 	public static void loadOpcodeTable() {
-
+		for (int i = 0; i < MemoryInstruction.getiCtr(); i++) {
+			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
+			String instructionStr = instruction.getLabel()+": "+instructionBuilder(instruction);
+			String opcodeHex = instruction.getOpcode().getOpcodeHex();
+			String ir0_5 = instruction.getOpcode().getIR0_5();
+			String ir6_10 = instruction.getOpcode().getIR6_10();
+			String ir11_15 = instruction.getOpcode().getIR11_15();
+			String ir16_31 = instruction.getOpcode().getIR16_31();
+			MiniMipsUI.getTblModOpcode().addRow(new Object[]{instructionStr,opcodeHex,ir0_5,ir6_10,ir11_15,ir16_31});
+		}
 	}
 
 	public static void createInitialRegisterMonitor() {

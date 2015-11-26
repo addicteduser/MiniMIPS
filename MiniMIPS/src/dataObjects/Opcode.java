@@ -18,7 +18,7 @@ public class Opcode {
 	private static int iCode;
 	private static String[] formatTokens;
 	
-	public static Opcode getOpcode(Instruction i) {
+	public static Opcode fetchOpcode(Instruction i) {
 		Opcode temp = null;
 		iName = i.getInstructionName();
 		//iType = i.getInstructionName();
@@ -139,7 +139,6 @@ public class Opcode {
 		System.out.println(IR11_15);
 		System.out.println(IR16_31);
 		System.out.println(opcodeBin);
-		System.out.println(opcodeBin);
 		System.out.println(opcodeHex);
 	}
 	
@@ -151,5 +150,75 @@ public class Opcode {
 	
 	private static void parseIFormat(String format) {
 		formatTokens = format.split(",");
+	}
+
+	/**
+	 * @return the opcodeHex
+	 */
+	public static String getOpcodeHex() {
+		return opcodeHex;
+	}
+
+	/**
+	 * @param opcodeHex the opcodeHex to set
+	 */
+	public static void setOpcodeHex(String opcodeHex) {
+		Opcode.opcodeHex = opcodeHex;
+	}
+
+	/**
+	 * @return the iR0_5
+	 */
+	public static String getIR0_5() {
+		return IR0_5;
+	}
+
+	/**
+	 * @param iR0_5 the iR0_5 to set
+	 */
+	public static void setIR0_5(String iR0_5) {
+		IR0_5 = iR0_5;
+	}
+
+	/**
+	 * @return the iR6_10
+	 */
+	public static String getIR6_10() {
+		return IR6_10;
+	}
+
+	/**
+	 * @param iR6_10 the iR6_10 to set
+	 */
+	public static void setIR6_10(String iR6_10) {
+		IR6_10 = iR6_10;
+	}
+
+	/**
+	 * @return the iR11_15
+	 */
+	public static String getIR11_15() {
+		return IR11_15;
+	}
+
+	/**
+	 * @param iR11_15 the iR11_15 to set
+	 */
+	public static void setIR11_15(String iR11_15) {
+		IR11_15 = iR11_15;
+	}
+
+	/**
+	 * @return the iR16_31
+	 */
+	public static String getIR16_31() {
+		return IR16_31;
+	}
+
+	/**
+	 * @param iR16_31 the iR16_31 to set
+	 */
+	public static void setIR16_31(String iR16_31) {
+		IR16_31 = iR16_31;
 	}
 }

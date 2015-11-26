@@ -62,7 +62,7 @@ public class Instruction {
 	public static void generateAllOpcode() {
 		for (int i = 0; i < MemoryInstruction.getiCtr(); i++) {
 			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
-			opcode = Opcode.getOpcode(instruction);
+			opcode = Opcode.fetchOpcode(instruction);
 		}
 	}
 

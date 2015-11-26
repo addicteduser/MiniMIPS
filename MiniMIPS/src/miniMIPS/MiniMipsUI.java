@@ -375,12 +375,12 @@ public class MiniMipsUI extends JFrame {
 	
 	public static void resetRegisterMonitor() {
 		Object gprRow[][] = {};
-		Object gprCol[] = {"REGISTER", "CONTENT"};
+		Object gprCol[] = {"GPR", "CONTENT"};
 		tblmodGPR.setDataVector(gprRow, gprCol);
 		tblGPR.setModel(tblmodGPR);
 		
 		Object fprRow[][] = {};
-		Object fprCol[] = {"REGISTER", "CONTENTS"};
+		Object fprCol[] = {"FPR", "CONTENT"};
 		tblmodFPR.setDataVector(fprRow, fprCol);
 		tblFPR.setModel(tblmodFPR);
 		
@@ -439,6 +439,10 @@ public class MiniMipsUI extends JFrame {
 	
 	public static UneditableTableModel getTblModCodeSeg() {
 		return tblmodCodeSeg;
+	}
+	
+	public static UneditableTableModel getTblModOpcode() {
+		return tblmodOpcode;
 	}
 
 	class UneditableTableModel extends DefaultTableModel {

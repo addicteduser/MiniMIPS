@@ -34,7 +34,7 @@ public class MiniMipsController {
 				Instruction.generateAllOpcode();
 				GuiUpdater.loadCodeTable();
 				GuiUpdater.loadDataTable();
-				
+				GuiUpdater.loadOpcodeTable();
 			}
 		}
 	}
