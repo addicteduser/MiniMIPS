@@ -1,4 +1,5 @@
-/miniMIPS/
+/constants/
 /dataObjects/
-/parser/
 /helper/
+/miniMIPS/
+/parser/

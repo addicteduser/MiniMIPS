@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,6 +21,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.Element;
+
+import helper.TableCellListener;
 
 public class MiniMipsUI extends JFrame {
 	private JPanel contentPane;
@@ -430,6 +433,17 @@ public class MiniMipsUI extends JFrame {
 	
 	public void addBtnStartActionListener(ActionListener l) {
 		btnStart.addActionListener(l);
+	}
+	
+	public void addMemoryTblCellListener(Action l) {
+		new TableCellListener(tblMemory, l);
+	}
+	
+	public void addGprTblCellListener(Action l) {
+		new TableCellListener(tblGPR, l);
+	}
+	public void addFprTblCellListener(Action l) {
+		new TableCellListener(tblFPR, l);
 	}
 
 //	public static UneditableTableModel getTblModCode() {

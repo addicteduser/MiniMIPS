@@ -3,9 +3,11 @@ package miniMIPS;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
 import dataObjects.Instruction;
+import helper.TableCellListener;
 import helper.Validator;
 import parser.Parser;
 
@@ -19,6 +21,9 @@ public class MiniMipsController {
 		Instruction.createMappings();
 		frame.addBtnLoadMipsCodeActionListener(new LoadMipsCodeActionLister());
 		frame.addBtnStartActionListener(new StartActionListener());
+		frame.addMemoryTblCellListener(new MemoryTableEditListener());
+		frame.addGprTblCellListener(new GprTableEditListener());
+		frame.addFprTblCellListener(new FprTableEditListener());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -44,13 +49,43 @@ public class MiniMipsController {
 			}
 			
 			if (Validator.validateInput()) {
-				//GuiUpdater.loadDataTable();
-				//GuiUpdater.loadOpcodeTable();
-				//GuiUpdater.loadCodSegTable();
+				GuiUpdater.loadDataTable();
+				GuiUpdater.loadOpcodeTable();
+				GuiUpdater.loadCodSegTable();
 			} else {
 				System.err.println("[Error] Please check your label(s) and/or variable name(s).");
 				System.exit(0);
 			}
 		}
+	}
+	
+	private class MemoryTableEditListener extends AbstractAction {
+		public void actionPerformed(ActionEvent e) {
+			TableCellListener tcl = (TableCellListener)e.getSource();
+	        System.out.println("Row   : " + tcl.getRow());
+	        System.out.println("Column: " + tcl.getColumn());
+	        System.out.println("Old   : " + tcl.getOldValue());
+	        System.out.println("New   : " + tcl.getNewValue());	
+		}		
+	}
+	
+	private class GprTableEditListener extends AbstractAction {
+		public void actionPerformed(ActionEvent e) {
+			TableCellListener tcl = (TableCellListener)e.getSource();
+	        System.out.println("Row   : " + tcl.getRow());
+	        System.out.println("Column: " + tcl.getColumn());
+	        System.out.println("Old   : " + tcl.getOldValue());
+	        System.out.println("New   : " + tcl.getNewValue());	
+		}		
+	}
+	
+	private class FprTableEditListener extends AbstractAction {
+		public void actionPerformed(ActionEvent e) {
+			TableCellListener tcl = (TableCellListener)e.getSource();
+	        System.out.println("Row   : " + tcl.getRow());
+	        System.out.println("Column: " + tcl.getColumn());
+	        System.out.println("Old   : " + tcl.getOldValue());
+	        System.out.println("New   : " + tcl.getNewValue());	
+		}		
 	}
 }
