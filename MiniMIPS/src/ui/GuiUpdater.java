@@ -14,13 +14,15 @@ import parser.Parser;
 
 public class GuiUpdater {
 	public static void resetUI(boolean isTotalReset) {
-		if(isTotalReset)
+		if(isTotalReset) {
 			MiniMipsUI.resetTxtInput();
+		}
 
 		Parser.resetLineCtr();
-		MemoryData.resetCtr();
 		MemoryInstruction.resetCtr();
-		MiniMipsUI.resetMemory();
+		MemoryData.resetCtr();
+		MiniMipsUI.resetMemoryData();
+		MiniMipsUI.resetCodeSegment();
 		MiniMipsUI.resetTblModOpcode();
 		MiniMipsUI.resetRegisterMonitor();
 		MiniMipsUI.resetTblModClock();
@@ -52,15 +54,21 @@ public class GuiUpdater {
 	}
 
 	public static void loadDataTable() {
-		for (int i = 0; i < MemoryData.getdCtr(); i++) {
-			Data d = MemoryData.getDataList().get(i);
+		int i = 0;
+		for(Data d : MemoryData.getDataList()) {
 			String varName = d.getVarName();
 			long value = d.getValue();
 
 			MiniMipsUI.getTblModMemory().setValueAt(NumberBuilder.paddedHexStringBuilder(16,value), i, 1);
 			MiniMipsUI.getTblModMemory().setValueAt(varName, i, 2);
 			varName = "";
+			i++;
 		}
+		
+//		for (int i = 0; i < MemoryData.getdCtr(); i++) {
+//			Data d = MemoryData.getDataList().get(i);
+//			
+//		}
 	}
 
 	public static void loadCodSegTable() {
@@ -74,15 +82,22 @@ public class GuiUpdater {
 			MiniMipsUI.getTblModCodeSeg().setValueAt(instructionStr, i, 3);
 		}
 	}
+	
+	public static void updateDataTable(int row, int col, long currentVal, long newVal) {
+		String value = NumberBuilder.paddedHexStringBuilder(16, currentVal);
+		if (MemoryData.updateValue(row, newVal))
+			value = NumberBuilder.paddedHexStringBuilder(16, newVal);		
+		MiniMipsUI.getTblModMemory().setValueAt(value, row, col);
+	}
 
-	public static void updateGprTable(int row, int col, int currentVal, int newVal) {
+	public static void updateGprTable(int row, int col, long currentVal, long newVal) {
 		String regValue = NumberBuilder.paddedHexStringBuilder(16, currentVal);
 		if (GeneralPurposeRegister.updateRegister(row, newVal))
 			regValue = NumberBuilder.paddedHexStringBuilder(16, newVal);		
 		MiniMipsUI.getTblModGPR().setValueAt(regValue, row, col);
 	}
 	
-	public static void updateFprTable(int row, int col, int currentVal, int newVal) {
+	public static void updateFprTable(int row, int col, long currentVal, long newVal) {
 		String regValue = NumberBuilder.paddedHexStringBuilder(16, currentVal);
 		if (FloatingPointRegister.updateRegister(row, newVal))
 			regValue = NumberBuilder.paddedHexStringBuilder(16, newVal);		
@@ -106,14 +121,16 @@ public class GuiUpdater {
 				MiniMipsUI.getTblModFPR().addRow(new Object[]{regName,regValue});
 		}
 	}
-
-	public static void createInitialMemory() {
+	
+	public static void createInitialData() {
 		MemoryData.initializeDataList();
 		for(Data d : MemoryData.getDataList()) {
 			String address = d.getAddress();
 			MiniMipsUI.getTblModMemory().addRow(new Object[]{address,NumberBuilder.paddedHexStringBuilder(16, 0),""});
 		}
+	}
 
+	public static void createInitialInstruction() {
 		MemoryInstruction.initializeInstructionList();
 		for (Instruction i : MemoryInstruction.getInstructionList()) {
 			String address = i.getAddress();

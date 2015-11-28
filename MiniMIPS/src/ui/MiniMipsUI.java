@@ -329,10 +329,6 @@ public class MiniMipsUI extends JFrame {
 	}
 
 	private void createTables() {
-		//tblmodCode = new UneditableTableModel();
-		//tblCode = new JTable(tblmodCode);
-		//resetTblModCode();
-
 		tblmodOpcode = new UneditableTableModel();
 		tblOpcode = new JTable(tblmodOpcode);
 		resetTblModOpcode();
@@ -349,23 +345,16 @@ public class MiniMipsUI extends JFrame {
 
 		tblmodMemory = new PartialEditableTableModel(new boolean[]{false,true,true});
 		tblMemory = new JTable(tblmodMemory);
+		resetMemoryData();
+		
 		tblmodCodeSeg = new UneditableTableModel();
 		tblCodeSeg = new JTable(tblmodCodeSeg);
-		resetMemory();
+		resetCodeSegment();
 
 		tblmodClock = new UneditableTableModel();
 		tblClock = new JTable(tblmodClock);
 		resetTblModClock();
 	}
-
-//	public static void resetTblModCode() {
-//		Object codeRow[][] = {};
-//		Object codeCol[] = {"LABEL", "INSTRUCTION"};
-//		tblmodCode.setDataVector(codeRow, codeCol);		
-//		tblCode.setModel(tblmodCode);
-//		tblCode.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//		tblCode.getColumnModel().getColumn(1).setPreferredWidth(200);
-//	}
 
 	public static void resetTblModOpcode() {		
 		Object opcodeRow[][] = {};
@@ -398,19 +387,21 @@ public class MiniMipsUI extends JFrame {
 		GuiUpdater.createInitialRegisterMonitor();
 	}
 
-	public static void resetMemory() {
+	public static void resetMemoryData() {
 		Object memoryRow[][] = {};
 		Object memoryCol[] = {"ADDRESS", "DATA", "VARIABLE"};
 		tblmodMemory.setDataVector(memoryRow, memoryCol);
 		tblMemory.setModel(tblmodMemory);
-
+		GuiUpdater.createInitialData();
+	}
+	
+	public static void resetCodeSegment() {
 		Object codesegRow[][] = {};
 		Object codesegCol[] = {"ADDRESS", "REPRESENTATION", "LABEL", "INSTRUCTION"};
 		tblmodCodeSeg.setDataVector(codesegRow, codesegCol);
 		tblCodeSeg.setModel(tblmodCodeSeg);
 		tblCodeSeg.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-		GuiUpdater.createInitialMemory();
+		GuiUpdater.createInitialInstruction();
 	}
 
 	public static void resetTblModClock() {
@@ -451,10 +442,6 @@ public class MiniMipsUI extends JFrame {
 	public void addTextAreaFocusListener(WindowAdapter l) {
 		this.addWindowFocusListener(l);		
 	}
-
-//	public static UneditableTableModel getTblModCode() {
-//		return tblmodCode;
-//	}
 
 	public static PartialEditableTableModel getTblModGPR() {
 		return tblmodGPR;

@@ -3,6 +3,7 @@ package dataObjects;
 import java.util.ArrayList;
 
 import helper.NumberBuilder;
+import helper.Validator;
 
 public class MemoryData {
 	private static ArrayList<Data> dataList = new ArrayList<Data>();
@@ -17,6 +18,19 @@ public class MemoryData {
 			dataList.add(tempData);
 		}
 	}
+	
+	public static void updateVarName(int row, String newVal) {
+		dataList.get(row).setVarName(newVal);
+	}
+	
+	public static boolean updateValue(int row, long newVal) {
+		if (Validator.isValueValid(Long.MIN_VALUE, Long.MAX_VALUE, newVal)) {
+			dataList.get(row).setValue(newVal);
+			return true;
+		} else
+			return false;
+	}
+	
 
 	public static void resetCtr() {
 		dCtr = 0;

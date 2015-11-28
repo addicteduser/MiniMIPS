@@ -9,6 +9,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
 import dataObjects.Instruction;
+import dataObjects.MemoryData;
 import helper.TableCellListener;
 import helper.Validator;
 import parser.Parser;
@@ -57,8 +58,6 @@ public class MiniMipsController {
 
 	private class StartActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			// save register content
-			// save memory content
 			GuiUpdater.resetUI(false);
 			for(String s :frame.getTxtInput().split("\\n")) {
 				parser.parseInput(s);
@@ -78,17 +77,29 @@ public class MiniMipsController {
 		TableCellListener tcl;
 		int row;
 		int col;
-		int currentVal;
-		int newVal;
+		long currentNumberVal;
+		long newNumberVal;
+		String newStringVal;
 	}
 
-	private class MemoryTableEditListener extends AbstractAction {
+	private class MemoryTableEditListener extends TableEditListener {
 		public void actionPerformed(ActionEvent e) {
-			TableCellListener tcl = (TableCellListener)e.getSource();
-			int row = tcl.getRow();
-			int col = tcl.getColumn();
-			int currentVal = (int) tcl.getOldValue();
-			int newVal = (int) tcl.getNewValue();
+			tcl = (TableCellListener)e.getSource();
+			row = tcl.getRow();
+			col = tcl.getColumn();	
+			
+			if (col == 1) { // data
+				currentNumberVal = Integer.parseInt((String)tcl.getOldValue(),16);
+				try {
+					newNumberVal = Integer.parseInt((String)tcl.getNewValue(),16);
+				} catch (NumberFormatException ex) {
+					ErrorMessage.showErrorMsg("[Error] Invalid data value.");
+				} finally {
+					GuiUpdater.updateDataTable(row, col, currentNumberVal, newNumberVal);
+				}
+			} else if (col == 2) { // variable
+				MemoryData.updateVarName(row, newStringVal);
+			}
 		}		
 	}
 
@@ -97,14 +108,14 @@ public class MiniMipsController {
 			tcl = (TableCellListener)e.getSource();
 			row = tcl.getRow();
 			col = tcl.getColumn();
-			currentVal = Integer.parseInt((String)tcl.getOldValue(),16);
+			currentNumberVal = Long.parseLong((String)tcl.getOldValue(),16);
 			try {
-				newVal = Integer.parseInt((String)tcl.getNewValue(),16);
+				newNumberVal = Long.parseLong((String)tcl.getNewValue(),16);
 			} catch (NumberFormatException ex) {
 				ErrorMessage.showErrorMsg("[Error] Invalid register value.");
-				newVal = currentVal;
+				newNumberVal = currentNumberVal;
 			} finally {
-				GuiUpdater.updateGprTable(row, col, currentVal, newVal);
+				GuiUpdater.updateGprTable(row, col, currentNumberVal, newNumberVal);
 			}
 		}		
 	}
@@ -114,14 +125,14 @@ public class MiniMipsController {
 			tcl = (TableCellListener)e.getSource();
 			row = tcl.getRow();
 			col = tcl.getColumn();
-			currentVal = Integer.parseInt((String)tcl.getOldValue(),16);
+			currentNumberVal = Long.parseLong((String)tcl.getOldValue(),16);
 			try {
-				newVal = Integer.parseInt((String)tcl.getNewValue(),16);
+				newNumberVal = Long.parseLong((String)tcl.getNewValue(),16);
 			} catch (NumberFormatException ex) {
 				ErrorMessage.showErrorMsg("[Error] Invalid register value.");
-				newVal = currentVal;
+				newNumberVal = currentNumberVal;
 			} finally {
-				GuiUpdater.updateFprTable(row, col, currentVal, newVal);
+				GuiUpdater.updateFprTable(row, col, currentNumberVal, newNumberVal);
 			}
 		}		
 	}

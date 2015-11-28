@@ -28,8 +28,8 @@ public class GeneralPurposeRegister {
 	 * @param newVal
 	 * @return TRUE if the newValue is valid, FALSE if not.
 	 */
-	public static boolean updateRegister(int row, int newVal) {
-		if (Validator.isValueValid(Integer.MIN_VALUE, Integer.MAX_VALUE, newVal)) {
+	public static boolean updateRegister(int row, long newVal) {
+		if (Validator.isValueValid(Long.MIN_VALUE, Long.MAX_VALUE, newVal)) {
 			gpr.get(row).setRegValue(newVal);
 			return true;
 		} else

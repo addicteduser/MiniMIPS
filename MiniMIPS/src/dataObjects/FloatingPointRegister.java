@@ -22,7 +22,7 @@ public class FloatingPointRegister {
 	 * @param newVal
 	 * @return TRUE if the newValue is valid, FALSE if not.
 	 */
-	public static boolean updateRegister(int row, int newVal) {
+	public static boolean updateRegister(int row, long newVal) {
 		if (Validator.isValueValid(Long.MIN_VALUE, Long.MAX_VALUE, newVal)) {
 			fpr.get(row).setRegValue(newVal);
 			return true;
