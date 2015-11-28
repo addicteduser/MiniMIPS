@@ -10,12 +10,14 @@ import dataObjects.MemoryData;
 import dataObjects.MemoryInstruction;
 import dataObjects.Register;
 import helper.NumberBuilder;
+import parser.Parser;
 
 public class GuiUpdater {
 	public static void resetUI(boolean isTotalReset) {
 		if(isTotalReset)
 			MiniMipsUI.resetTxtInput();
 
+		Parser.resetLineCtr();
 		MemoryData.resetCtr();
 		MemoryInstruction.resetCtr();
 		MiniMipsUI.resetMemory();

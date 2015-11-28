@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import constants.DIRECTIVES;
+import ui.ErrorMessage;
 
 public class Parser {
 
@@ -18,7 +19,7 @@ public class Parser {
 	private static int lineCtr;
 
 	public Parser() {
-		lineCtr = 0;
+		resetLineCtr();
 	}
 
 	public ArrayList<String> parseFile(File f) {
@@ -30,7 +31,7 @@ public class Parser {
 			fstream = new FileInputStream(f);
 		} catch (FileNotFoundException e) {
 			// e.printStackTrace();
-			System.err.println("[ERROR] File Not Found.");
+			ErrorMessage.showErrorMsg("[ERROR] File Not Found.");
 		}
 
 		br = new BufferedReader(new InputStreamReader(fstream));
@@ -41,7 +42,7 @@ public class Parser {
 			}
 		} catch (IOException e) {
 			//e.printStackTrace();
-			System.err.println("[ERROR at line:" + getLineCtr() + "]");
+			ErrorMessage.showErrorMsg("[ERROR at line:" + getLineCtr() + "]");
 		} finally {
 			// Close the input stream
 			try {
@@ -50,7 +51,7 @@ public class Parser {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return code;
 	}
 
@@ -65,40 +66,37 @@ public class Parser {
 
 		System.out.println("[INPUT] " + strLine);
 
-		if (strLine.startsWith("#") || strLine.startsWith(";")) {
-			// If strLine is a comment
-		} else if (strLine.isEmpty()) {
-			// If strLine is a line break
-		} else if (strLine.startsWith(".")) {
-			// If strLine is a directive
-			String tokens[] = strLine.split(" ", 2);
+		try {
+			if (strLine.startsWith("#") || strLine.startsWith(";")) {
+				// If strLine is a comment
+			} else if (strLine.isEmpty()) {
+				// If strLine is a line break
+			} else if (strLine.startsWith(".")) {
+				// If strLine is a directive
+				String tokens[] = strLine.split(" ", 2);
 
-			directive = DIRECTIVES.valueOf(tokens[0].substring(1).toUpperCase());
-			//System.out.println("[DIRECTIVE] "+directive);
-
-			switch (directive) {
-			case DATA:
-				// If strLine is the start of .data directive
-				parser = new DataParser();
-				parser.resetCtr();
-				break;
-			case CODE:
-			case TEXT:
-				// If strLine is the start of the .code/.text directive
-				parser = new InstructionParser();
-				parser.resetCtr();
-				break;
-			default:
+				directive = DIRECTIVES.valueOf(tokens[0].substring(1).toUpperCase());
+				switch (directive) {
+				case DATA:
+					// If strLine is the start of .data directive
+					parser = new DataParser();
+					parser.resetCtr();
+					break;
+				case CODE:
+				case TEXT:
+					// If strLine is the start of the .code/.text directive
+					parser = new InstructionParser();
+					parser.resetCtr();
+					break;
+				default:
+					parser.parse(strLine);
+				}
+			} else {
 				parser.parse(strLine);
 			}
-		} else {
-			try {
-				parser.parse(strLine);
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-				System.err.println("[ERROR at line:" + getLineCtr() + "]");
-				System.exit(0);
-			}
+		} catch (Exception e) {
+			//e.printStackTrace();
+			ErrorMessage.showErrorMsg("[ERROR at line:" + getLineCtr() + "]");
 		}
 	}
 
@@ -107,5 +105,9 @@ public class Parser {
 	 */
 	public static int getLineCtr() {
 		return lineCtr;
+	}
+
+	public static void resetLineCtr() {
+		lineCtr = 0;
 	}
 }

@@ -4,10 +4,7 @@ import constants.DIRECTIVES;
 import dataObjects.Data;
 import dataObjects.MemoryData;
 import helper.Validator;
-
-// TODO values are double
-// TODO if values are in hex
-// TODO if varName already exists
+import ui.ErrorMessage;
 
 public class DataParser implements IParser {
 	private static int ctr = 0;
@@ -52,8 +49,7 @@ public class DataParser implements IParser {
 			if (!Validator.doesVarNameExist(tokens[0]))
 				tempVarName = tokens[0];
 			else {
-				System.err.println("[ERROR at line:" + Parser.getLineCtr() + "] Variable name '"+tokens[0]+"' already exists.");
-				System.exit(0);
+				ErrorMessage.showErrorMsg("[ERROR at line:" + Parser.getLineCtr() + "] Variable name '"+tokens[0]+"' already exists.");
 			}
 		} catch(NullPointerException e) {
 			tempVarName = tokens[0];
@@ -79,8 +75,7 @@ public class DataParser implements IParser {
 			if (tokens[0].startsWith("."))
 				tempDirective = DIRECTIVES.valueOf(tokens[0].substring(1).toUpperCase());
 			else {
-				System.err.println("[ERROR at line:" + Parser.getLineCtr() + "] Invalid data segment.");
-				System.exit(0);
+				ErrorMessage.showErrorMsg("[ERROR at line:" + Parser.getLineCtr() + "] Invalid data segment.");
 			}
 		}
 	}
@@ -100,8 +95,7 @@ public class DataParser implements IParser {
 		if (areValuesValid()) {
 			addToList();
 		} else {
-			System.err.println("[ERROR at line:"+Parser.getLineCtr()+"] Value(s) out of bounds for given directive.");
-			System.exit(0);
+			ErrorMessage.showErrorMsg("[ERROR at line:"+Parser.getLineCtr()+"] Value(s) out of bounds for given directive.");
 		}
 	}
 
@@ -138,8 +132,7 @@ public class DataParser implements IParser {
 			//			}
 			//			break;
 		default:
-			System.err.println("[Error at line:"+Parser.getLineCtr()+"] Invalid directive.");
-			System.exit(0);
+			ErrorMessage.showErrorMsg("[Error at line:"+Parser.getLineCtr()+"] Invalid directive.");
 		}
 
 		return validValues;
