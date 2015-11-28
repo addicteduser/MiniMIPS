@@ -2,6 +2,7 @@ package dataObjects;
 
 import java.util.EnumMap;
 
+import pipeline.PipelineStage;
 import constants.INSTRUCTIONS;
 import constants.INSTRUCTIONTYPES;
 
@@ -16,6 +17,7 @@ public class Instruction {
 	private String v2;
 	private String v3;
 	private Opcode opcode;
+	private PipelineStage pipelineStage;
 
 	public Instruction(String address) {
 		this.address = address;
@@ -198,5 +200,19 @@ public class Instruction {
 	 */
 	public void setInstructionType(INSTRUCTIONTYPES instructionType) {
 		this.instructionType = instructionType;
+	}
+	
+	/**
+	 * @return the pipelineStage
+	 */
+	public PipelineStage getPipelineStage() {
+		return pipelineStage;
+	}
+
+	/**
+	 * @param pipelineStage the pipelineStage to set
+	 */
+	public void setPipelineStage(PipelineStage pipelineStage) {
+		this.pipelineStage = pipelineStage;
 	}
 }
