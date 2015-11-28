@@ -25,7 +25,7 @@ public class MiniMipsController {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-	
+
 	private void addEventHandlers() {
 		frame.addBtnLoadMipsCodeActionListener(new LoadMipsCodeActionLister());
 		frame.addBtnStartActionListener(new StartActionListener());
@@ -72,23 +72,38 @@ public class MiniMipsController {
 		}
 	}
 
+	private abstract class TableEditListener extends AbstractAction {
+		TableCellListener tcl;
+		int row;
+		int col;
+		int currentVal;
+		int newVal;
+	}
+
 	private class MemoryTableEditListener extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
 			TableCellListener tcl = (TableCellListener)e.getSource();
-			System.out.println("Row   : " + tcl.getRow());
-			System.out.println("Column: " + tcl.getColumn());
-			System.out.println("Old   : " + tcl.getOldValue());
-			System.out.println("New   : " + tcl.getNewValue());	
+			int row = tcl.getRow();
+			int col = tcl.getColumn();
+			int currentVal = (int) tcl.getOldValue();
+			int newVal = (int) tcl.getNewValue();
 		}		
 	}
 
-	private class GprTableEditListener extends AbstractAction {
+	private class GprTableEditListener extends TableEditListener {
 		public void actionPerformed(ActionEvent e) {
-			TableCellListener tcl = (TableCellListener)e.getSource();
-			System.out.println("Row   : " + tcl.getRow());
-			System.out.println("Column: " + tcl.getColumn());
-			System.out.println("Old   : " + tcl.getOldValue());
-			System.out.println("New   : " + tcl.getNewValue());	
+			tcl = (TableCellListener)e.getSource();
+			row = tcl.getRow();
+			col = tcl.getColumn();
+			currentVal = Integer.parseInt((String)tcl.getOldValue(),16);
+			try {
+				newVal = Integer.parseInt((String)tcl.getNewValue(),16);
+			} catch (NumberFormatException ex) {
+				System.err.println("[Error] Invalid register value.");
+				newVal = currentVal;
+			} finally {
+				GuiUpdater.updateRegisterTable(row, col, currentVal, newVal);
+			}
 		}		
 	}
 

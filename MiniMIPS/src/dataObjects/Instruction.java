@@ -59,13 +59,6 @@ public class Instruction {
 		instructionCode.put(INSTRUCTIONS.J, "J,2"); // J Label
 	}
 
-	public static void generateAllOpcode() {
-		for (int i = 0; i < MemoryInstruction.getiCtr(); i++) {
-			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
-			instruction.setOpcode(new Opcode(instruction));
-		}
-	}
-
 	/**
 	 * @return the label
 	 */

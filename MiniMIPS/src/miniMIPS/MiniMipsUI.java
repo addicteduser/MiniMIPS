@@ -476,14 +476,14 @@ public class MiniMipsUI extends JFrame {
 		return tblmodOpcode;
 	}
 
-	class UneditableTableModel extends DefaultTableModel {
+	public class UneditableTableModel extends DefaultTableModel {
 		@Override
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		}
 	}
 
-	class PartialEditableTableModel extends DefaultTableModel {
+	public class PartialEditableTableModel extends DefaultTableModel {
 		boolean[] canEdit;
 
 		public PartialEditableTableModel(boolean[] canEdit) {

@@ -2,6 +2,8 @@ package dataObjects;
 
 import java.util.ArrayList;
 
+import helper.Validator;
+
 public class GeneralPurposeRegister {
 	private static ArrayList<Register> gpr = new ArrayList<Register>();
 
@@ -18,6 +20,20 @@ public class GeneralPurposeRegister {
 		gpr.add(tempReg);
 		tempReg = new Register("LO",0);
 		gpr.add(tempReg);
+	}
+	
+	/**
+	 * Updates the gpr list if the newValue is a valid register value.
+	 * @param row
+	 * @param newVal
+	 * @return TRUE if the newValue is valid, FALSE if not.
+	 */
+	public static boolean updateRegister(int row, int newVal) {
+		if (Validator.isValueValid(Integer.MIN_VALUE, Integer.MAX_VALUE, newVal)) {
+			gpr.get(row).setRegValue(newVal);
+			return true;
+		} else
+			return false;
 	}
 
 	/**

@@ -32,7 +32,7 @@ public class GuiUpdater {
 	}
 
 	public static void loadOpcodeTable() {
-		Instruction.generateAllOpcode();
+		MemoryInstruction.generateAllOpcode();
 		for (int i = 0; i < MemoryInstruction.getiCtr(); i++) {
 			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
 			String instructionStr;
@@ -73,20 +73,28 @@ public class GuiUpdater {
 		}
 	}
 
+	public static void updateRegisterTable(int row, int col, int currentVal, int newVal) {
+		String regValue = NumberBuilder.paddedHexStringBuilder(16, currentVal);
+		if (GeneralPurposeRegister.updateRegister(row, newVal))
+			regValue = NumberBuilder.paddedHexStringBuilder(16, newVal);		
+		MiniMipsUI.getTblModGPR().setValueAt(regValue, row, col);
+	}
 
 	public static void createInitialRegisterMonitor() {
 		GeneralPurposeRegister.initializeGPR();
 		for(Register r : GeneralPurposeRegister.getGpr()) {
 			String regName = r.getRegName();
 			String regValue = NumberBuilder.paddedHexStringBuilder(16, r.getRegValue());
-			MiniMipsUI.getTblModGPR().addRow(new Object[]{regName,regValue});
+			if (!regName.matches("R0"))
+				MiniMipsUI.getTblModGPR().addRow(new Object[]{regName,regValue});
 		}
 
 		FloatingPointRegister.initializeFPR();
 		for(Register r : FloatingPointRegister.getFpr()) {
 			String regName = r.getRegName();
 			String regValue = NumberBuilder.paddedHexStringBuilder(16, r.getRegValue());
-			MiniMipsUI.getTblModFPR().addRow(new Object[]{regName,regValue});
+			if (!regName.matches("F0"))
+				MiniMipsUI.getTblModFPR().addRow(new Object[]{regName,regValue});
 		}
 	}
 

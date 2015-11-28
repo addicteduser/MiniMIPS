@@ -33,6 +33,14 @@ public class MemoryInstruction {
 		}
 		return null;
 	}
+	
+	public static void generateAllOpcode() {
+		for (int i = 0; i < iCtr; i++) {
+			Instruction instruction = instructionList.get(i);
+			instruction.setOpcode(new Opcode(instruction));
+		}
+	}
+
 
 	/**
 	 * @return the instructionList
