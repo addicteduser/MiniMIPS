@@ -75,9 +75,16 @@ public class GuiUpdater {
 		}
 	}
 
-	public static void updateRegisterTable(int row, int col, int currentVal, int newVal) {
+	public static void updateGprTable(int row, int col, int currentVal, int newVal) {
 		String regValue = NumberBuilder.paddedHexStringBuilder(16, currentVal);
 		if (GeneralPurposeRegister.updateRegister(row, newVal))
+			regValue = NumberBuilder.paddedHexStringBuilder(16, newVal);		
+		MiniMipsUI.getTblModGPR().setValueAt(regValue, row, col);
+	}
+	
+	public static void updateFprTable(int row, int col, int currentVal, int newVal) {
+		String regValue = NumberBuilder.paddedHexStringBuilder(16, currentVal);
+		if (FloatingPointRegister.updateRegister(row, newVal))
 			regValue = NumberBuilder.paddedHexStringBuilder(16, newVal);		
 		MiniMipsUI.getTblModGPR().setValueAt(regValue, row, col);
 	}

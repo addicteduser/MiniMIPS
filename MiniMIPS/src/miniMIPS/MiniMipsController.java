@@ -104,18 +104,25 @@ public class MiniMipsController {
 				ErrorMessage.showErrorMsg("[Error] Invalid register value.");
 				newVal = currentVal;
 			} finally {
-				GuiUpdater.updateRegisterTable(row, col, currentVal, newVal);
+				GuiUpdater.updateGprTable(row, col, currentVal, newVal);
 			}
 		}		
 	}
 
-	private class FprTableEditListener extends AbstractAction {
+	private class FprTableEditListener extends TableEditListener {
 		public void actionPerformed(ActionEvent e) {
-			TableCellListener tcl = (TableCellListener)e.getSource();
-			System.out.println("Row   : " + tcl.getRow());
-			System.out.println("Column: " + tcl.getColumn());
-			System.out.println("Old   : " + tcl.getOldValue());
-			System.out.println("New   : " + tcl.getNewValue());	
+			tcl = (TableCellListener)e.getSource();
+			row = tcl.getRow();
+			col = tcl.getColumn();
+			currentVal = Integer.parseInt((String)tcl.getOldValue(),16);
+			try {
+				newVal = Integer.parseInt((String)tcl.getNewValue(),16);
+			} catch (NumberFormatException ex) {
+				ErrorMessage.showErrorMsg("[Error] Invalid register value.");
+				newVal = currentVal;
+			} finally {
+				GuiUpdater.updateFprTable(row, col, currentVal, newVal);
+			}
 		}		
 	}
 }
