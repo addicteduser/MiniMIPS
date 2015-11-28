@@ -44,7 +44,7 @@ public class MiniMipsUI extends JFrame {
 	private JScrollPane scpOpcode;
 	private JButton btnStep;
 	private JButton btnRun;
-	private JButton btnPipelineSomething;
+	private JButton btnGenerate;
 	private JScrollPane scpPipeline;
 	private JScrollPane scpGPR;
 	private JScrollPane scpFPR;
@@ -225,14 +225,9 @@ public class MiniMipsUI extends JFrame {
 		btnRun.setBounds(165, 163, 82, 29);
 		pnlPipeline.add(btnRun);
 
-		btnPipelineSomething = new JButton("Pipeline Something");
-		btnPipelineSomething.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// PIPELINE SOMETHING CODE HERE
-			}
-		});
-		btnPipelineSomething.setBounds(244, 163, 127, 29);
-		pnlPipeline.add(btnPipelineSomething);
+		btnGenerate = new JButton("Generate Map");
+		btnGenerate.setBounds(244, 163, 127, 29);
+		pnlPipeline.add(btnGenerate);
 
 		scpPipeline = new JScrollPane();
 		scpPipeline.setBounds(19, 27, 426, 134);
@@ -427,6 +422,10 @@ public class MiniMipsUI extends JFrame {
 		btnStart.addActionListener(l);
 	}
 	
+	public void addBtnGenerateActionListener(ActionListener l) {
+		btnGenerate.addActionListener(l);
+	}
+	
 	public void addMemoryTblCellListener(Action l) {
 		new TableCellListener(tblMemory, l);
 	}
@@ -461,6 +460,10 @@ public class MiniMipsUI extends JFrame {
 
 	public static UneditableTableModel getTblModOpcode() {
 		return tblmodOpcode;
+	}
+	
+	public static UneditableTableModel getTblModPipeline() {
+		return tblmodPipeline;
 	}
 
 	public class UneditableTableModel extends DefaultTableModel {

@@ -3,20 +3,19 @@ package pipeline;
 import java.util.ArrayList;
 
 public class Pipeline {
-	public static ArrayList<Pipeline> pipeline = new ArrayList<Pipeline>();
-	public ArrayList<String> stages = new ArrayList<String>();
+	private static ArrayList<PipelineStage> pipeline = new ArrayList<PipelineStage>();
 
 	/**
 	 * @return the pipeline
 	 */
-	public static ArrayList<Pipeline> getPipeline() {
+	public static ArrayList<PipelineStage> getPipeline() {
 		return pipeline;
 	}
 
 	/**
 	 * @param pipeline the pipeline to set
 	 */
-	public static void setPipeline(ArrayList<Pipeline> pipeline) {
+	public static void setPipeline(ArrayList<PipelineStage> pipeline) {
 		Pipeline.pipeline = pipeline;
 	}
 }

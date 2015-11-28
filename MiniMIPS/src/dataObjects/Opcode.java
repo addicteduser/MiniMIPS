@@ -22,7 +22,6 @@ public class Opcode {
 	public Opcode(Instruction i) {
 		Opcode temp = new Opcode();
 		iName = i.getInstructionName();
-		//iType = i.getInstructionName();
 		parseICode(Instruction.getInstructionCode().get(iName));
 		parseIFormat(Instruction.getInstructionFormat().get(iType));
 		buildOpcode(i);
@@ -33,6 +32,7 @@ public class Opcode {
 		temp.setIR16_31(IR16_31);
 		temp.setOpcodeHex(opcodeHex);
 		i.setOpcode(temp);
+		i.setInstructionType(iType);
 	}
 
 	private void buildOpcode(Instruction i) {

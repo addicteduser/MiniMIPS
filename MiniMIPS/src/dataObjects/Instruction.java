@@ -10,6 +10,7 @@ public class Instruction {
 	private static EnumMap<INSTRUCTIONS, String> instructionCode;
 	private static EnumMap<INSTRUCTIONTYPES, String> instructionFormat;
 	private INSTRUCTIONS instructionName;
+	private INSTRUCTIONTYPES instructionType;
 	private String label;
 	private String v1;
 	private String v2;
@@ -183,5 +184,19 @@ public class Instruction {
 	 */
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	/**
+	 * @return the instructionType
+	 */
+	public INSTRUCTIONTYPES getInstructionType() {
+		return instructionType;
+	}
+
+	/**
+	 * @param instructionType the instructionType to set
+	 */
+	public void setInstructionType(INSTRUCTIONTYPES instructionType) {
+		this.instructionType = instructionType;
 	}
 }

@@ -33,6 +33,7 @@ public class MiniMipsController {
 	private void addEventHandlers() {
 		frame.addBtnLoadMipsCodeActionListener(new LoadMipsCodeActionLister());
 		frame.addBtnStartActionListener(new StartActionListener());
+		frame.addBtnGenerateActionListener(new GenerateMapActionListener());
 		frame.addMemoryTblCellListener(new MemoryTableEditListener());
 		frame.addGprTblCellListener(new GprTableEditListener());
 		frame.addFprTblCellListener(new FprTableEditListener());
@@ -71,6 +72,13 @@ public class MiniMipsController {
 				ErrorMessage.showErrorMsg("[Error] Please check your label(s) and/or variable name(s).");
 			}
 		}
+	}
+	
+	private class GenerateMapActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			GuiUpdater.generatePipelineMapTable();
+		}
+		
 	}
 
 	private abstract class TableEditListener extends AbstractAction {
