@@ -1,4 +1,4 @@
-package miniMIPS;
+package ui;
 
 import java.util.ArrayList;
 

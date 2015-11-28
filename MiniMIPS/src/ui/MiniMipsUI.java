@@ -1,4 +1,4 @@
-package miniMIPS;
+package ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;

@@ -12,6 +12,9 @@ import dataObjects.Instruction;
 import helper.TableCellListener;
 import helper.Validator;
 import parser.Parser;
+import ui.ErrorMessage;
+import ui.GuiUpdater;
+import ui.MiniMipsUI;
 
 public class MiniMipsController {
 	private MiniMipsUI frame;
@@ -66,8 +69,7 @@ public class MiniMipsController {
 				GuiUpdater.loadOpcodeTable();
 				GuiUpdater.loadCodSegTable();
 			} else {
-				System.err.println("[Error] Please check your label(s) and/or variable name(s).");
-				System.exit(0);
+				ErrorMessage.showErrorMsg("[Error] Please check your label(s) and/or variable name(s).");
 			}
 		}
 	}
@@ -99,7 +101,7 @@ public class MiniMipsController {
 			try {
 				newVal = Integer.parseInt((String)tcl.getNewValue(),16);
 			} catch (NumberFormatException ex) {
-				System.err.println("[Error] Invalid register value.");
+				ErrorMessage.showErrorMsg("[Error] Invalid register value.");
 				newVal = currentVal;
 			} finally {
 				GuiUpdater.updateRegisterTable(row, col, currentVal, newVal);
