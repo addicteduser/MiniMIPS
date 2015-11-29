@@ -11,9 +11,7 @@ import dataObjects.MemoryInstruction;
 import dataObjects.Register;
 import helper.NumberBuilder;
 import parser.Parser;
-import pipeline.Pipeline;
 import pipeline.PipelineMapGenerator;
-import pipeline.PipelineStage;
 
 public class GuiUpdater {
 	public static void resetUI(boolean isTotalReset) {
@@ -88,8 +86,11 @@ public class GuiUpdater {
 	
 	public static void generatePipelineMapTable() {
 		new PipelineMapGenerator().generateMap();
-		for (PipelineStage p : Pipeline.getPipeline()) {
-			MiniMipsUI.getTblModPipeline().addRow(p.getStages().toArray());
+		for(int i = 0; i < MemoryInstruction.getiCtr(); i++) {
+			Instruction instruction = MemoryInstruction.getInstructionList().get(i);
+			String instructionStr = instructionBuilder(instruction);
+			if (i == instruction.getPipelinestage().getClockCycleStart())
+				MiniMipsUI.getTblModPipeline().addRow(new Object[]{instructionStr, instruction.getPipelinestage().getStages().toArray()});
 		}
 	}
 	

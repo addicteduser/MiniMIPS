@@ -4,6 +4,7 @@ import java.util.EnumMap;
 
 import constants.INSTRUCTIONS;
 import constants.INSTRUCTIONTYPES;
+import pipeline.PipelineStage;
 
 public class Instruction {
 	private String address;
@@ -16,6 +17,7 @@ public class Instruction {
 	private String v2;
 	private String v3;
 	private Opcode opcode;
+	private PipelineStage pipelinestage;
 
 	public Instruction(String address) {
 		this.address = address;
@@ -198,5 +200,19 @@ public class Instruction {
 	 */
 	public void setInstructionType(INSTRUCTIONTYPES instructionType) {
 		this.instructionType = instructionType;
+	}
+
+	/**
+	 * @return the pipelinestage
+	 */
+	public PipelineStage getPipelinestage() {
+		return pipelinestage;
+	}
+
+	/**
+	 * @param pipelinestage the pipelinestage to set
+	 */
+	public void setPipelinestage(PipelineStage pipelinestage) {
+		this.pipelinestage = pipelinestage;
 	}
 }

@@ -26,7 +26,7 @@ public class PipelineMapGenerator {
 				}
 
 				tempPipelineStage.setClockCycleStart(pointer);
-				Pipeline.getPipeline().add(tempPipelineStage);
+				current.setPipelinestage(tempPipelineStage);
 			} else {
 				setValues();
 				if (current.getInstructionName().toString().matches("BEQ|J")) { // handle branches
@@ -37,6 +37,9 @@ public class PipelineMapGenerator {
 						stage++;
 					}
 				}
+				
+				tempPipelineStage.setClockCycleStart(pointer);
+				current.setPipelinestage(tempPipelineStage);
 			}
 			previous = current;
 			pointer++;
