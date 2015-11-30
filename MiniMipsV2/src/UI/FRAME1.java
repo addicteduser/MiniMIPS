@@ -23,6 +23,7 @@ import CodeObjects.RType.DADDU;
 import CodeObjects.RType.DDIV;
 import CodeObjects.RType.DSRLV;
 import CodeObjects.RType.DSUBU;
+import CodeObjects.RType.OR;
 import CodeObjects.RType.SLT;
 import Functions.Pipelinemap;
 import Functions.Usable;
@@ -1402,7 +1403,7 @@ public class FRAME1 extends javax.swing.JFrame {
             d = usable.toBinary(0, 5);
             x = new String();
 
-            if (selected.toString().equals("DADDU") || selected.toString().equals("DSRLV") || selected.toString().equals("SLT") || selected.toString().equals("AND")) {
+            if (selected.toString().equals("DADDU") || selected.toString().equals("OR") || selected.toString().equals("DSRLV") || selected.toString().equals("SLT") || selected.toString().equals("AND")) {
                 flag = 1;
                 JIndexArray.add(Jnull);
                 BEQXArray.add("");
@@ -1418,6 +1419,13 @@ public class FRAME1 extends javax.swing.JFrame {
                     case "DADDU":
                         x = (usable.toBinary(0, 6) + b + c + a + d + usable.toBinary(45, 6));
                         iList.add(new DADDU(sAddress.get(nIndex2),
+                                Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
+                                Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
+                                Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
+                        break;
+                    case "OR":
+                        x = (usable.toBinary(0, 6) + b + c + a + d + usable.toBinary(37, 6));
+                        iList.add(new OR(sAddress.get(nIndex2),
                                 Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
@@ -1614,11 +1622,18 @@ public class FRAME1 extends javax.swing.JFrame {
             case "DSRLV":
             case "SLT":
             case "AND":
+            case "DADDU":
+            case "OR":
+            case "DSLL":
+            case "MUL.S":
+            case "ADD.S":
                 jPanel1.setVisible(true);
                 break;
             case "LW":
             case "LWU":
             case "SW":
+            case "L.S":
+            case "S.S":
                 jPanel3.setVisible(true);
                 break;
             case "J":
@@ -1628,10 +1643,12 @@ public class FRAME1 extends javax.swing.JFrame {
                 jPanel6.setVisible(true);
                 break;
             case "DDIV":
+            case "DMULT":
                 jPanel2.setVisible(true);
                 break;
             case "DADDIU":
             case "ORI":
+            case "ANDI":
                 jPanel7.setVisible(true);
                 break;
         }
