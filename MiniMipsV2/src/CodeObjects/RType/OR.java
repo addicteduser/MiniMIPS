@@ -24,19 +24,27 @@ public class OR extends RType {
     @Override
     public String ALU(CachedTables ct) {
         String rd = "";
-        String sRS, sRT;
-        sRS = usable.hexStringToNBitBinary(ct.getRtc().getRegisterRow(this.getRs()), 64);
-        sRT = usable.hexStringToNBitBinary(ct.getRtc().getRegisterRow(this.getRt()), 64);
-        for (int i = sRS.length() - 1; i >= 0; i--) {
-            if (sRS.charAt(i) == '0' && sRT.charAt(i) == '0') {
-                rd = "0" + rd;
-            } else {
-                rd = "1" + rd;
-            }
-        }
-        BigInteger binaryOp = new BigInteger(rd, 2);
-        rd = binaryOp.toString(16);
-        rd = usable.hexToNbit(rd, 16);
+        BigInteger rs, rt, ans;
+        
+        rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()),16);
+        rt = new BigInteger(ct.getRtc().getRegisterRow(this.getRt()),16);
+        ans = rs.or(rt);
+        rd = usable.hexToNbit(ans.toString(16), 16);
+        
+//        String rd = "";
+//        String sRS, sRT;
+//        sRS = usable.hexStringToNBitBinary(ct.getRtc().getRegisterRow(this.getRs()), 64);
+//        sRT = usable.hexStringToNBitBinary(ct.getRtc().getRegisterRow(this.getRt()), 64);
+//        for (int i = sRS.length() - 1; i >= 0; i--) {
+//            if (sRS.charAt(i) == '0' && sRT.charAt(i) == '0') {
+//                rd = "0" + rd;
+//            } else {
+//                rd = "1" + rd;
+//            }
+//        }
+//        BigInteger binaryOp = new BigInteger(rd, 2);
+//        rd = binaryOp.toString(16);
+//        rd = usable.hexToNbit(rd, 16);
         return rd;
     }
 

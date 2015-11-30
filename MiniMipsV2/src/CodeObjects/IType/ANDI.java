@@ -22,12 +22,8 @@ public class ANDI extends IType {
 
     @Override
     public String ALU(CachedTables ct) {
-        //String rd = "";
-       // String sRS, sIMM;
-        //Long rs;
-        
         String rd = "";
-        String sRS, sIMM;
+        String sIMM;
         BigInteger rs, imm, ans;
         
         rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()),16);
