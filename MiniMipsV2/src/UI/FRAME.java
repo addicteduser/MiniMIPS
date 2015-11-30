@@ -374,9 +374,9 @@ public class FRAME extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panel1.setBackground(new java.awt.Color(51, 51, 51));
+        panel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        jButton2.setFont(new java.awt.Font("Castellar", 0, 14)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("DONE");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -389,12 +389,11 @@ public class FRAME extends javax.swing.JFrame {
             }
         });
 
-        jLabel18.setFont(new java.awt.Font("Castellar", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setText("Step 2 - OPCODE TABLE");
 
-        jButton1.setFont(new java.awt.Font("Castellar", 0, 14)); // NOI18N
-        jButton1.setText("ADD TO CODE");
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("ADD");
         jButton1.setFocusTraversalPolicyProvider(true);
         jButton1.setHideActionText(true);
         jButton1.setInheritsPopupMenu(true);
@@ -412,8 +411,7 @@ public class FRAME extends javax.swing.JFrame {
             }
         });
 
-        lblGroup7.setFont(new java.awt.Font("Mongolian Baiti", 1, 30)); // NOI18N
-        lblGroup7.setForeground(new java.awt.Color(0, 204, 204));
+        lblGroup7.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
         lblGroup7.setText("GROUP 7 - PIPELINE FLUSH");
         lblGroup7.setPreferredSize(new java.awt.Dimension(100, 100));
 
@@ -431,17 +429,15 @@ public class FRAME extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("(OPTIONAL) LABEL");
 
-        jLabel3.setFont(new java.awt.Font("Castellar", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Step 1 - INPUT CODE");
 
         panel2.setLayout(new java.awt.CardLayout());
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -468,16 +464,13 @@ public class FRAME extends javax.swing.JFrame {
 
         jLabel5.setText(",");
 
-        jLabel7.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("RD");
 
-        jLabel8.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("RS");
 
-        jLabel9.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("RT");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -530,7 +523,7 @@ public class FRAME extends javax.swing.JFrame {
 
         panel2.add(jPanel1, "card5");
 
-        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
         jComboBox7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31" }));
         jComboBox7.addActionListener(new java.awt.event.ActionListener() {
@@ -558,12 +551,10 @@ public class FRAME extends javax.swing.JFrame {
 
         jLabel14.setText(")");
 
-        jLabel15.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel15.setText("RD");
 
-        jLabel16.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel16.setText("RS");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -613,7 +604,7 @@ public class FRAME extends javax.swing.JFrame {
 
         panel2.add(jPanel3, "card10");
 
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31" }));
         jComboBox5.addActionListener(new java.awt.event.ActionListener() {
@@ -631,12 +622,10 @@ public class FRAME extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setText("RS");
 
-        jLabel11.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel11.setText("RT");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -672,12 +661,12 @@ public class FRAME extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         panel2.add(jPanel2, "card9");
 
-        jPanel5.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -703,7 +692,7 @@ public class FRAME extends javax.swing.JFrame {
 
         panel2.add(jPanel5, "card10");
 
-        jPanel6.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel6.setBackground(new java.awt.Color(204, 204, 204));
 
         jComboBox9.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31" }));
         jComboBox9.addActionListener(new java.awt.event.ActionListener() {
@@ -721,12 +710,10 @@ public class FRAME extends javax.swing.JFrame {
             }
         });
 
-        jLabel23.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel23.setText("RS");
 
-        jLabel24.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel24.setText("RT");
 
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -735,8 +722,7 @@ public class FRAME extends javax.swing.JFrame {
             }
         });
 
-        jLabel25.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel25.setText("LABEL");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -764,7 +750,7 @@ public class FRAME extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel25)
-                        .addGap(0, 29, Short.MAX_VALUE))
+                        .addGap(0, 32, Short.MAX_VALUE))
                     .addComponent(jTextField4))
                 .addContainerGap())
         );
@@ -781,12 +767,12 @@ public class FRAME extends javax.swing.JFrame {
                     .addComponent(jLabel23)
                     .addComponent(jLabel24)
                     .addComponent(jLabel25))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         panel2.add(jPanel6, "card9");
 
-        jPanel7.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel7.setBackground(new java.awt.Color(204, 204, 204));
 
         jComboBox11.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31" }));
         jComboBox11.addActionListener(new java.awt.event.ActionListener() {
@@ -804,16 +790,13 @@ public class FRAME extends javax.swing.JFrame {
             }
         });
 
-        jLabel27.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel27.setText("RD");
 
-        jLabel28.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel28.setText("RS");
 
-        jLabel29.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel29.setText("IMM");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -858,7 +841,7 @@ public class FRAME extends javax.swing.JFrame {
                     .addComponent(jLabel27)
                     .addComponent(jLabel28)
                     .addComponent(jLabel29))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         panel2.add(jPanel7, "card9");
@@ -915,11 +898,10 @@ public class FRAME extends javax.swing.JFrame {
 
         jScrollPane4.setViewportView(jScrollPane1);
 
-        jLabel20.setFont(new java.awt.Font("Castellar", 1, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setText("Step 3 - PIPELINE MAP");
 
-        panel3.setBackground(new java.awt.Color(51, 51, 51));
+        panel3.setBackground(new java.awt.Color(204, 204, 204));
 
         jScrollPane5.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
 
@@ -981,8 +963,7 @@ public class FRAME extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable3);
 
-        jLabel1.setFont(new java.awt.Font("Castellar", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Registers");
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
@@ -1030,16 +1011,13 @@ public class FRAME extends javax.swing.JFrame {
         jTable5.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         jScrollPane7.setViewportView(jTable5);
 
-        jLabel17.setFont(new java.awt.Font("Castellar", 1, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel17.setText("Code Segment");
 
-        jLabel19.setFont(new java.awt.Font("Castellar", 1, 12)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel19.setText("Data");
 
-        jLabel30.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel30.setText("GO TO");
 
         jTextField6.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
@@ -1049,7 +1027,7 @@ public class FRAME extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton3.setText("GO");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1081,7 +1059,7 @@ public class FRAME extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))))
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
@@ -1107,11 +1085,10 @@ public class FRAME extends javax.swing.JFrame {
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
 
-        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
         jScrollPane8.setAutoscrolls(true);
 
-        jTable6.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
         jTable6.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"IF Cycle"},
@@ -1151,8 +1128,7 @@ public class FRAME extends javax.swing.JFrame {
         jTable6.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane8.setViewportView(jTable6);
 
-        jLabel21.setFont(new java.awt.Font("Castellar", 1, 12)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel21.setText("CLOCK CYCLE VALUES / TRACING");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -1161,7 +1137,7 @@ public class FRAME extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 347, Short.MAX_VALUE))
             .addComponent(jScrollPane8)
         );
         jPanel4Layout.setVerticalGroup(
@@ -1173,8 +1149,7 @@ public class FRAME extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton4.setBackground(new java.awt.Color(204, 0, 0));
-        jButton4.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton4.setLabel("RESET");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1182,20 +1157,19 @@ public class FRAME extends javax.swing.JFrame {
             }
         });
 
-        jLabel31.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel31.setText("CODE ADDED");
 
-        jButton5.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jButton5.setText("Single-step");
+        jButton5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton5.setText("STEP");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
-        jButton6.setText("Full Execution");
+        jButton6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton6.setText("RUN");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -1275,7 +1249,7 @@ public class FRAME extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jButton6))
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 3, Short.MAX_VALUE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2025,54 +1999,6 @@ public class FRAME extends javax.swing.JFrame {
         new Pipelinemap(pipelinemodel).buildPipelineMap(iList, ct, (DefaultTableModel) jTable6.getModel(), this.hazardType);
 
     }//GEN-LAST:event_jButton7ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FRAME.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FRAME.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FRAME.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FRAME.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-//        MIPSSplash m = new MIPSSplash();
-//        m.splashInit();           // initialize splash overlay drawing parameters
-//        m.appInit();              // simulate what an application would do before starting
-//        if (m.mySplash != null) // check if we really had a spash screen
-//        {
-//            m.mySplash.close();   // we're done with it
-//        }
-//        // begin with the interactive portion of the program
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new FRAME1().setVisible(true);
-//            }
-//        });
-        new FRAME().setVisible(true);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ERRORImmLS;

@@ -1,4 +1,5 @@
 
+import UI.FRAME;
 import UI.FRAME1;
 
 /*
@@ -13,7 +14,7 @@ import UI.FRAME1;
  */
 public class Driver {
     public static void main(String args[]) {
-        FRAME1 frame = new FRAME1();
+        FRAME frame = new FRAME();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
