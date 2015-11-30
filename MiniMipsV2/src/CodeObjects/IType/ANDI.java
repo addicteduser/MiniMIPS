@@ -22,26 +22,23 @@ public class ANDI extends IType {
 
     @Override
     public String ALU(CachedTables ct) {
+        //String rd = "";
+       // String sRS, sIMM;
+        //Long rs;
+        
         String rd = "";
         String sRS, sIMM;
-        Long rs;
-
-        sRS = ct.getRtc().getRegisterRow(this.getRs());
-        sRS = usable.hexStringToNBitBinary(sRS, 64);
+        BigInteger rs, imm, ans;
+        
+        rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()),16);
+        System.out.println("RS = "+rs);
         sIMM = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
-        sIMM = usable.hexToNbit(sIMM, 64);
-
-        for (int i = sRS.length() - 1; i >= 0; i--) {
-            if (sRS.charAt(i) == '0' || sIMM.charAt(i) == '0') {
-                rd = "0" + rd;
-            } else {
-                rd = "1" + rd;
-            }
-        }
-        BigInteger binaryOp2 = new BigInteger(rd, 2);
-        rd = binaryOp2.toString(16);
-        rd = usable.hexToNbit(rd, 16);
-        System.out.println(rd);
+        System.out.println("temp IMM 1 = "+sIMM);
+        imm = new BigInteger(sIMM, 2);      
+        
+        ans = rs.and(imm);
+        rd = usable.hexToNbit(ans.toString(16), 16);
+        
         return rd;
     }
 
