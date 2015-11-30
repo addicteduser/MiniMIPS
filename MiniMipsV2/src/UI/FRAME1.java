@@ -1405,7 +1405,7 @@ public class FRAME1 extends javax.swing.JFrame {
             d = usable.toBinary(0, 5);
             x = new String();
 
-            if (selected.toString().equals("DADDU") || selected.toString().equals("OR") || selected.toString().equals("SLT") || selected.toString().equals("AND")) {
+            if (selected.toString().equals("DADDU") || selected.toString().equals("OR") || selected.toString().equals("ADD.S") || selected.toString().equals("MUL.S") || selected.toString().equals("SLT") || selected.toString().equals("AND")) {
                 flag = 1;
                 JIndexArray.add(Jnull);
                 BEQXArray.add("");
@@ -1414,9 +1414,9 @@ public class FRAME1 extends javax.swing.JFrame {
                         + jComboBox2.getSelectedItem().toString() + " , "
                         + jComboBox3.getSelectedItem().toString();
                 /* Binary of registers selected in jPanel1*/
-                a = usable.toBinary(Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)), 5);
-                b = usable.toBinary(Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)), 5);
-                c = usable.toBinary(Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1)), 5);
+                a = usable.toBinary(Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)), 5);//rd
+                b = usable.toBinary(Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)), 5);//rs
+                c = usable.toBinary(Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1)), 5);//rt
                 switch (selected.toString()) {
                     case "DADDU":
                         x = (usable.toBinary(0, 6) + b + c + a + d + usable.toBinary(45, 6));
@@ -1446,8 +1446,14 @@ public class FRAME1 extends javax.swing.JFrame {
                                 Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
                         break;
+                    case "ADD.S":
+                        x = usable.toBinary(17, 6)+usable.toBinary(16, 5)+c+b+a+usable.toBinary(0, 6);
+                        break;
+                    case "MUL.S":
+                        x = usable.toBinary(17, 6)+usable.toBinary(16, 5)+c+b+a+usable.toBinary(2, 6);
+                        break;
                 }
-            } else if (selected.toString() == "LWU" || selected.toString() == "LW" || selected.toString() == "SW") {
+            } else if (selected.toString().equals("LWU") || selected.toString().equals("LW") || selected.toString().equals("SW") || selected.toString().equals("L.S") || selected.toString().equals("S.S")) {
                 if (isInvalidImmediateLoadStore()) {
                     flag = 0;
                     ERRORImmLS.setVisible(true);
@@ -1482,6 +1488,12 @@ public class FRAME1 extends javax.swing.JFrame {
                             iList.add(new SW(sAddress.get(nIndex2),
                                     -1, Integer.parseInt(jComboBox8.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox7.getSelectedItem().toString().substring(1)), jTF2));
+                            break;
+                        case "L.S":
+                            x = usable.toBinary(49, 6) + b3 + a3 + jTF2;
+                            break;
+                        case "S.S":
+                            x = usable.toBinary(57, 6) + b3 + a3 + jTF2;
                             break;
                     }
                 }
