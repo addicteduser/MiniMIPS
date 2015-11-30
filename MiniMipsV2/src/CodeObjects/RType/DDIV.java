@@ -8,7 +8,7 @@ package CodeObjects.RType;
 import Caches.CachedTables;
 import javax.swing.table.DefaultTableModel;
 import Functions.Usable;
-import UI.FRAME1;
+import UI.FRAME;
 import java.math.BigInteger;
 
 /**
@@ -47,7 +47,7 @@ public class DDIV extends RType {
         temprs = usable.binaryToNbit(rs.toString(2), 64);
         temprt = usable.binaryToNbit(rt.toString(2), 64);
         if (rt.equals(BigInteger.ZERO)) {
-            new FRAME1().ERRORDIVZERO();
+            new FRAME().ERRORDIVZERO();
 
         } else {
             lo = rs.divide(rt);

@@ -8,7 +8,7 @@ package CodeObjects.IType;
 import Caches.CachedTables;
 import java.math.BigInteger;
 import Functions.Usable;
-import UI.FRAME1;
+import UI.FRAME;
 import javax.swing.JOptionPane;
 
 /**
@@ -52,8 +52,8 @@ public class LWU extends IType {
 
         System.out.println("hex: " + offsetTemp);
 
-        if (new FRAME1().isINVALIDinLW(offsetTemp)) {
-            JOptionPane.showMessageDialog(new FRAME1(), "LOADING ADDRESS IS NOT AVAILABLE!", "Error", JOptionPane.ERROR_MESSAGE);
+        if (new FRAME().isINVALIDinLW(offsetTemp)) {
+            JOptionPane.showMessageDialog(new FRAME(), "LOADING ADDRESS IS NOT AVAILABLE!", "Error", JOptionPane.ERROR_MESSAGE);
 
         } else {
 

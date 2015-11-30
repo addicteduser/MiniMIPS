@@ -7,7 +7,7 @@ package CodeObjects.RType;
 
 import Caches.CachedTables;
 import Functions.Usable;
-import UI.FRAME1;
+import UI.FRAME;
 import java.math.BigInteger;
 
 /**
