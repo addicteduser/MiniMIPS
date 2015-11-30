@@ -21,6 +21,7 @@ import CodeObjects.JType.J;
 import CodeObjects.RType.AND;
 import CodeObjects.RType.DADDU;
 import CodeObjects.RType.DDIV;
+import CodeObjects.RType.DMULT;
 import CodeObjects.RType.DSRLV;
 import CodeObjects.RType.DSUBU;
 import CodeObjects.RType.OR;
@@ -1563,7 +1564,7 @@ public class FRAME1 extends javax.swing.JFrame {
             } else {
                 flag = 1;
                 switch (selected.toString()) {
-                    case "DDIV":
+                    case "DMULT":
                         /* Binary of registers selected in jPanel2*/
                         JIndexArray.add(Jnull);
                         BEQXArray.add("");
@@ -1571,8 +1572,8 @@ public class FRAME1 extends javax.swing.JFrame {
                                 + " , " + jComboBox6.getSelectedItem().toString();
                         String a2 = usable.toBinary(Integer.parseInt(jComboBox5.getSelectedItem().toString().substring(1)), 5);
                         String b2 = usable.toBinary(Integer.parseInt(jComboBox6.getSelectedItem().toString().substring(1)), 5);
-                        x = (usable.toBinary(0, 6) + a2 + b2 + d + d + usable.toBinary(30, 6));
-                        iList.add(new DDIV(sAddress.get(nIndex2),
+                        x = (usable.toBinary(0, 6) + a2 + b2 + d + d + usable.toBinary(28, 6));
+                        iList.add(new DMULT(sAddress.get(nIndex2),
                                 -1, Integer.parseInt(jComboBox5.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox6.getSelectedItem().toString().substring(1))));
                         break;

@@ -12,6 +12,7 @@ import CodeObjects.IType.SW;
 import CodeObjects.Instruction;
 import CodeObjects.JType.J;
 import CodeObjects.RType.DDIV;
+import CodeObjects.RType.DMULT;
 import CodeObjects.RType.RType;
 import java.awt.Point;
 import javax.swing.table.DefaultTableModel;
@@ -45,7 +46,7 @@ public class WB {
             }
             this.affectedRegister="n/a";  
         }
-        else if(ins instanceof DDIV){
+        else if(ins instanceof DMULT){
             this.affectedRegister="hi and lo"+"= "+ins.ALU(ct);
             ins.specialFunction(ct);
         }
@@ -66,7 +67,7 @@ public class WB {
             }
             this.affectedRegister="n/a";  
         }
-        else if(ins instanceof DDIV){
+        else if(ins instanceof DMULT){
             this.affectedRegister="hi and lo"+"= "+ins.ALU(ct);
             ins.specialFunction(ct);
         }
