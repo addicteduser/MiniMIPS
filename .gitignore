@@ -2,10 +2,10 @@
 *.s
 
 # Netbeans files
-/build/
-/nbproject/
-.xml
-.mf
+/MiniMipsV2/build/
+/MiniMipsV2/nbproject/
+*.xml
+*.mf
 
 # Java bin
 *.class
