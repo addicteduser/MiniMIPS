@@ -14,7 +14,7 @@ import CodeObjects.IType.BEQ;
 import CodeObjects.IType.DADDIU;
 import CodeObjects.IType.LW;
 import CodeObjects.IType.LWU;
-import CodeObjects.IType.ORI;
+import CodeObjects.IType.ANDI;
 import CodeObjects.IType.SW;
 import CodeObjects.Instruction;
 import CodeObjects.JType.J;
@@ -1491,7 +1491,7 @@ public class FRAME1 extends javax.swing.JFrame {
                             break;
                     }
                 }
-            } else if (selected.toString().equals("DADDIU") || selected.toString().equals("ORI")) {
+            } else if (selected.toString().equals("DADDIU") || selected.toString().equals("ANDI")) {
                 if (isInvalidImmediateOther()) {
                     flag = 0;
                     ERRORImmLS.setVisible(true);
@@ -1514,9 +1514,9 @@ public class FRAME1 extends javax.swing.JFrame {
                                     Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), -1, jTF5));
 //                          iList.add(new )
                             break;
-                        case "ORI":
-                            x = (usable.toBinary(13, 6) + b7 + a7 + jTF5);
-                            iList.add(new ORI(sAddress.get(nIndex2),
+                        case "ANDI":
+                            x = (usable.toBinary(12, 6) + b7 + a7 + jTF5);
+                            iList.add(new ANDI(sAddress.get(nIndex2),
                                     Integer.parseInt(jComboBox11.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), -1, jTF5));
                             break;
