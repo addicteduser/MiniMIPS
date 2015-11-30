@@ -1,6 +1,12 @@
 # Test cases
 *.s
 
+# Netbeans files
+/build/
+/nbproject/
+.xml
+.mf
+
 # Java bin
 *.class
 
