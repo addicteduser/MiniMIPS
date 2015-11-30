@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CodeObjects;
 
 import Caches.CachedTables;
@@ -10,10 +5,6 @@ import CodeObjects.IType.BEQ;
 import CodeObjects.JType.J;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Evy
- */
 public abstract class Instruction {
 
     protected int insNumber;

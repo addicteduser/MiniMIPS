@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CodeObjects.IType;
 
 import Caches.CachedTables;
@@ -12,10 +7,6 @@ import Functions.Usable;
 import UI.FRAME;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author joechua
- */
 public class LW extends IType {
 
     private Usable usable = new Usable();

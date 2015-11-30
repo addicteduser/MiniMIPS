@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CodeObjects.RType;
 
 import CodeObjects.Instruction;
 
-/**
- *
- * @author joechua
- */
 public abstract class RType extends Instruction {
 
     protected int rd, rs, rt;

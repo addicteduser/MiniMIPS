@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CodeObjects.IType;
 
 import Caches.CachedTables;
@@ -10,10 +5,6 @@ import CodeObjects.Instruction;
 import Functions.Usable;
 import java.math.BigInteger;
 
-/**
- *
- * @author joechua
- */
 public class BEQ extends IType {
 
     private int cond;

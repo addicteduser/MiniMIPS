@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Functions;
 
 import java.awt.event.ItemEvent;
@@ -11,10 +6,6 @@ import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
-/**
- *
- * @author nievabri
- */
 public class Usable {
 
     public String chopHexStringToBinary(String hex, int N1, int N2) {

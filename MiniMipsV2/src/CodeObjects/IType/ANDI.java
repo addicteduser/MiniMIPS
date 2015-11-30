@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CodeObjects.IType;
 
 import Caches.CachedTables;
 import Functions.Usable;
 import java.math.BigInteger;
 
-/**
- *
- * @author addicteduser
- */
 public class ANDI extends IType {
     private Usable usable = new Usable();
     
