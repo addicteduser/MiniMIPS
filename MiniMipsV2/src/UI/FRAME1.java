@@ -15,6 +15,7 @@ import CodeObjects.IType.DADDIU;
 import CodeObjects.IType.LW;
 import CodeObjects.IType.LWU;
 import CodeObjects.IType.ANDI;
+import CodeObjects.IType.DSLL;
 import CodeObjects.IType.SW;
 import CodeObjects.Instruction;
 import CodeObjects.JType.J;
@@ -1404,7 +1405,7 @@ public class FRAME1 extends javax.swing.JFrame {
             d = usable.toBinary(0, 5);
             x = new String();
 
-            if (selected.toString().equals("DADDU") || selected.toString().equals("OR") || selected.toString().equals("DSRLV") || selected.toString().equals("SLT") || selected.toString().equals("AND")) {
+            if (selected.toString().equals("DADDU") || selected.toString().equals("OR") || selected.toString().equals("SLT") || selected.toString().equals("AND")) {
                 flag = 1;
                 JIndexArray.add(Jnull);
                 BEQXArray.add("");
@@ -1427,13 +1428,6 @@ public class FRAME1 extends javax.swing.JFrame {
                     case "OR":
                         x = (usable.toBinary(0, 6) + b + c + a + d + usable.toBinary(37, 6));
                         iList.add(new OR(sAddress.get(nIndex2),
-                                Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
-                                Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
-                                Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
-                        break;
-                    case "DSRLV":
-                        x = (usable.toBinary(0, 6) + b + c + a + d + usable.toBinary(22, 6));
-                        iList.add(new DSRLV(sAddress.get(nIndex2),
                                 Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
@@ -1491,7 +1485,7 @@ public class FRAME1 extends javax.swing.JFrame {
                             break;
                     }
                 }
-            } else if (selected.toString().equals("DADDIU") || selected.toString().equals("ANDI")) {
+            } else if (selected.toString().equals("DSLL") || selected.toString().equals("DADDIU") || selected.toString().equals("ANDI")) {
                 if (isInvalidImmediateOther()) {
                     flag = 0;
                     ERRORImmLS.setVisible(true);
@@ -1512,11 +1506,21 @@ public class FRAME1 extends javax.swing.JFrame {
                             iList.add(new DADDIU(sAddress.get(nIndex2),
                                     Integer.parseInt(jComboBox11.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), -1, jTF5));
-//                          iList.add(new )
                             break;
                         case "ANDI":
                             x = (usable.toBinary(12, 6) + b7 + a7 + jTF5);
                             iList.add(new ANDI(sAddress.get(nIndex2),
+                                    Integer.parseInt(jComboBox11.getSelectedItem().toString().substring(1)),
+                                    Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), -1, jTF5));
+                            break;
+                        case "DSLL":
+                            long imm = Long.parseLong(jTextField5.getText(),16);
+                            String temp = usable.toBinary(imm, 16);
+                            System.out.println("DSLL = "+imm);
+                            System.out.println("DSLL = "+temp);
+                            jTF5 = temp.substring(11);
+                            x = usable.toBinary(0, 6) + usable.toBinary(0, 5) + b7 + a7 + jTF5 + usable.toBinary(56, 6);
+                            iList.add(new DSLL(sAddress.get(nIndex2),
                                     Integer.parseInt(jComboBox11.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), -1, jTF5));
                             break;
@@ -1625,7 +1629,7 @@ public class FRAME1 extends javax.swing.JFrame {
             case "AND":
             case "DADDU":
             case "OR":
-            case "DSLL":
+            //case "DSLL":
             case "MUL.S":
             case "ADD.S":
                 jPanel1.setVisible(true);
@@ -1650,6 +1654,7 @@ public class FRAME1 extends javax.swing.JFrame {
             case "DADDIU":
             case "ORI":
             case "ANDI":
+            case "DSLL":
                 jPanel7.setVisible(true);
                 break;
         }
