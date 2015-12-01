@@ -1,9 +1,9 @@
 
-import UI.FRAME;
+import UI.MipsUI;
 
 public class Driver {
     public static void main(String args[]) {
-        FRAME frame = new FRAME();
+        MipsUI frame = new MipsUI();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
