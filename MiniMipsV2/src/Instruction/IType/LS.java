@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Instruction.IType;
 
 import Helper.Usable;
@@ -11,10 +6,6 @@ import UI.MipsUI;
 import java.math.BigInteger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author addicteduser
- */
 public class LS extends IType {
 
     private Usable usable = new Usable();

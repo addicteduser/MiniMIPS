@@ -7,6 +7,7 @@ import Instruction.IType.SW;
 import Instruction.Instruction;
 import Helper.Usable;
 import Instruction.IType.LS;
+import Instruction.IType.SS;
 import java.awt.Point;
 import java.math.BigInteger;
 import javax.swing.table.DefaultTableModel;
@@ -85,7 +86,7 @@ public class MEMWB {
             this.LMD = this.ALUOUTPUT;
             ins.specialFunction(ct);
         }
-        if (ins instanceof SW) {
+        if (ins instanceof SW || ins instanceof SS) {
             int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB().toString(), 2);
 //                Long temp = Long.parseLong(ct.getRtc().getRegisterRow(b).toString(),16);
 //                String sTemp = temp.toString();
@@ -93,7 +94,7 @@ public class MEMWB {
 //                this.MEM_ALUOUTPUT= new Usable().hexToNbit(binaryOp.toString(), 16);
             this.MEM_ALUOUTPUT = ct.getRtc().getRegisterRow(b).toString();
         } else {
-            this.MEM_ALUOUTPUT = "n/a";
+            this.MEM_ALUOUTPUT = "N/A";
         }
     }
 
@@ -105,7 +106,7 @@ public class MEMWB {
             this.LMD = this.ALUOUTPUT;
             ins.specialFunction(ct);
         }
-        if (ins instanceof SW) {
+        if (ins instanceof SW || ins instanceof SS) {
             int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB().toString(), 2);
 //                Long temp = Long.parseLong(ct.getRtc().getRegisterRow(b).toString(),16);
 //                String sTemp = temp.toString();
@@ -113,7 +114,7 @@ public class MEMWB {
 //                this.MEM_ALUOUTPUT= new Usable().hexToNbit(binaryOp.toString(), 16);
             this.MEM_ALUOUTPUT = ct.getRtc().getRegisterRow(b).toString();
         } else {
-            this.MEM_ALUOUTPUT = "n/a";
+            this.MEM_ALUOUTPUT = "N/A";
         }
     }
     

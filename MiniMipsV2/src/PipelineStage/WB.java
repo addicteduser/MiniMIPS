@@ -3,6 +3,7 @@ package PipelineStage;
 import Table.CachedTables;
 import Instruction.IType.BEQ;
 import Instruction.IType.IType;
+import Instruction.IType.SS;
 import Instruction.IType.SW;
 import Instruction.Instruction;
 import Instruction.JType.J;
@@ -12,7 +13,7 @@ import java.awt.Point;
 import javax.swing.table.DefaultTableModel;
 
 public class WB {
-    private String affectedRegister="n/a";
+    private String affectedRegister="N/A";
     private Point position;
     private Instruction ins;
     /**
@@ -34,10 +35,10 @@ public class WB {
             if(ins instanceof SW){
                 ins.specialFunction(ct);
             }
-            this.affectedRegister="n/a";  
+            this.affectedRegister="N/A";  
         }
         else if(ins instanceof DMULT){
-            this.affectedRegister="hi and lo"+"= "+ins.ALU(ct);
+            this.affectedRegister="HI/LO"+"= "+ins.ALU(ct);
             ins.specialFunction(ct);
         }
         else{
@@ -51,14 +52,14 @@ public class WB {
     }
     
         public void reWriteback( CachedTables ct){
-        if(ins instanceof BEQ || ins instanceof SW || ins instanceof J){
-            if(ins instanceof SW){
+        if(ins instanceof BEQ || ins instanceof SW || ins instanceof J || ins instanceof SS){
+            if(ins instanceof SW || ins instanceof SS){
                 ins.specialFunction(ct);
             }
-            this.affectedRegister="n/a";  
+            this.affectedRegister="N/A";  
         }
         else if(ins instanceof DMULT){
-            this.affectedRegister="hi and lo"+"= "+ins.ALU(ct);
+            this.affectedRegister="HI/LO"+"= "+ins.ALU(ct);
             ins.specialFunction(ct);
         }
         else{
