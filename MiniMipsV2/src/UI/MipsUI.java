@@ -1,36 +1,38 @@
 package UI;
 
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.math.BigInteger;
+import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import Helper.NumberBuilder;
+import Helper.PipelineMap;
+import Instruction.Instruction;
+import Instruction.IType.ANDI;
+import Instruction.IType.BEQ;
+import Instruction.IType.DADDIU;
+import Instruction.IType.DSLL;
+import Instruction.IType.LS;
+import Instruction.IType.LW;
+import Instruction.IType.LWU;
+import Instruction.IType.SS;
+import Instruction.IType.SW;
+import Instruction.JType.J;
+import Instruction.RType.ADDS;
+import Instruction.RType.DADDU;
+import Instruction.RType.DMULT;
+import Instruction.RType.MULS;
+import Instruction.RType.OR;
+import Instruction.RType.SLT;
 import Table.CachedTables;
 import Table.DataTableCache;
 import Table.OpcodeTableCache;
 import Table.OpcodeTableRow;
 import Table.RegisterTableCache;
-import Instruction.IType.BEQ;
-import Instruction.IType.DADDIU;
-import Instruction.IType.LW;
-import Instruction.IType.LWU;
-import Instruction.IType.ANDI;
-import Instruction.IType.DSLL;
-import Instruction.IType.SW;
-import Instruction.Instruction;
-import Instruction.JType.J;
-import Instruction.RType.DADDU;
-import Instruction.RType.DMULT;
-import Instruction.RType.OR;
-import Instruction.RType.SLT;
-import Helper.PipelineMap;
-import Helper.NumberBuilder;
-import Instruction.IType.LS;
-import Instruction.IType.SS;
-import Instruction.RType.ADDS;
-import Instruction.RType.MULS;
-import java.awt.Color;
-import java.awt.Rectangle;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 public class MipsUI extends javax.swing.JFrame {
 
@@ -46,7 +48,6 @@ public class MipsUI extends javax.swing.JFrame {
     private DataTableCache datatablecache;
     private CachedTables cachedtables;
 
-    NumberBuilder usable = new NumberBuilder();
     private String hex;
     private int nIndex = -1;
     private ArrayList<String> labelSA = new ArrayList<String>();
@@ -99,7 +100,7 @@ public class MipsUI extends javax.swing.JFrame {
         String extendValue;
 
         if (changedValue.matches("[a-fA-F0-9]*") && changedValue.length() > 0 && changedValue.length() <= 16) {
-            extendValue = usable.hexToNbit(changedValue, 16);
+            extendValue = NumberBuilder.hexToNbit(changedValue, 16);
             regModel.setValueAt(extendValue.toUpperCase(), r, c);
         } else {
             JOptionPane.showMessageDialog(this, "Invalid input!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -117,7 +118,7 @@ public class MipsUI extends javax.swing.JFrame {
         String extendValue;
 
         if (changedValue.matches("[a-fA-F0-9]*") && changedValue.length() > 0 && changedValue.length() <= 2) {
-            extendValue = usable.hexToNbit(changedValue, 2);
+            extendValue = NumberBuilder.hexToNbit(changedValue, 2);
             dataModel.setValueAt(extendValue.toUpperCase(), r, c);
             dataModel.setValueAt(extendValue.toUpperCase(), r, c + 1);
         } else {
@@ -129,12 +130,12 @@ public class MipsUI extends javax.swing.JFrame {
     public boolean isLabelInvalid() {
         if (!jTextField1.getText().equals("")) {
             String sTemp = jTextField1.getText().toUpperCase();
-            if (sTemp.equals("DADDU") || sTemp.equals("DMULT") || sTemp.equals("OR") || sTemp.equals("DSLL") || sTemp.equals("ANDI") || sTemp.equals("DSUBU") || sTemp.equals("DDIV")
-                    || sTemp.equals("AND") || sTemp.equals("BEQ")
-                    || sTemp.equals("DSRLV") || sTemp.equals("SLT")
-                    || sTemp.equals("LW") || sTemp.equals("LWU")
-                    || sTemp.equals("SW") || sTemp.equals("DADDIU")
-                    || sTemp.equals("ORI") || sTemp.equals("J")
+            if (sTemp.equals("DADDU") || sTemp.equals("DMULT")
+            		|| sTemp.equals("OR") || sTemp.equals("DSLL") 
+            		|| sTemp.equals("ANDI") || sTemp.equals("BEQ")
+            		|| sTemp.equals("SLT") || sTemp.equals("LW")
+            		|| sTemp.equals("LWU") || sTemp.equals("SW")
+            		|| sTemp.equals("DADDIU")|| sTemp.equals("J")
                     || sTemp.substring(0, 1).matches("[0-9]")
                     || !sTemp.matches("[a-zA-Z0-9_]*")) {
                 return true;
@@ -153,12 +154,12 @@ public class MipsUI extends javax.swing.JFrame {
             return true;
         } else {
             String sTemp = label.toUpperCase();
-            if (sTemp.equals("DADDU") || sTemp.equals("DMULT") || sTemp.equals("OR") || sTemp.equals("DSLL") || sTemp.equals("ANDI") || sTemp.equals("DSUBU") || sTemp.equals("DDIV")
-                    || sTemp.equals("AND") || sTemp.equals("BEQ")
-                    || sTemp.equals("DSRLV") || sTemp.equals("SLT")
-                    || sTemp.equals("LW") || sTemp.equals("LWU")
-                    || sTemp.equals("SW") || sTemp.equals("DADDIU")
-                    || sTemp.equals("ORI") || sTemp.equals("J")
+            if (sTemp.equals("DADDU") || sTemp.equals("DMULT")
+            		|| sTemp.equals("OR") || sTemp.equals("DSLL") 
+            		|| sTemp.equals("ANDI") || sTemp.equals("BEQ")
+            		|| sTemp.equals("SLT") || sTemp.equals("LW")
+            		|| sTemp.equals("LWU") || sTemp.equals("SW")
+            		|| sTemp.equals("DADDIU")|| sTemp.equals("J")
                     || sTemp.substring(0, 1).matches("[0-9]")
                     || !sTemp.matches("[a-zA-Z0-9_]*")) {
                 return true;
@@ -228,7 +229,7 @@ public class MipsUI extends javax.swing.JFrame {
             int compare = i % 4;
             if (compare == 0) {
                 hex = Integer.toHexString(i).toUpperCase();
-                hex = usable.hexToNbit(hex, 4);
+                hex = NumberBuilder.hexToNbit(hex, 4);
                 codemodel.addRow(new Object[]{hex});
             }
         }
@@ -238,7 +239,7 @@ public class MipsUI extends javax.swing.JFrame {
         datamodel = (DefaultTableModel) jTable4.getModel();
         for (int i = 8192; i <= 16383; i++) {
             hex = Integer.toHexString(i).toUpperCase();
-            hex = usable.hexToNbit(hex, 4);
+            hex = NumberBuilder.hexToNbit(hex, 4);
             datamodel.addRow(new Object[]{hex, "00", "00"});
         }
     }
@@ -367,7 +368,6 @@ public class MipsUI extends javax.swing.JFrame {
         jLabel32.setText("jLabel32");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setEnabled(false);
 
         panel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -385,7 +385,7 @@ public class MipsUI extends javax.swing.JFrame {
         });
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel18.setText("OPCODE");
+        jLabel18.setText("Step 2 - OPCODE TABLE");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("ADD");
@@ -407,7 +407,7 @@ public class MipsUI extends javax.swing.JFrame {
         });
 
         lblGroup7.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        lblGroup7.setText("MiniMIPS [NO FWD, FREEZE]");
+        lblGroup7.setText("GROUP 7 - PIPELINE FLUSH");
         lblGroup7.setPreferredSize(new java.awt.Dimension(100, 100));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -428,7 +428,7 @@ public class MipsUI extends javax.swing.JFrame {
         jLabel2.setText("(OPTIONAL) LABEL");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("INPUT MIPS CODE");
+        jLabel3.setText("Step 1 - INPUT CODE");
 
         panel2.setLayout(new java.awt.CardLayout());
 
@@ -848,6 +848,7 @@ public class MipsUI extends javax.swing.JFrame {
 
         jScrollPane3.setAutoscrolls(true);
 
+        jTable2.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -893,7 +894,7 @@ public class MipsUI extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jScrollPane1);
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel20.setText("PIPELINE MAP");
+        jLabel20.setText("Step 3 - PIPELINE MAP");
 
         panel3.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -1021,7 +1022,7 @@ public class MipsUI extends javax.swing.JFrame {
         jLabel17.setText("Code Segment");
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel19.setText("Data Segment");
+        jLabel19.setText("Data");
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel30.setText("GO TO");
@@ -1053,27 +1054,22 @@ public class MipsUI extends javax.swing.JFrame {
                     .addGroup(panel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel17)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
-                        .addGroup(panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel3Layout.createSequentialGroup()
+                        .addContainerGap())
+                    .addGroup(panel3Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(panel3Layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addGap(89, 89, 89)
+                                .addComponent(jLabel30)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel3Layout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addGroup(panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(panel3Layout.createSequentialGroup()
-                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(panel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel19)
-                                        .addGap(39, 39, 39)
-                                        .addComponent(jLabel30)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(12, 12, 12)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addContainerGap())))
+                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
         );
         panel3Layout.setVerticalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1140,14 +1136,16 @@ public class MipsUI extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jTable6);
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel21.setText("PIPELINE TRACING");
+        jLabel21.setText("CLOCK CYCLE VALUES / TRACING");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 347, Short.MAX_VALUE))
+            .addComponent(jScrollPane8)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1258,12 +1256,12 @@ public class MipsUI extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jButton6))
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 3, Short.MAX_VALUE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50))
+                .addContainerGap())
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1332,10 +1330,10 @@ public class MipsUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1363,13 +1361,13 @@ public class MipsUI extends javax.swing.JFrame {
 
         if (!isLabelInvalid()) {
             nIndex++;
-            temp = usable.toBinary((nIndex * 4), 28);
+            temp = NumberBuilder.toBinary((nIndex * 4), 28);
             temp = temp.substring(0, temp.length() - 2);
             sAddress.add(temp);
             labelSA.add(jTextField1.getText());
 
             selected = jComboBox4.getSelectedItem();
-            d = usable.toBinary(0, 5);
+            d = NumberBuilder.toBinary(0, 5);
             x = new String();
 
             if (selected.toString().equals("DADDU") || selected.toString().equals("OR")
@@ -1383,41 +1381,41 @@ public class MipsUI extends javax.swing.JFrame {
                         + jComboBox2.getSelectedItem().toString() + " , "
                         + jComboBox3.getSelectedItem().toString();
                 /* Binary of registers selected in jPanel1*/
-                a = usable.toBinary(Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)), 5);//rd
-                b = usable.toBinary(Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)), 5);//rs
-                c = usable.toBinary(Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1)), 5);//rt
+                a = NumberBuilder.toBinary(Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)), 5);//rd
+                b = NumberBuilder.toBinary(Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)), 5);//rs
+                c = NumberBuilder.toBinary(Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1)), 5);//rt
                 switch (selected.toString()) {
                     case "DADDU":
-                        x = (usable.toBinary(0, 6) + b + c + a + d + usable.toBinary(45, 6));
+                        x = (NumberBuilder.toBinary(0, 6) + b + c + a + d + NumberBuilder.toBinary(45, 6));
                         iList.add(new DADDU(sAddress.get(nIndex2),
                                 Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
                         break;
                     case "OR":
-                        x = (usable.toBinary(0, 6) + b + c + a + d + usable.toBinary(37, 6));
+                        x = (NumberBuilder.toBinary(0, 6) + b + c + a + d + NumberBuilder.toBinary(37, 6));
                         iList.add(new OR(sAddress.get(nIndex2),
                                 Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
                         break;
                     case "SLT":
-                        x = (usable.toBinary(0, 6) + b + c + a + d + usable.toBinary(42, 6));
+                        x = (NumberBuilder.toBinary(0, 6) + b + c + a + d + NumberBuilder.toBinary(42, 6));
                         iList.add(new SLT(sAddress.get(nIndex2),
                                 Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
                         break;
                     case "ADD.S":
-                        x = usable.toBinary(17, 6) + usable.toBinary(16, 5) + c + b + a + usable.toBinary(0, 6);
+                        x = NumberBuilder.toBinary(17, 6) + NumberBuilder.toBinary(16, 5) + c + b + a + NumberBuilder.toBinary(0, 6);
                         iList.add(new ADDS(sAddress.get(nIndex2),
                                 Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
                         break;
                     case "MUL.S":
-                        x = usable.toBinary(17, 6) + usable.toBinary(16, 5) + c + b + a + usable.toBinary(2, 6);
-                        iList.add(new MULS (sAddress.get(nIndex2),
+                        x = NumberBuilder.toBinary(17, 6) + NumberBuilder.toBinary(16, 5) + c + b + a + NumberBuilder.toBinary(2, 6);
+                        iList.add(new MULS(sAddress.get(nIndex2),
                                 Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
@@ -1435,39 +1433,39 @@ public class MipsUI extends javax.swing.JFrame {
                     tempInst = jComboBox4.getSelectedItem().toString() + " "
                             + jComboBox7.getSelectedItem().toString() + ", " + jTextField2.getText() + "("
                             + jComboBox8.getSelectedItem().toString() + ")";
-                    String a3 = usable.toBinary(Integer.parseInt(jComboBox7.getSelectedItem().toString().substring(1)), 5);
-                    String b3 = usable.toBinary(Integer.parseInt(jComboBox8.getSelectedItem().toString().substring(1)), 5);
-                    String jTF2 = usable.hexStringToNBitBinary(jTextField2.getText(), 16);
+                    String a3 = NumberBuilder.toBinary(Integer.parseInt(jComboBox7.getSelectedItem().toString().substring(1)), 5);
+                    String b3 = NumberBuilder.toBinary(Integer.parseInt(jComboBox8.getSelectedItem().toString().substring(1)), 5);
+                    String jTF2 = NumberBuilder.hexStringToNBitBinary(jTextField2.getText(), 16);
                     switch (selected.toString()) {
                         case "LW":
-                            x = usable.toBinary(35, 6) + b3 + a3 + jTF2;
+                            x = NumberBuilder.toBinary(35, 6) + b3 + a3 + jTF2;
                             iList.add(new LW(sAddress.get(nIndex2),
                                     Integer.parseInt(jComboBox7.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox8.getSelectedItem().toString().substring(1)),
                                     -1, jTF2));
                             break;
                         case "LWU":
-                            x = usable.toBinary(39, 6) + b3 + a3 + jTF2;
+                            x = NumberBuilder.toBinary(39, 6) + b3 + a3 + jTF2;
                             iList.add(new LWU(sAddress.get(nIndex2),
                                     Integer.parseInt(jComboBox7.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox8.getSelectedItem().toString().substring(1)),
                                     -1, jTF2));
                             break;
                         case "SW":
-                            x = usable.toBinary(43, 6) + b3 + a3 + jTF2;
+                            x = NumberBuilder.toBinary(43, 6) + b3 + a3 + jTF2;
                             iList.add(new SW(sAddress.get(nIndex2),
                                     -1, Integer.parseInt(jComboBox8.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox7.getSelectedItem().toString().substring(1)), jTF2));
                             break;
                         case "L.S":
-                            x = usable.toBinary(49, 6) + b3 + a3 + jTF2;
+                            x = NumberBuilder.toBinary(49, 6) + b3 + a3 + jTF2;
                             iList.add(new LS(sAddress.get(nIndex2),
                                     Integer.parseInt(jComboBox7.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox8.getSelectedItem().toString().substring(1)),
                                     -1, jTF2));
                             break;
                         case "S.S":
-                            x = usable.toBinary(57, 6) + b3 + a3 + jTF2;
+                            x = NumberBuilder.toBinary(57, 6) + b3 + a3 + jTF2;
                             iList.add(new SS(sAddress.get(nIndex2),
                                     -1, Integer.parseInt(jComboBox8.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox7.getSelectedItem().toString().substring(1)), jTF2));
@@ -1483,32 +1481,32 @@ public class MipsUI extends javax.swing.JFrame {
                     ERRORImmLS.setVisible(false);
                     BEQXArray.add("");
                     JIndexArray.add(Jnull);
-                    String a7 = usable.toBinary(Integer.parseInt(jComboBox11.getSelectedItem().toString().substring(1)), 5);
-                    String b7 = usable.toBinary(Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), 5);
-                    String jTF5 = usable.hexStringToNBitBinary(jTextField5.getText(), 16);
+                    String a7 = NumberBuilder.toBinary(Integer.parseInt(jComboBox11.getSelectedItem().toString().substring(1)), 5);
+                    String b7 = NumberBuilder.toBinary(Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), 5);
+                    String jTF5 = NumberBuilder.hexStringToNBitBinary(jTextField5.getText(), 16);
                     tempInst = jComboBox4.getSelectedItem().toString() + " " + jComboBox11.getSelectedItem().toString()
                             + " , " + jComboBox12.getSelectedItem().toString() + " , "
                             + jTextField5.getText();
                     switch (selected.toString()) {
                         case "DADDIU":
-                            x = usable.toBinary(25, 6) + b7 + a7 + jTF5;
+                            x = NumberBuilder.toBinary(25, 6) + b7 + a7 + jTF5;
                             iList.add(new DADDIU(sAddress.get(nIndex2),
                                     Integer.parseInt(jComboBox11.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), -1, jTF5));
                             break;
                         case "ANDI":
-                            x = (usable.toBinary(12, 6) + b7 + a7 + jTF5);
+                            x = (NumberBuilder.toBinary(12, 6) + b7 + a7 + jTF5);
                             iList.add(new ANDI(sAddress.get(nIndex2),
                                     Integer.parseInt(jComboBox11.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), -1, jTF5));
                             break;
                         case "DSLL":
                             long imm = Long.parseLong(jTextField5.getText(), 16);
-                            String temp = usable.toBinary(imm, 16);
+                            String temp = NumberBuilder.toBinary(imm, 16);
                             System.out.println("DSLL = " + imm);
                             System.out.println("DSLL = " + temp);
                             jTF5 = temp.substring(11);
-                            x = usable.toBinary(0, 6) + usable.toBinary(0, 5) + b7 + a7 + jTF5 + usable.toBinary(56, 6);
+                            x = NumberBuilder.toBinary(0, 6) + NumberBuilder.toBinary(0, 5) + b7 + a7 + jTF5 + NumberBuilder.toBinary(56, 6);
                             iList.add(new DSLL(sAddress.get(nIndex2),
                                     Integer.parseInt(jComboBox11.getSelectedItem().toString().substring(1)),
                                     Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), -1, jTF5));
@@ -1533,7 +1531,7 @@ public class MipsUI extends javax.swing.JFrame {
                             JIndexArray.add(jTextField3.getText());
                             BEQXArray.add("");
                             tempInst = jComboBox4.getSelectedItem().toString() + " " + jTextField3.getText();
-                            x = usable.toBinary(2, 6); //temp j opcode value to replace in done button
+                            x = NumberBuilder.toBinary(2, 6); //temp j opcode value to replace in done button
                             iList.add(new J(sAddress.get(nIndex2), toPass));
                             break;
                         case "BEQ":
@@ -1541,12 +1539,12 @@ public class MipsUI extends javax.swing.JFrame {
                             tempInst = jComboBox4.getSelectedItem().toString() + " " + jComboBox9.getSelectedItem().toString()
                                     + " , " + jComboBox10.getSelectedItem().toString() + " , " + jTextField4.getText();
                             //jCB9, jCB10, jTF4
-                            String a6 = usable.toBinary(Integer.parseInt(jComboBox9.getSelectedItem().toString().substring(1)), 5);
-                            String b7 = usable.toBinary(Integer.parseInt(jComboBox10.getSelectedItem().toString().substring(1)), 5);
+                            String a6 = NumberBuilder.toBinary(Integer.parseInt(jComboBox9.getSelectedItem().toString().substring(1)), 5);
+                            String b7 = NumberBuilder.toBinary(Integer.parseInt(jComboBox10.getSelectedItem().toString().substring(1)), 5);
                             String jTF4 = jTextField4.getText();
                             String BEQopcodeTEMP;
                             x = a6; //temp opcode
-                            BEQopcodeTEMP = usable.toBinary(4, 6) + a6 + b7 + jTF4;
+                            BEQopcodeTEMP = NumberBuilder.toBinary(4, 6) + a6 + b7 + jTF4;
                             BEQXArray.add(BEQopcodeTEMP);
                             iList.add(new BEQ(sAddress.get(nIndex2),
                                     -1, Integer.parseInt(jComboBox9.getSelectedItem().toString().substring(1)),
@@ -1563,9 +1561,9 @@ public class MipsUI extends javax.swing.JFrame {
                         BEQXArray.add("");
                         tempInst = jComboBox4.getSelectedItem().toString() + " " + jComboBox5.getSelectedItem().toString()
                                 + " , " + jComboBox6.getSelectedItem().toString();
-                        String a2 = usable.toBinary(Integer.parseInt(jComboBox5.getSelectedItem().toString().substring(1)), 5);
-                        String b2 = usable.toBinary(Integer.parseInt(jComboBox6.getSelectedItem().toString().substring(1)), 5);
-                        x = (usable.toBinary(0, 6) + a2 + b2 + d + d + usable.toBinary(28, 6));
+                        String a2 = NumberBuilder.toBinary(Integer.parseInt(jComboBox5.getSelectedItem().toString().substring(1)), 5);
+                        String b2 = NumberBuilder.toBinary(Integer.parseInt(jComboBox6.getSelectedItem().toString().substring(1)), 5);
+                        x = (NumberBuilder.toBinary(0, 6) + a2 + b2 + d + d + NumberBuilder.toBinary(28, 6));
                         iList.add(new DMULT(sAddress.get(nIndex2),
                                 -1, Integer.parseInt(jComboBox5.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox6.getSelectedItem().toString().substring(1))));
@@ -1582,9 +1580,9 @@ public class MipsUI extends javax.swing.JFrame {
                 }
                 BigInteger binaryOpcode = new BigInteger(x, 2);
                 String opcode = binaryOpcode.toString(16);
-                System.out.println("\nopcode in hex: " + usable.hexToNbit(opcode, 8));
+                System.out.println("\nopcode in hex: " + NumberBuilder.hexToNbit(opcode, 8));
 
-                OPCODE8.add(usable.hexToNbit(opcode, 8));
+                OPCODE8.add(NumberBuilder.hexToNbit(opcode, 8));
                 sInstruction.add(tempInst);
                 jTextField1.setText("");
                 nIndex2++;
@@ -1743,7 +1741,7 @@ public class MipsUI extends javax.swing.JFrame {
         jButton2.setEnabled(false);
         jButton1.setEnabled(false);
         nIndex++;
-        temp = usable.toBinary((nIndex * 4), 28);
+        temp = NumberBuilder.toBinary((nIndex * 4), 28);
         temp = temp.substring(0, temp.length() - 2);
         sAddress.add(temp);
 
@@ -1752,12 +1750,12 @@ public class MipsUI extends javax.swing.JFrame {
             for (int i = 0; i < JIndexArray.size(); i++) {
                 if (!JIndexArray.get(i).equals("")) {
 
-                    x = usable.toBinary(2, 6) + sAddress.get((labelSA.indexOf(JIndexArray.get(i))));
+                    x = NumberBuilder.toBinary(2, 6) + sAddress.get((labelSA.indexOf(JIndexArray.get(i))));
                     BigInteger binaryOpcode2 = new BigInteger(x, 2);
                     String newJOpcode = "";
                     newJOpcode = binaryOpcode2.toString(16);
-                    System.out.println("\nJopcode in hex: " + usable.hexToNbit(newJOpcode, 8));
-                    OPCODE8.set(i, usable.hexToNbit(newJOpcode, 8));
+                    System.out.println("\nJopcode in hex: " + NumberBuilder.hexToNbit(newJOpcode, 8));
+                    OPCODE8.set(i, NumberBuilder.hexToNbit(newJOpcode, 8));
                 }
             }
             long target = 0L;
@@ -1777,7 +1775,7 @@ public class MipsUI extends javax.swing.JFrame {
                         BEQoffset = BEQoffset.substring(BEQoffset.length() - 18, BEQoffset.length() - 2); //correct.
                         System.out.println(target + "-" + PC + " - A");
                     } else {
-                        BEQoffset = usable.toBinary(temp1, 18);
+                        BEQoffset = NumberBuilder.toBinary(temp1, 18);
                         BEQoffset = BEQoffset.substring(0, BEQoffset.length() - 2);
                         System.out.println(BEQoffset + " - B");
 
@@ -1788,16 +1786,16 @@ public class MipsUI extends javax.swing.JFrame {
                     BigInteger binaryOpcode2 = new BigInteger(x, 2);
                     String newBEQOpcode = new String();
                     newBEQOpcode = binaryOpcode2.toString(16);
-                    System.out.println("\nBEQopcode in hex: " + usable.hexToNbit(newBEQOpcode, 8));
-                    OPCODE8.set(i, usable.hexToNbit(newBEQOpcode, 8));
+                    System.out.println("\nBEQopcode in hex: " + NumberBuilder.hexToNbit(newBEQOpcode, 8));
+                    OPCODE8.set(i, NumberBuilder.hexToNbit(newBEQOpcode, 8));
                 }
             }
 
             opcodemodel = (DefaultTableModel) jTable1.getModel(); //model = opcode table
             for (int i = 0; i < OPCODE8.size(); i++) {
-                opcodemodel.addRow(new Object[]{sInstruction.get(i), OPCODE8.get(i).toUpperCase(), usable.chopHexStringToBinary(OPCODE8.get(i), 0, 5),
-                    usable.chopHexStringToBinary(OPCODE8.get(i), 6, 10), usable.chopHexStringToBinary(OPCODE8.get(i), 11, 15),
-                    usable.chopHexStringToBinary(OPCODE8.get(i), 16, 31)});
+                opcodemodel.addRow(new Object[]{sInstruction.get(i), OPCODE8.get(i).toUpperCase(), NumberBuilder.chopHexStringToBinary(OPCODE8.get(i), 0, 5),
+                    NumberBuilder.chopHexStringToBinary(OPCODE8.get(i), 6, 10), NumberBuilder.chopHexStringToBinary(OPCODE8.get(i), 11, 15),
+                    NumberBuilder.chopHexStringToBinary(OPCODE8.get(i), 16, 31)});
                 /* update only 2nd column onwards */
                 codemodel.setValueAt(OPCODE8.get(i).toUpperCase(), i, 1);
                 codemodel.setValueAt(labelSA.get(i), i, 2);
@@ -1822,7 +1820,7 @@ public class MipsUI extends javax.swing.JFrame {
              for (int i = 0; i < iList.size(); i++, tempInd++) {
              iList.get(i).setInsNumber(i);
              hexaddr = Integer.toHexString(tempInd * 4);
-             hexaddr = usable.hexStringToNBitBinary(hexaddr, 4);
+             hexaddr = NumberBuilder.hexStringToNBitBinary(hexaddr, 4);
              // iList.get(i).setMemAddrInHex(hexaddr);
              System.out.println("testing [done] ins instance: " + iList.get(i));
              System.out.println(iList.get(i).ALU(cachedtables));
@@ -1966,7 +1964,7 @@ public class MipsUI extends javax.swing.JFrame {
 
         CachedTables ct = new CachedTables(((DefaultTableModel) jTable5.getModel()), ((DefaultTableModel) jTable4.getModel()), ((DefaultTableModel) jTable1.getModel()), ((DefaultTableModel) jTable3.getModel()), opcodemodel.getRowCount());
         pipelinemodel = (DefaultTableModel) jTable2.getModel();
-        this.hazardType = "PipelineFlush";
+        this.hazardType = new String("PipelineFlush");
         new PipelineMap(pipelinemodel).buildPipelineMap(iList, ct, (DefaultTableModel) jTable6.getModel(), this.hazardType);
 
     }//GEN-LAST:event_jButton6ActionPerformed

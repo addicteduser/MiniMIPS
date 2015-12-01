@@ -274,10 +274,12 @@ public class PipelineMap {
     private void traceNotbeqwithoutstall(Instruction ins) {
         int cyclenum = new Point(this.nextIF).x;
         cyclenum -= 1;
+
         this.cycles.get(cyclenum).setIfid(fetch(ins, cyclenum++));
         this.cycles.get(cyclenum).setIdex(decode(ins, cyclenum++));
         this.cycles.get(cyclenum).setExmem(execute(ins, cyclenum++));
         this.cycles.get(cyclenum).setMemwb(memory(ins, cyclenum++));
+
         this.cycles.get(cyclenum).setWb(write(ins, cyclenum));
 
     }
@@ -285,6 +287,7 @@ public class PipelineMap {
     private void traceNotbeqButstalled(Instruction ins) {
         int cyclenum = new Point(this.nextIF).x;
         cyclenum -= 1;
+
         this.cycles.get(cyclenum).setIfid(fetch(ins, cyclenum));
         for (int x = 0; x < 3; x++) {
             this.setValue("*", this.nextIF.y, this.nextIF.x);
@@ -294,6 +297,7 @@ public class PipelineMap {
         this.cycles.get(cyclenum).setIdex(decode(ins, cyclenum++));
         this.cycles.get(cyclenum).setExmem(execute(ins, cyclenum++));
         this.cycles.get(cyclenum).setMemwb(memory(ins, cyclenum++));
+
         this.cycles.get(cyclenum).setWb(write(ins, cyclenum));
 
     }
@@ -302,6 +306,7 @@ public class PipelineMap {
         int cycleSize;
 
         cycleSize = this.cycles.size();
+
         for (int i = 0; i < cycleSize; i++) {
 
             cycleModel.addColumn("Cycle " + (i + 1));
@@ -311,6 +316,7 @@ public class PipelineMap {
                 cycleModel.setValueAt(this.cycles.get(i).getIfid().getNPC(), 2, i + 1);
                 cycleModel.setValueAt(this.cycles.get(i).getIfid().getPC(), 3, i + 1);
             } catch (Exception e) {
+
             }
 
             try {
@@ -319,6 +325,7 @@ public class PipelineMap {
                 cycleModel.setValueAt(this.cycles.get(i).getIdex().getB(), 7, i + 1);
                 cycleModel.setValueAt(this.cycles.get(i).getIdex().getIMM(), 8, i + 1);
             } catch (Exception f) {
+
             }
 
             try {
@@ -327,6 +334,7 @@ public class PipelineMap {
                 cycleModel.setValueAt(this.cycles.get(i).getExmem().getB(), 12, i + 1);
                 cycleModel.setValueAt(this.cycles.get(i).getExmem().getCond(), 13, i + 1);
             } catch (Exception g) {
+
             }
 
             try {
@@ -335,6 +343,7 @@ public class PipelineMap {
                 cycleModel.setValueAt(this.cycles.get(i).getMemwb().getLMD(), 17, i + 1);
                 cycleModel.setValueAt(this.cycles.get(i).getMemwb().getMEM_ALUOUTPUT(), 18, i + 1);
             } catch (Exception h) {
+
             }
 
             try {
@@ -342,6 +351,7 @@ public class PipelineMap {
             } catch (Exception j) {
             }
         }
+
     }
 
     public void clearRD() { //for beq flush sake because after jump sure there is no dependency
@@ -358,6 +368,7 @@ public class PipelineMap {
             try {
                 tempRd = ((RType) ins).getRd();
             } catch (Exception f) {
+
             }
         }//note to not check for dependency in the succeeding
         if (tempRd == 0) {
@@ -399,6 +410,7 @@ public class PipelineMap {
             isFirstInstruction = false;
             //checking if control hazard 
             if (ins.haveControlHazard()) {
+
                 //if beq or j ^ it will true
                 this.branchCountdown = 0;
                 this.branchHolder = ins;
@@ -416,10 +428,12 @@ public class PipelineMap {
                     processNBInstruction(true, ins);
                     clearRD(); //disregard the checking of all above instructiom because if stalled the next instruction will never hit the mem
                 } else {
+
                     processNBInstruction(false, ins);
                 }
                 //checking if control hazard 
                 if (ins.haveControlHazard()) {
+
                     //if beq or j ^ it will true
                     this.branchCountdown = 0;
                     this.branchHolder = ins; //takes note of the beq instance
@@ -436,6 +450,7 @@ public class PipelineMap {
                 if (ins.getInsNumber() == this.branchHolder.specialFunction(ct)) { //destlabel is before current
                     int numSkippedInst = this.branchHolder.specialFunction(ct) - ins.getInsNumber();
                     for (int x = 0; x < numSkippedInst; x++) {
+
                         this.addPLMRow();
                         this.setValue(ct.getOtc().geOpcodeRow(ins.getInsNumber() + x).getInstruction(), this.nextIF.y, 0);
                         this.nextIF.y++;
@@ -466,8 +481,8 @@ public class PipelineMap {
 
                     processNBInstruction(false, ins);
                 }
-
                 if (ins.haveControlHazard()) {
+
                     //if beq or j ^ it will true
                     this.branchCountdown = 0;
                     this.branchHolder = ins;
@@ -504,7 +519,6 @@ public class PipelineMap {
             }
         }
     }
-
     public void runCycle(int i, CachedTables ct, DefaultTableModel cycleModel) {
         try {
             this.cycles.get(i).getWb().reWriteback(ct);
@@ -513,6 +527,7 @@ public class PipelineMap {
             //draw the table of wb
             cycleModel.setValueAt(this.cycles.get(i).getWb().getAffectedRegister(), 20, i + 1);
         } catch (Exception e) {
+
         }
 
         try {
@@ -525,6 +540,7 @@ public class PipelineMap {
             cycleModel.setValueAt(this.cycles.get(i).getMemwb().getLMD(), 17, i + 1);
             cycleModel.setValueAt(this.cycles.get(i).getMemwb().getMEM_ALUOUTPUT(), 18, i + 1);
         } catch (Exception e) {
+
         }
 
         try {
@@ -538,6 +554,7 @@ public class PipelineMap {
             cycleModel.setValueAt(this.cycles.get(i).getExmem().getCond(), 13, i + 1);
 
         } catch (Exception e) {
+
         }
 
         try {
@@ -550,6 +567,7 @@ public class PipelineMap {
             cycleModel.setValueAt(this.cycles.get(i).getIdex().getB(), 7, i + 1);
             cycleModel.setValueAt(this.cycles.get(i).getIdex().getIMM(), 8, i + 1);
         } catch (Exception e) {
+
         }
 
         try {
@@ -561,6 +579,7 @@ public class PipelineMap {
             cycleModel.setValueAt(this.cycles.get(i).getIfid().getNPC(), 2, i + 1);
             cycleModel.setValueAt(this.cycles.get(i).getIfid().getPC(), 3, i + 1);
         } catch (Exception e) {
+
         }
     }
 }

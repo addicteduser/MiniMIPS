@@ -7,9 +7,11 @@ import java.math.BigInteger;
 
 public class J extends Instruction {
 
+    private NumberBuilder usable = new NumberBuilder();
     private String destLabel;
 
     public J(String addr, String destlabel) {
+      
         this.destLabel = destlabel;
     }
 
@@ -27,7 +29,7 @@ public class J extends Instruction {
         result = sIMM.substring(2); //remove first two "00"
         BigInteger binaryOp2 = new BigInteger(result, 2);
         result = binaryOp2.toString(16);
-        result = NumberBuilder.hexToNbit(result, 16);
+        result = usable.hexToNbit(result, 16);
         return result;
     }
 

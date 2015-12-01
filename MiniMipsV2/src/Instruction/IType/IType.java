@@ -1,5 +1,6 @@
 package Instruction.IType;
 
+import Instruction.Instruction;
 import Instruction.RType.RType;
 
 public abstract class IType extends RType{

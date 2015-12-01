@@ -3,6 +3,7 @@ package Instruction;
 import Table.CachedTables;
 import Instruction.IType.BEQ;
 import Instruction.JType.J;
+import javax.swing.table.DefaultTableModel;
 
 public abstract class Instruction {
 

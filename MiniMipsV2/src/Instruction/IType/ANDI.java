@@ -1,8 +1,9 @@
 package Instruction.IType;
 
-import Table.CachedTables;
-import Helper.NumberBuilder;
 import java.math.BigInteger;
+
+import Helper.NumberBuilder;
+import Table.CachedTables;
 
 public class ANDI extends IType {
     
@@ -17,7 +18,9 @@ public class ANDI extends IType {
         BigInteger rs, imm, ans;
         
         rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()),16);
+        System.out.println("RS = "+rs);
         sIMM = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
+        System.out.println("temp IMM 1 = "+sIMM);
         imm = new BigInteger(sIMM, 2);      
         
         ans = rs.and(imm);
@@ -41,4 +44,5 @@ public class ANDI extends IType {
             return false;
         }
     }
+
 }

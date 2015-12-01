@@ -1,6 +1,7 @@
 package Instruction.IType;
 
 import Table.CachedTables;
+import Instruction.Instruction;
 import Helper.NumberBuilder;
 import java.math.BigInteger;
 
@@ -37,6 +38,7 @@ public class BEQ extends IType {
 
     @Override
     public String ALU(CachedTables ct) {
+        String destination = this.getImmORoffset(); //this is not imm but this is label. siname lang yung name. hehez.
         int BEQindex;
         String result = "";
         BigInteger rs, rt;

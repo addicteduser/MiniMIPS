@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 
 public class LWU extends IType {
 
+    private NumberBuilder usable = new NumberBuilder();
+
     public LWU(String addr, int rd, int rs, int rt, String immORoffset) {
         super(addr, rd, rs, rt, immORoffset);
     }
@@ -25,17 +27,21 @@ public class LWU extends IType {
     public String ALU(CachedTables ct) {
         String lALU = null;
         String offsetTemp = null;
-        long rs, rt, offset;
+        long rs, rt, offset, ans;
         int value;
+       // int address;
 
         offsetTemp = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
         offset = Long.parseLong(offsetTemp, 2);
         rs = Long.parseLong(ct.getRtc().getRegisterRow(this.rs), 16);
         offset = offset + rs;
+        System.out.println("ans: " + offset);
 
         offsetTemp = Long.toBinaryString(offset);
         BigInteger binaryOp = new BigInteger(offsetTemp, 2);
         offsetTemp = binaryOp.toString(16).toUpperCase();
+
+        System.out.println("hex: " + offsetTemp);
 
         if (new MipsUI().isINVALIDinLW(offsetTemp)) {
             JOptionPane.showMessageDialog(new MipsUI(), "LOADING ADDRESS IS NOT AVAILABLE!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -44,11 +50,13 @@ public class LWU extends IType {
 
             value = ct.getDtc().findAddrLocation(offsetTemp);
             lALU = ct.getDtc().getMemoryCacheContents(value);
-            
+            System.out.println("valueh: " + lALU);
+
             lALU = lALU.toUpperCase();
-            lALU = NumberBuilder.hexToNbit(lALU, 16);
+            lALU = usable.hexToNbit(lALU, 16);
 
         }
+        System.out.println("value: " + lALU);
 
         return lALU;
     }

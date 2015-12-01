@@ -37,8 +37,9 @@ public class DADDIU extends IType {
     public String ALU(CachedTables ct) {
         BigInteger rs, ans, imm;
 
-        String ansALU = "";
-        String immTemp = "";
+        String ansRT = null;
+        String ansALU = null;
+        String immTemp = null;
 
         immTemp = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
         imm = new BigInteger(immTemp, 2);

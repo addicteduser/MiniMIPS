@@ -1,5 +1,6 @@
 package Helper;
 
+import java.awt.event.ItemEvent;
 import java.math.BigDecimal;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
@@ -71,6 +72,7 @@ public class NumberBuilder {
    public static String toBinary(long decimalResult, int N) {
         int i;
         String binary = Long.toBinaryString(decimalResult); //gives us a binary string, but is missing leading zeros
+        //System.out.println("#testing2" + binary);
         int length = binary.length();
         if (length == N) {
             return binary;
@@ -112,10 +114,12 @@ public class NumberBuilder {
             throw new IllegalArgumentException("Hex String is not a N bit number!");
         }
     }
-
+    
     public class MyInputVerifier extends InputVerifier {
+
         @Override
         public boolean verify(JComponent input) {
+            //boolean match = text.matches("[a-zA-Z0-9]+");
             String text = ((JTextField) input).getText();
             try {
                 BigDecimal value = new BigDecimal(text);
@@ -125,4 +129,5 @@ public class NumberBuilder {
             }
         }
     }
+
 }

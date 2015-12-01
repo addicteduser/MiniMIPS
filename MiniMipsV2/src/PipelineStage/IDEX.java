@@ -4,8 +4,10 @@ import Table.CachedTables;
 import Instruction.Instruction;
 import Helper.NumberBuilder;
 import java.awt.Point;
+import static java.lang.Character.UnicodeBlock.of;
 import java.math.BigInteger;
 import javax.swing.table.DefaultTableModel;
+import static javax.swing.text.html.HTML.Tag.HEAD;
 
 public class IDEX {
 
@@ -102,6 +104,7 @@ public class IDEX {
         BigInteger binaryOp = new BigInteger(this.IMM, 2);
         this.IMM = binaryOp.toString(16);
         this.IMM = NumberBuilder.hexToNbit(this.IMM, 16);
+
     }
     
     public void drawToMap(DefaultTableModel pipelinemapmodel) {

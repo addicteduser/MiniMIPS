@@ -20,9 +20,13 @@ public class DSLL extends IType {
         //Long rs;
 
         rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()),16);
+        System.out.println("RS = "+rs);
         sIMM = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
+        System.out.println("temp IMM 1 = "+sIMM);
         sIMM = sIMM.substring(5, 10);
+        System.out.println("temp IMM 2 = "+sIMM);
         imm = Integer.parseInt(sIMM,2);
+        System.out.println("IMM = "+imm);
         ans = rs.shiftLeft(imm);
         
         rd = NumberBuilder.hexToNbit(ans.toString(16), 16);
