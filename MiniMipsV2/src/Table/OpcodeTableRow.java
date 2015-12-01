@@ -1,7 +1,5 @@
 package Table;
 
-import java.util.ArrayList;
-
 public class OpcodeTableRow {
      private String instruction;
     private String opcode;

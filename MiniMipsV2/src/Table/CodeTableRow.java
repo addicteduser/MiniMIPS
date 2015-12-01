@@ -1,8 +1,5 @@
 package Table;
 
-import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
-
 public class CodeTableRow {
     private String address;
     private String opcode;

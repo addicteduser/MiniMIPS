@@ -1,7 +1,5 @@
 package Table;
 
-import java.util.ArrayList;
-
 public class RegisterTableRow {
      private String RegisterNumber;
     private String RegisterValue;

@@ -79,33 +79,29 @@ public class IDEX {
         ct.getRtc().refreshRegisterCacheArray(); 
         
         this.IR = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getOpcode();
-        int a = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getA().toString(), 2);
-        this.A = ct.getRtc().getRegisterRow(a).toString();
-        System.out.println("testing [IDEX.decode] A: " + this.A);
-        int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB().toString(), 2);
-        this.B = ct.getRtc().getRegisterRow(b).toString();
-        this.IMM = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getImm().toString();
+        int a = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getA(), 2);
+        this.A = ct.getRtc().getRegisterRow(a);
+        int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB(), 2);
+        this.B = ct.getRtc().getRegisterRow(b);
+        this.IMM = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getImm();
         BigInteger binaryOp = new BigInteger(this.IMM, 2);
         this.IMM = binaryOp.toString(16);
-        this.IMM = new NumberBuilder().hexToNbit(this.IMM, 16);
+        this.IMM = NumberBuilder.hexToNbit(this.IMM, 16);
     }
 
-    public void reDecode( CachedTables ct) {
-        System.out.println("testing [IDEX.redecode]... ");
-        
+    public void reDecode( CachedTables ct) {       
         //added this line to ensure that the data will always be fresh
         ct.getRtc().refreshRegisterCacheArray(); 
         
         this.IR = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getOpcode();
-        int a = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getA().toString(), 2);
-        this.A = ct.getRtc().getRegisterRow(a).toString();
-        System.out.println("testing [IDEX.redecode] A: " + this.A);
-        int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB().toString(), 2);
-        this.B = ct.getRtc().getRegisterRow(b).toString();
-        this.IMM = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getImm().toString();
+        int a = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getA(), 2);
+        this.A = ct.getRtc().getRegisterRow(a);
+        int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB(), 2);
+        this.B = ct.getRtc().getRegisterRow(b);
+        this.IMM = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getImm();
         BigInteger binaryOp = new BigInteger(this.IMM, 2);
         this.IMM = binaryOp.toString(16);
-        this.IMM = new NumberBuilder().hexToNbit(this.IMM, 16);
+        this.IMM = NumberBuilder.hexToNbit(this.IMM, 16);
     }
     
     public void drawToMap(DefaultTableModel pipelinemapmodel) {

@@ -5,11 +5,9 @@ import Instruction.IType.LW;
 import Instruction.IType.LWU;
 import Instruction.IType.SW;
 import Instruction.Instruction;
-import Helper.NumberBuilder;
 import Instruction.IType.LS;
 import Instruction.IType.SS;
 import java.awt.Point;
-import java.math.BigInteger;
 import javax.swing.table.DefaultTableModel;
 
 public class MEMWB {
@@ -88,10 +86,6 @@ public class MEMWB {
         }
         if (ins instanceof SW || ins instanceof SS) {
             int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB(), 2);
-//                Long temp = Long.parseLong(ct.getRtc().getRegisterRow(b).toString(),16);
-//                String sTemp = temp.toString();
-//                BigInteger binaryOp = new BigInteger(sTemp, 2);
-//                this.MEM_ALUOUTPUT= new NumberBuilder().hexToNbit(binaryOp.toString(), 16);
             if(ins instanceof SS)
                 this.MEM_ALUOUTPUT = ct.getRtc().getFRegisterRow(b);
             else
@@ -111,10 +105,6 @@ public class MEMWB {
         }
         if (ins instanceof SW || ins instanceof SS) {
             int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB(), 2);
-//                Long temp = Long.parseLong(ct.getRtc().getRegisterRow(b).toString(),16);
-//                String sTemp = temp.toString();
-//                BigInteger binaryOp = new BigInteger(sTemp, 2);
-//                this.MEM_ALUOUTPUT= new NumberBuilder().hexToNbit(binaryOp.toString(), 16);
             if(ins instanceof SS)
                 this.MEM_ALUOUTPUT = ct.getRtc().getFRegisterRow(b);
             else

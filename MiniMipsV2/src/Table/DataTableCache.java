@@ -14,13 +14,10 @@ public class DataTableCache {
         String before = "";
         for (int x = 0; x < 8192; x++) {
             try {
-                addr = new String((this.model.getValueAt(x, 0).toString()));
-                before = new String((this.model.getValueAt(x, 1).toString()));
-
-//            this.dataTableRows.add(new DataTableRow((this.model.getValueAt(x, 0).toString()), (this.model.getValueAt(x, 1).toString()), null));
+                addr = (this.model.getValueAt(x, 0).toString());
+                before = (this.model.getValueAt(x, 1).toString());
             } catch (Exception e) {
-//                this.dataTableRows.add(new DataTableRow((this.model.getValueAt(x, 0).toString()), null, null));
-                System.out.println("Empty fetch at datatableCache");
+
             }
             this.dataTableRows.add(new DataTableRow(addr, before, ""));
         }
@@ -56,16 +53,10 @@ public class DataTableCache {
     }
 
     public void writeToMemoryCache(String value, int addresslocation) {
-//        int j = 0, k = 2;
-//        for (int i = 0; i < 4; i++, addresslocation++, j += 2, k += 2) {
-//            this.model.setValueAt(value.substring(j, k), addresslocation + i, 2);
-//        }
         int j = 8;
         for (int i = 0; i < 4; i++) {
             this.model.setValueAt(value.substring(j, (j + 2)), addresslocation + i, 2);
             j = j + 2;
         }
-
     }
-
 }

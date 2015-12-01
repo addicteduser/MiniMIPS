@@ -75,10 +75,10 @@ public class EXMEM {
     public void execute(Instruction ins, CachedTables ct) {
         this.ins=ins;
         this.IR = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getOpcode();
-        int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB().toString(), 2);
-        this.B = ct.getRtc().getRegisterRow(b).toString();
+        int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB(), 2);
+        this.B = ct.getRtc().getRegisterRow(b);
         this.ALUOUTPUT = ins.ALU(ct);
-//        this.ALUOUTPUT=ins.getAluoutput();
+
         try {
             this.cond = ((BEQ) ins).isCond();
         } catch (Exception e) {
@@ -96,10 +96,10 @@ public class EXMEM {
 
     public void reExecute(CachedTables ct) {
         this.IR = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getOpcode();
-        int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB().toString(), 2);
-        this.B = ct.getRtc().getRegisterRow(b).toString();
+        int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB(), 2);
+        this.B = ct.getRtc().getRegisterRow(b);
         this.ALUOUTPUT = ins.ALU(ct);
-//        this.ALUOUTPUT=ins.getAluoutput();
+
         try {
             this.cond = ((BEQ) ins).isCond();
         } catch (Exception e) {
