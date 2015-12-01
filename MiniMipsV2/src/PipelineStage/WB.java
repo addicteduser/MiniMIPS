@@ -2,7 +2,6 @@ package PipelineStage;
 
 import Table.CachedTables;
 import Instruction.IType.BEQ;
-import Instruction.IType.IType;
 import Instruction.IType.LS;
 import Instruction.IType.SS;
 import Instruction.IType.SW;
