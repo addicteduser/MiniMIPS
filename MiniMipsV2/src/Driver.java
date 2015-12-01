@@ -6,5 +6,6 @@ public class Driver {
         MipsUI frame = new MipsUI();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+        frame.setExtendedState(frame.MAXIMIZED_BOTH);
     }
 }

@@ -1966,7 +1966,7 @@ public class MipsUI extends javax.swing.JFrame {
 
         CachedTables ct = new CachedTables(((DefaultTableModel) jTable5.getModel()), ((DefaultTableModel) jTable4.getModel()), ((DefaultTableModel) jTable1.getModel()), ((DefaultTableModel) jTable3.getModel()), opcodemodel.getRowCount());
         pipelinemodel = (DefaultTableModel) jTable2.getModel();
-        this.hazardType = new String("PipelineFlush");
+        this.hazardType = "PipelineFlush";
         new PipelineMap(pipelinemodel).buildPipelineMap(iList, ct, (DefaultTableModel) jTable6.getModel(), this.hazardType);
 
     }//GEN-LAST:event_jButton6ActionPerformed
