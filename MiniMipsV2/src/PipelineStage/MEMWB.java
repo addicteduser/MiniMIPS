@@ -6,6 +6,7 @@ import Instruction.IType.LWU;
 import Instruction.IType.SW;
 import Instruction.Instruction;
 import Helper.Usable;
+import Instruction.IType.LS;
 import java.awt.Point;
 import java.math.BigInteger;
 import javax.swing.table.DefaultTableModel;
@@ -80,7 +81,7 @@ public class MEMWB {
         this.LMD = "N/A";
         this.ALUOUTPUT = ins.ALU(ct);
         this.IR = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getOpcode();
-        if (ins instanceof LW || ins instanceof LWU) {
+        if (ins instanceof LW || ins instanceof LWU || ins instanceof LS) {
             this.LMD = this.ALUOUTPUT;
             ins.specialFunction(ct);
         }
@@ -100,7 +101,7 @@ public class MEMWB {
         this.LMD = "N/A";
         this.ALUOUTPUT = ins.ALU(ct);
         this.IR = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getOpcode();
-        if (ins instanceof LW || ins instanceof LWU) {
+        if (ins instanceof LW || ins instanceof LWU || ins instanceof LS) {
             this.LMD = this.ALUOUTPUT;
             ins.specialFunction(ct);
         }

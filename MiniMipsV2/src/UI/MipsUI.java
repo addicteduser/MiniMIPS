@@ -16,7 +16,6 @@ import Instruction.Instruction;
 import Instruction.JType.J;
 import Instruction.RType.AND;
 import Instruction.RType.DADDU;
-import Instruction.RType.DDIV;
 import Instruction.RType.DMULT;
 import Instruction.RType.DSRLV;
 import Instruction.RType.DSUBU;
@@ -24,10 +23,12 @@ import Instruction.RType.OR;
 import Instruction.RType.SLT;
 import Helper.PipelineMap;
 import Helper.Usable;
+import Instruction.IType.LS;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -89,10 +90,6 @@ public class MipsUI extends javax.swing.JFrame {
 
     }
 
-    public void ERRORDIVZERO() {
-        JOptionPane.showMessageDialog(this, "Division by zero error! Please RESET now", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
     public void checkInput(int row, int column) {
         regModel = (DefaultTableModel) jTable3.getModel();
         int r = row;
@@ -105,7 +102,7 @@ public class MipsUI extends javax.swing.JFrame {
             extendValue = usable.hexToNbit(changedValue, 16);
             regModel.setValueAt(extendValue.toUpperCase(), r, c);
         } else {
-            JOptionPane.showMessageDialog(this, "value is not valid!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid input!", "Error", JOptionPane.ERROR_MESSAGE);
         }
         registertablecache = new RegisterTableCache(regModel);
 //        cachedtables = new CachedTables(codemodel, datamodel, opcodemodel, regModel, opcodemodel.getRowCount());
@@ -124,7 +121,7 @@ public class MipsUI extends javax.swing.JFrame {
             dataModel.setValueAt(extendValue.toUpperCase(), r, c);
             dataModel.setValueAt(extendValue.toUpperCase(), r, c + 1);
         } else {
-            JOptionPane.showMessageDialog(this, "value is not valid!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid input!", "Error", JOptionPane.ERROR_MESSAGE);
         }
         datatablecache = new DataTableCache(dataModel);
     }
@@ -259,6 +256,12 @@ public class MipsUI extends javax.swing.JFrame {
 
     public MipsUI() {
         initComponents();
+        gpr1 = new DefaultComboBoxModel(new Object[]{"R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31" });
+        gpr2 = new DefaultComboBoxModel(new Object[]{"R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31" });
+        gpr3 = new DefaultComboBoxModel(new Object[]{"R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22", "R23", "R24", "R25", "R26", "R27", "R28", "R29", "R30", "R31" });
+        fpr1 = new DefaultComboBoxModel(new Object[]{"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11"});
+        fpr2 = new DefaultComboBoxModel(new Object[]{"F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11"});
+        fpr3 = new DefaultComboBoxModel(new Object[]{"F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11"});
         resizeTableColumnWidth();
         dynamicGeneratedValuesOfAddresses();
         dataSegmentAddresses();
@@ -931,7 +934,19 @@ public class MipsUI extends javax.swing.JFrame {
                 {"R30", "0000000000000000"},
                 {"R31", "0000000000000000"},
                 {"LO", "0000000000000000"},
-                {"HI", "0000000000000000"}
+                {"HI", "0000000000000000"},
+                {"F0", "0000000000000000"},
+                {"F1", "0000000000000000"},
+                {"F2", "0000000000000000"},
+                {"F3", "0000000000000000"},
+                {"F4", "0000000000000000"},
+                {"F5", "0000000000000000"},
+                {"F6", "0000000000000000"},
+                {"F7", "0000000000000000"},
+                {"F8", "0000000000000000"},
+                {"F9", "0000000000000000"},
+                {"F10", "0000000000000000"},
+                {"F11", "0000000000000000"}
             },
             new String [] {
                 "Register", "Register Value"
@@ -1354,7 +1369,9 @@ public class MipsUI extends javax.swing.JFrame {
             d = usable.toBinary(0, 5);
             x = new String();
 
-            if (selected.toString().equals("DADDU") || selected.toString().equals("OR") || selected.toString().equals("ADD.S") || selected.toString().equals("MUL.S") || selected.toString().equals("SLT") || selected.toString().equals("AND")) {
+            if (selected.toString().equals("DADDU") || selected.toString().equals("OR")
+                    || selected.toString().equals("ADD.S") || selected.toString().equals("MUL.S")
+                    || selected.toString().equals("SLT")) {
                 flag = 1;
                 JIndexArray.add(Jnull);
                 BEQXArray.add("");
@@ -1388,18 +1405,11 @@ public class MipsUI extends javax.swing.JFrame {
                                 Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
                                 Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
                         break;
-                    case "AND":
-                        x = (usable.toBinary(0, 6) + b + c + a + d + usable.toBinary(36, 6));
-                        iList.add(new AND(sAddress.get(nIndex2),
-                                Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
-                                Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
-                                Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
-                        break;
                     case "ADD.S":
-                        x = usable.toBinary(17, 6)+usable.toBinary(16, 5)+c+b+a+usable.toBinary(0, 6);
+                        x = usable.toBinary(17, 6) + usable.toBinary(16, 5) + c + b + a + usable.toBinary(0, 6);
                         break;
                     case "MUL.S":
-                        x = usable.toBinary(17, 6)+usable.toBinary(16, 5)+c+b+a+usable.toBinary(2, 6);
+                        x = usable.toBinary(17, 6) + usable.toBinary(16, 5) + c + b + a + usable.toBinary(2, 6);
                         break;
                 }
             } else if (selected.toString().equals("LWU") || selected.toString().equals("LW") || selected.toString().equals("SW") || selected.toString().equals("L.S") || selected.toString().equals("S.S")) {
@@ -1440,6 +1450,10 @@ public class MipsUI extends javax.swing.JFrame {
                             break;
                         case "L.S":
                             x = usable.toBinary(49, 6) + b3 + a3 + jTF2;
+                            iList.add(new LS(sAddress.get(nIndex2),
+                                    Integer.parseInt(jComboBox7.getSelectedItem().toString().substring(1)),
+                                    Integer.parseInt(jComboBox8.getSelectedItem().toString().substring(1)),
+                                    -1, jTF2));
                             break;
                         case "S.S":
                             x = usable.toBinary(57, 6) + b3 + a3 + jTF2;
@@ -1475,10 +1489,10 @@ public class MipsUI extends javax.swing.JFrame {
                                     Integer.parseInt(jComboBox12.getSelectedItem().toString().substring(1)), -1, jTF5));
                             break;
                         case "DSLL":
-                            long imm = Long.parseLong(jTextField5.getText(),16);
+                            long imm = Long.parseLong(jTextField5.getText(), 16);
                             String temp = usable.toBinary(imm, 16);
-                            System.out.println("DSLL = "+imm);
-                            System.out.println("DSLL = "+temp);
+                            System.out.println("DSLL = " + imm);
+                            System.out.println("DSLL = " + temp);
                             jTF5 = temp.substring(11);
                             x = usable.toBinary(0, 6) + usable.toBinary(0, 5) + b7 + a7 + jTF5 + usable.toBinary(56, 6);
                             iList.add(new DSLL(sAddress.get(nIndex2),
@@ -1584,15 +1598,26 @@ public class MipsUI extends javax.swing.JFrame {
         jPanel6.setVisible(false);
         jPanel7.setVisible(false);
         switch (selected.toString()) {
-            case "DSUBU":
-            case "DSRLV":
             case "SLT":
-            case "AND":
             case "DADDU":
             case "OR":
-            //case "DSLL":
             case "MUL.S":
             case "ADD.S":
+                if(selected.toString().matches("SLT")||selected.toString().matches("OR")||selected.toString().matches("DADDU")) {
+                    jComboBox1.setModel(gpr1);
+                    jComboBox2.setModel(gpr2);
+                    jComboBox3.setModel(gpr3);
+                    jLabel7.setText("RD");
+                    jLabel8.setText("RS");
+                    jLabel9.setText("RT");
+                } else if(selected.toString().matches("MUL.S")||selected.toString().matches("ADD.S")) {
+                    jComboBox1.setModel(fpr1);
+                    jComboBox2.setModel(fpr2);
+                    jComboBox3.setModel(fpr3);
+                    jLabel7.setText("FD");
+                    jLabel8.setText("FS");
+                    jLabel9.setText("FT");
+                }
                 jPanel1.setVisible(true);
                 break;
             case "LW":
@@ -1600,6 +1625,17 @@ public class MipsUI extends javax.swing.JFrame {
             case "SW":
             case "L.S":
             case "S.S":
+                if(selected.toString().matches("LW")||selected.toString().matches("LWU")||selected.toString().matches("SW")) {
+                    jComboBox7.setModel(gpr1);
+                    jComboBox8.setModel(gpr2);
+                    jLabel15.setText("RD");
+                    jLabel16.setText("RS");
+                } else if(selected.toString().matches("L.S")||selected.toString().matches("S.S")) {
+                    jComboBox7.setModel(fpr1);
+                    jComboBox8.setModel(gpr2);
+                    jLabel15.setText("FD");
+                    jLabel16.setText("RS");
+                }
                 jPanel3.setVisible(true);
                 break;
             case "J":
@@ -1608,12 +1644,10 @@ public class MipsUI extends javax.swing.JFrame {
             case "BEQ":
                 jPanel6.setVisible(true);
                 break;
-            case "DDIV":
             case "DMULT":
                 jPanel2.setVisible(true);
                 break;
             case "DADDIU":
-            case "ORI":
             case "ANDI":
             case "DSLL":
                 jPanel7.setVisible(true);
@@ -1953,8 +1987,8 @@ public class MipsUI extends javax.swing.JFrame {
         int c = jTable3.getSelectedColumn();
         System.out.println(r);
         System.out.println(c);
-        if (r == 0 && c == 1) {
-            JOptionPane.showMessageDialog(this, "value of R0 cannot be edited!", "Error", JOptionPane.ERROR_MESSAGE);
+        if ((r == 0 || r == 34) && c == 1) {
+            JOptionPane.showMessageDialog(this, "Cannot modify R0/F0!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             checkInput(r, c);
         }
@@ -1991,6 +2025,12 @@ public class MipsUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private DefaultComboBoxModel gpr1;
+    private DefaultComboBoxModel gpr2;
+    private DefaultComboBoxModel gpr3;
+    private DefaultComboBoxModel fpr1;
+    private DefaultComboBoxModel fpr2;
+    private DefaultComboBoxModel fpr3;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ERRORImmLS;
     private javax.swing.JLabel ERRORlabel;

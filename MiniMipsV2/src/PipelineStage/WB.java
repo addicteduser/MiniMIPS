@@ -6,7 +6,6 @@ import Instruction.IType.IType;
 import Instruction.IType.SW;
 import Instruction.Instruction;
 import Instruction.JType.J;
-import Instruction.RType.DDIV;
 import Instruction.RType.DMULT;
 import Instruction.RType.RType;
 import java.awt.Point;
