@@ -7,7 +7,9 @@ import Instruction.IType.SS;
 import Instruction.IType.SW;
 import Instruction.Instruction;
 import Instruction.JType.J;
+import Instruction.RType.ADDS;
 import Instruction.RType.DMULT;
+import Instruction.RType.MULS;
 import Instruction.RType.RType;
 import java.awt.Point;
 import javax.swing.table.DefaultTableModel;
@@ -43,9 +45,15 @@ public class WB {
         }
         else{
             try{
-                this.affectedRegister="R"+((RType)ins).getRd()+"= "+ins.ALU(ct);
+                if(ins instanceof ADDS || ins instanceof MULS)
+                    this.affectedRegister="F"+((RType)ins).getRd()+"= "+ins.ALU(ct);
+                else
+                    this.affectedRegister="R"+((RType)ins).getRd()+"= "+ins.ALU(ct);
             }catch(Exception e){
-                this.affectedRegister="R"+((IType)ins).getRd()+"= "+ins.ALU(ct);
+                if(ins instanceof ADDS || ins instanceof MULS)
+                    this.affectedRegister="F"+((RType)ins).getRd()+"= "+ins.ALU(ct);
+                else
+                    this.affectedRegister="R"+((RType)ins).getRd()+"= "+ins.ALU(ct);
             }
             ins.specialFunction(ct);
         }
@@ -64,9 +72,15 @@ public class WB {
         }
         else{
             try{
-                this.affectedRegister="R"+((RType)ins).getRd()+"= "+ins.ALU(ct);
+                if(ins instanceof ADDS || ins instanceof MULS)
+                    this.affectedRegister="F"+((RType)ins).getRd()+"= "+ins.ALU(ct);
+                else
+                    this.affectedRegister="R"+((RType)ins).getRd()+"= "+ins.ALU(ct);
             }catch(Exception e){
-                this.affectedRegister="R"+((IType)ins).getRd()+"= "+ins.ALU(ct);
+                if(ins instanceof ADDS || ins instanceof MULS)
+                    this.affectedRegister="F"+((RType)ins).getRd()+"= "+ins.ALU(ct);
+                else
+                    this.affectedRegister="R"+((RType)ins).getRd()+"= "+ins.ALU(ct);
             }
             ins.specialFunction(ct);
         }

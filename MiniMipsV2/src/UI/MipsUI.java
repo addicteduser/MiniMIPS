@@ -25,6 +25,7 @@ import Helper.PipelineMap;
 import Helper.Usable;
 import Instruction.IType.LS;
 import Instruction.IType.SS;
+import Instruction.RType.ADDS;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.math.BigInteger;
@@ -1408,6 +1409,10 @@ public class MipsUI extends javax.swing.JFrame {
                         break;
                     case "ADD.S":
                         x = usable.toBinary(17, 6) + usable.toBinary(16, 5) + c + b + a + usable.toBinary(0, 6);
+                        iList.add(new ADDS(sAddress.get(nIndex2),
+                                Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
+                                Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
+                                Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
                         break;
                     case "MUL.S":
                         x = usable.toBinary(17, 6) + usable.toBinary(16, 5) + c + b + a + usable.toBinary(2, 6);
