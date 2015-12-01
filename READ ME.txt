@@ -1,0 +1,7 @@
+Program Features:
+- Able to code all logic of all required instructions
+- Can implement pipeline flush and freeze (for pipeline FREEZE, the stalling is still marked as IF in the pipeline map)
+- Was not able to implement the floating point clock cycles (i.e. float instructions still execute in one EX clock cycle)
+
+DELA CRUZ, Kyle Mc Hale
+KALAW, Kristine Ma. Dominique

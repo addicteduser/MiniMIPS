@@ -33,6 +33,7 @@ import Table.DataTableCache;
 import Table.OpcodeTableCache;
 import Table.OpcodeTableRow;
 import Table.RegisterTableCache;
+import java.awt.Font;
 
 public class MipsUI extends javax.swing.JFrame {
 
@@ -364,6 +365,7 @@ public class MipsUI extends javax.swing.JFrame {
         ERRORImmLS = new javax.swing.JLabel();
         ERRORnosuchlabel = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
+        jButton7.setVisible(false);
 
         jLabel32.setText("jLabel32");
 
@@ -385,7 +387,7 @@ public class MipsUI extends javax.swing.JFrame {
         });
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel18.setText("Step 2 - OPCODE TABLE");
+        jLabel18.setText("OPCODE");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("ADD");
@@ -406,8 +408,8 @@ public class MipsUI extends javax.swing.JFrame {
             }
         });
 
-        lblGroup7.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        lblGroup7.setText("GROUP 7 - PIPELINE FLUSH");
+        lblGroup7.setFont(new Font("Tahoma", Font.BOLD, 24)); // NOI18N
+        lblGroup7.setText("MiniMIPS [No FWD, FREEZE/FLUSH]");
         lblGroup7.setPreferredSize(new java.awt.Dimension(100, 100));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -428,7 +430,7 @@ public class MipsUI extends javax.swing.JFrame {
         jLabel2.setText("(OPTIONAL) LABEL");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Step 1 - INPUT CODE");
+        jLabel3.setText("INPUT MIPS CODE");
 
         panel2.setLayout(new java.awt.CardLayout());
 
@@ -848,7 +850,7 @@ public class MipsUI extends javax.swing.JFrame {
 
         jScrollPane3.setAutoscrolls(true);
 
-        jTable2.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
+        jTable2.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -894,7 +896,7 @@ public class MipsUI extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jScrollPane1);
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel20.setText("Step 3 - PIPELINE MAP");
+        jLabel20.setText("PIPELINE MAP");
 
         panel3.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -1136,7 +1138,7 @@ public class MipsUI extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jTable6);
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel21.setText("CLOCK CYCLE VALUES / TRACING");
+        jLabel21.setText("PIPELINE TRACING");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1734,7 +1736,7 @@ public class MipsUI extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         /* DONE BUTTON */
-        jButton7.setEnabled(true); //pipeline2
+        //jButton7.setEnabled(true); //pipeline2
         jTable3.setEnabled(false); //register table
         jButton6.setEnabled(true); //full exec button
         jButton5.setEnabled(true); //single exec button
@@ -1808,25 +1810,10 @@ public class MipsUI extends javax.swing.JFrame {
             jButton1.setEnabled(false); //add to code button
             jButton4.setBackground(Color.red); /* reset button */
 
-            // new PipelineMap(this).processNBInstruction();
-//  new PipelineMap(model).addPLMCol();
-//  new PipelineMap(model).processNBInstruction();
-
             /* set of Instruction variables */
             int tempInd = 0;
             String hexaddr = "";
             cachedtables = new CachedTables(codemodel, datamodel, opcodemodel, (DefaultTableModel) jTable3.getModel(), opcodemodel.getRowCount());
-            /*
-             for (int i = 0; i < iList.size(); i++, tempInd++) {
-             iList.get(i).setInsNumber(i);
-             hexaddr = Integer.toHexString(tempInd * 4);
-             hexaddr = NumberBuilder.hexStringToNBitBinary(hexaddr, 4);
-             // iList.get(i).setMemAddrInHex(hexaddr);
-             System.out.println("testing [done] ins instance: " + iList.get(i));
-             System.out.println(iList.get(i).ALU(cachedtables));
-             }
-             */
-//            System.out.println("testing [done] cachedtables: " + cachedtables);
 
         } else {
             ERRORnosuchlabel.setVisible(true);
@@ -1964,7 +1951,7 @@ public class MipsUI extends javax.swing.JFrame {
 
         CachedTables ct = new CachedTables(((DefaultTableModel) jTable5.getModel()), ((DefaultTableModel) jTable4.getModel()), ((DefaultTableModel) jTable1.getModel()), ((DefaultTableModel) jTable3.getModel()), opcodemodel.getRowCount());
         pipelinemodel = (DefaultTableModel) jTable2.getModel();
-        this.hazardType = new String("PipelineFlush");
+        this.hazardType = JOptionPane.showInputDialog("[1] FREEZE or [2] FLUSH?: ");
         new PipelineMap(pipelinemodel).buildPipelineMap(iList, ct, (DefaultTableModel) jTable6.getModel(), this.hazardType);
 
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -2133,7 +2120,7 @@ public class MipsUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initPipelineMap() {
-        this.hazardType = JOptionPane.showInputDialog("Enter control hazard type: ");
+        this.hazardType = JOptionPane.showInputDialog("[1] FREEZE or [2] FLUSH?: ");
         CachedTables ct = new CachedTables(((DefaultTableModel) jTable5.getModel()), ((DefaultTableModel) jTable4.getModel()), ((DefaultTableModel) jTable1.getModel()), ((DefaultTableModel) jTable3.getModel()), opcodemodel.getRowCount());
         this.initialTableState = new CachedTables(((DefaultTableModel) jTable5.getModel()), ((DefaultTableModel) jTable4.getModel()), ((DefaultTableModel) jTable1.getModel()), ((DefaultTableModel) jTable3.getModel()), opcodemodel.getRowCount());
         pipelinemodel = (DefaultTableModel) jTable2.getModel();

@@ -33,6 +33,7 @@ public class PipelineMap {
     private Instruction branchHolder;
     private ArrayList instList;
     private ArrayList<HazardTrigger> rdList;
+    private String hazard;
 
     public PipelineMap() {
         rdList = new ArrayList();
@@ -191,20 +192,14 @@ public class PipelineMap {
     public void buildPipelineMap(ArrayList instructionList, CachedTables ct, DefaultTableModel cycleModel, String hazardType) {
         this.ct = ct;
         this.instList = instructionList;
-        switch (hazardType) {
-            case "PipelineFlush":
-                for (this.i = 0; this.i < instructionList.size(); this.i++) { //just move down till finish
-                    ((Instruction) instructionList.get(this.i)).setInsNumber(this.i);
-                    buildPipelineMapFreeze((Instruction) instructionList.get(this.i));
-                }
-                break;
-            case "Pipeline2":
-                for (this.i = 0; this.i < instructionList.size(); this.i++) { //just move down till finish
-                    ((Instruction) instructionList.get(this.i)).setInsNumber(this.i);
-                    buildPipelineMapSinglePipeline2((Instruction) instructionList.get(this.i));
-                }
-                break;
+        
+        hazard = hazardType;
+        
+        for (this.i = 0; this.i < instructionList.size(); this.i++) { //just move down till finish
+            ((Instruction) instructionList.get(this.i)).setInsNumber(this.i);
+            buildPipelineMapFreeze((Instruction) instructionList.get(this.i));
         }
+        
         this.buildTracing(cycleModel); //takes the cycles and draws it
     }
 
@@ -268,7 +263,8 @@ public class PipelineMap {
         int cyclenum = new Point(this.nextIF).x;
         cyclenum -= 1;
         this.cycles.get(cyclenum).setIfid(fetch(ins, cyclenum++));
-        //this.nextIF.y++; // this is to make it flush
+        if (hazard.equals("2"))
+        	this.nextIF.y++; // this is to make it flush
     }
 
     private void traceNotbeqwithoutstall(Instruction ins) {
@@ -401,100 +397,6 @@ public class PipelineMap {
             }
         }
 
-    }
-
-    //building pipeline map for single execution
-    public void buildPipelineMapSinglePipeline2(Instruction ins) {
-        if (isFirstInstruction) {
-            processNBInstruction(false, ins); // proceed to tracign and drawing of map
-            isFirstInstruction = false;
-            //checking if control hazard 
-            if (ins.haveControlHazard()) {
-
-                //if beq or j ^ it will true
-                this.branchCountdown = 0;
-                this.branchHolder = ins;
-                try {
-                    //cast to beq
-                } catch (Exception e) {
-                    //cast to j
-                }
-            }
-            pushRD(ins); //gets the last rd
-        } else {
-            //check for hazards
-            if (this.branchCountdown < 0) { // no determining of jump in progress
-                if (this.checkDataHazard(ins)) { //changed here to accomodate the checkign olf laod instruction
-                    processNBInstruction(true, ins);
-                    clearRD(); //disregard the checking of all above instructiom because if stalled the next instruction will never hit the mem
-                } else {
-
-                    processNBInstruction(false, ins);
-                }
-                //checking if control hazard 
-                if (ins.haveControlHazard()) {
-
-                    //if beq or j ^ it will true
-                    this.branchCountdown = 0;
-                    this.branchHolder = ins; //takes note of the beq instance
-                    try {
-                        //cast to beq
-                        this.branchCountdown = 0;
-                    } catch (Exception e) {
-                        //cast to j
-                    }
-                }
-                pushRD(ins); 
-            } else { //in wb already know where to jump na
-                this.branchCountdown = -1; //free the branch lock, no more countdown
-                if (ins.getInsNumber() == this.branchHolder.specialFunction(ct)) { //destlabel is before current
-                    int numSkippedInst = this.branchHolder.specialFunction(ct) - ins.getInsNumber();
-                    for (int x = 0; x < numSkippedInst; x++) {
-
-                        this.addPLMRow();
-                        this.setValue(ct.getOtc().geOpcodeRow(ins.getInsNumber() + x).getInstruction(), this.nextIF.y, 0);
-                        this.nextIF.y++;
-                    }
-                    this.i = this.branchHolder.specialFunction(ct);
-                    ins = (Instruction) this.instList.get(i);
-                    ins.setInsNumber(this.i);
-
-                    if (this.checkDataHazard(ins)) { //changed here to accomodate the checkign olf laod instruction
-                        processNBInstruction(true, ins);
-                        clearRD(); //disregard the checking of all above instructiom because if stalled the next instruction will never hit the mem
-                    } else {
-                        processNBInstruction(false, ins);
-                    }
-                } else { //jump is below 
-                    FreezeOrFlushInstruction(ins);
-                    int numSkippedInst = this.branchHolder.specialFunction(ct) - ins.getInsNumber();
-                    for (int x = 0; x < numSkippedInst; x++) {
-                        this.addPLMRow();
-                        this.setValue(ct.getOtc().geOpcodeRow(ins.getInsNumber() + x).getInstruction(), this.nextIF.y, 0);
-                        this.nextIF.y++;
-                    }
-                    this.i = this.branchHolder.specialFunction(ct);
-                    ins = (Instruction) this.instList.get(i);
-                    ins.setInsNumber(this.i);
-                    this.addPLMCol();
-                    this.cycles.add(new Cycle());
-
-                    processNBInstruction(false, ins);
-                }
-                if (ins.haveControlHazard()) {
-
-                    //if beq or j ^ it will true
-                    this.branchCountdown = 0;
-                    this.branchHolder = ins;
-                    try {
-                        //cast to beq
-                    } catch (Exception e) {
-                        //cast to j
-                    }
-                }
-                pushRD(ins); //gets the last rd
-            }
-        }
     }
 
     public boolean checkDataHazard(Instruction ins) {
