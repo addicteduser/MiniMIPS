@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Instruction.RType;
 
 import Helper.Usable;
 import Table.CachedTables;
 
-/**
- *
- * @author addicteduser
- */
 public class ADDS extends RType {
 
     private Usable usable = new Usable();

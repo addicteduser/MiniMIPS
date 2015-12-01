@@ -26,6 +26,7 @@ import Helper.Usable;
 import Instruction.IType.LS;
 import Instruction.IType.SS;
 import Instruction.RType.ADDS;
+import Instruction.RType.MULS;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.math.BigInteger;
@@ -1416,6 +1417,10 @@ public class MipsUI extends javax.swing.JFrame {
                         break;
                     case "MUL.S":
                         x = usable.toBinary(17, 6) + usable.toBinary(16, 5) + c + b + a + usable.toBinary(2, 6);
+                        iList.add(new MULS (sAddress.get(nIndex2),
+                                Integer.parseInt(jComboBox1.getSelectedItem().toString().substring(1)),
+                                Integer.parseInt(jComboBox2.getSelectedItem().toString().substring(1)),
+                                Integer.parseInt(jComboBox3.getSelectedItem().toString().substring(1))));
                         break;
                 }
             } else if (selected.toString().equals("LWU") || selected.toString().equals("LW") || selected.toString().equals("SW") || selected.toString().equals("L.S") || selected.toString().equals("S.S")) {
