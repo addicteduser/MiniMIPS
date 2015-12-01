@@ -1,14 +1,12 @@
 package Instruction.IType;
 
 import Table.CachedTables;
-import Instruction.Instruction;
-import Helper.Usable;
+import Helper.NumberBuilder;
 import java.math.BigInteger;
 
 public class BEQ extends IType {
 
     private int cond;
-    private Usable usable = new Usable();
 
     public BEQ(String addr, int rd, int rs, int rt, String immORoffset) {
         super(addr, rd, rs, rt, immORoffset);
@@ -39,17 +37,13 @@ public class BEQ extends IType {
 
     @Override
     public String ALU(CachedTables ct) {
-        String destination = this.getImmORoffset(); //this is not imm but this is label. siname lang yung name. hehez.
-       // long rs, rt;
         int BEQindex;
         String result = "";
         BigInteger rs, rt;
         
         rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()),16);
         rt = new BigInteger(ct.getRtc().getRegisterRow(this.getRt()),16);
-     
-     //   rs = Long.parseLong(ct.getRtc().getRegisterRow(this.getRs()), 16);
-      //  rt = Long.parseLong(ct.getRtc().getRegisterRow(this.getRt()), 16);
+
         if (rs.equals(rt)) {
             setCond(1);
             this.cond = 1;
@@ -60,7 +54,7 @@ public class BEQ extends IType {
             BEQindex = this.insNumber + 1;
         }
         result = ct.getCtc().getCodeLine(BEQindex).getAddress();
-        result = usable.hexToNbit(result, 16);
+        result = NumberBuilder.hexToNbit(result, 16);
         return result;
     }
 

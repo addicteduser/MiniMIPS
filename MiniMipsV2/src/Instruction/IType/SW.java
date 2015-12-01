@@ -2,11 +2,9 @@ package Instruction.IType;
 
 import Table.CachedTables;
 import java.math.BigInteger;
-import Helper.Usable;
+import Helper.NumberBuilder;
 
 public class SW extends IType {
-
-    private Usable usable = new Usable();
 
     public SW(String addr, int rd, int rs, int rt, String immORoffset) {
         super(addr, rd, rs, rt, immORoffset);
@@ -24,9 +22,6 @@ public class SW extends IType {
     @Override
     public String ALU(CachedTables ct) {
         String sIMM, sALU;
-        //Long rs, rt, imm, alu;
-        //rs = Long.parseLong(ct.getRtc().getRegisterRow(this.getRs()),16);
-        //rt = Long.parseLong(ct.getRtc().getRegisterRow(this.getRt()),16);
         
         BigInteger rs, rt, imm, alu;
         
@@ -38,8 +33,7 @@ public class SW extends IType {
         sALU = alu.toString(2);
         BigInteger binaryOp = new BigInteger(sALU, 2);
         sALU = binaryOp.toString(16);
-        sALU = usable.hexToNbit(sALU, 16);
-        System.out.println("sALU ans: "+sALU);
+        sALU = NumberBuilder.hexToNbit(sALU, 16);
         return sALU;
     }
 

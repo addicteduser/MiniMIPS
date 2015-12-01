@@ -3,7 +3,6 @@ package Instruction;
 import Table.CachedTables;
 import Instruction.IType.BEQ;
 import Instruction.JType.J;
-import javax.swing.table.DefaultTableModel;
 
 public abstract class Instruction {
 
@@ -30,7 +29,6 @@ public abstract class Instruction {
     }
 
     public abstract boolean haveDataHazard(int rd);
-//    public abstract int getRd();
 
     public String getMemAddrInHex() {
         return memAddrInHex;

@@ -5,7 +5,7 @@ import Instruction.IType.LW;
 import Instruction.IType.LWU;
 import Instruction.IType.SW;
 import Instruction.Instruction;
-import Helper.Usable;
+import Helper.NumberBuilder;
 import Instruction.IType.LS;
 import Instruction.IType.SS;
 import java.awt.Point;
@@ -91,7 +91,7 @@ public class MEMWB {
 //                Long temp = Long.parseLong(ct.getRtc().getRegisterRow(b).toString(),16);
 //                String sTemp = temp.toString();
 //                BigInteger binaryOp = new BigInteger(sTemp, 2);
-//                this.MEM_ALUOUTPUT= new Usable().hexToNbit(binaryOp.toString(), 16);
+//                this.MEM_ALUOUTPUT= new NumberBuilder().hexToNbit(binaryOp.toString(), 16);
             if(ins instanceof SS)
                 this.MEM_ALUOUTPUT = ct.getRtc().getFRegisterRow(b);
             else
@@ -114,7 +114,7 @@ public class MEMWB {
 //                Long temp = Long.parseLong(ct.getRtc().getRegisterRow(b).toString(),16);
 //                String sTemp = temp.toString();
 //                BigInteger binaryOp = new BigInteger(sTemp, 2);
-//                this.MEM_ALUOUTPUT= new Usable().hexToNbit(binaryOp.toString(), 16);
+//                this.MEM_ALUOUTPUT= new NumberBuilder().hexToNbit(binaryOp.toString(), 16);
             if(ins instanceof SS)
                 this.MEM_ALUOUTPUT = ct.getRtc().getFRegisterRow(b);
             else

@@ -2,11 +2,9 @@ package Instruction.IType;
 
 import Table.CachedTables;
 import java.math.BigInteger;
-import Helper.Usable;
+import Helper.NumberBuilder;
 
 public class DADDIU extends IType {
-
-    private Usable usable = new Usable();
 
     public DADDIU(String addr, int rd, int rs, int rt, String immORoffset) {
         super(addr, rd, rs, rt, immORoffset);
@@ -39,16 +37,12 @@ public class DADDIU extends IType {
     public String ALU(CachedTables ct) {
         BigInteger rs, ans, imm;
 
-        String ansRT = null;
-        String ansALU = null;
-        String immTemp = null;
+        String ansALU = "";
+        String immTemp = "";
 
         immTemp = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
         imm = new BigInteger(immTemp, 2);
 
-//        System.out.println("rs" + ct.getRtc().getRegisterRow(0));
-//        System.out.println("rt" + ct.getRtc().getRegisterRow(2));
-//        System.out.println("rd" + ct.getRtc().getRegisterRow(3));
         rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()), 16);
 
         ans = rs.add(imm);
@@ -59,7 +53,7 @@ public class DADDIU extends IType {
             ansALU = ansALU.substring(ansALU.length() - 16);
         } 
         else {
-            ansALU = usable.hexToNbit(ansALU, 16);
+            ansALU = NumberBuilder.hexToNbit(ansALU, 16);
         }
 
         return ansALU.toUpperCase();

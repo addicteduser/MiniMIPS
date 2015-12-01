@@ -1,12 +1,10 @@
 package Instruction.IType;
 
-import Helper.Usable;
+import Helper.NumberBuilder;
 import Table.CachedTables;
 import java.math.BigInteger;
 
 public class SS extends IType{
-
-    private Usable usable = new Usable();
     
     public SS(String addr, int rd, int rs, int rt, String immORoffset) {
         super(addr, rd, rs, rt, immORoffset);
@@ -22,17 +20,14 @@ public class SS extends IType{
         BigInteger rs, rt, imm, alu;
         
         rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()),16);
-        System.out.println("RS "+rs);
         rt = new BigInteger(ct.getRtc().getFRegisterRow(this.getRt()),16);
-        System.out.println("RT "+rs);
         sIMM = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
         imm = new BigInteger(sIMM, 2);//to make binary to decimal
         alu = imm.add(rs);
         sALU = alu.toString(2);
         BigInteger binaryOp = new BigInteger(sALU, 2);
         sALU = binaryOp.toString(16);
-        sALU = usable.hexToNbit(sALU, 16);
-        System.out.println("sALU ans: "+sALU);
+        sALU = NumberBuilder.hexToNbit(sALU, 16);
         return sALU;
     }
 

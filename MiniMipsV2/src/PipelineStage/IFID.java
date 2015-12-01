@@ -2,7 +2,7 @@ package PipelineStage;
 
 import Table.CachedTables;
 import Instruction.Instruction;
-import Helper.Usable;
+import Helper.NumberBuilder;
 import java.awt.Point;
 import java.math.BigInteger;
 import javax.swing.table.DefaultTableModel;
@@ -61,8 +61,8 @@ public class IFID {
         System.out.println("testing [IFID.fetch]... ");
         this.IR = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getOpcode();
         try {
-            this.PC = new Usable().hexToNbit(ct.getCtc().getCodeLine(ins.getInsNumber() + 1).getAddress().toString(), 16);
-            this.NPC = new Usable().hexToNbit(ct.getCtc().getCodeLine(ins.getInsNumber() + 1).getAddress().toString(), 16);
+            this.PC = new NumberBuilder().hexToNbit(ct.getCtc().getCodeLine(ins.getInsNumber() + 1).getAddress().toString(), 16);
+            this.NPC = new NumberBuilder().hexToNbit(ct.getCtc().getCodeLine(ins.getInsNumber() + 1).getAddress().toString(), 16);
             System.out.println("testing [IFID.fetch] pc/npc: " + this.NPC);
         } catch (Exception e) {
             long templong = Long.parseLong(ct.getCtc().getCodeLine(ins.getInsNumber()).getAddress().toString(), 16) + 4;
@@ -70,7 +70,7 @@ public class IFID {
             String tempaddress = Long.toBinaryString(templong);
             BigInteger binaryOpcode = new BigInteger(tempaddress, 2);
             String opcode = binaryOpcode.toString(16);
-            String hex = new Usable().hexToNbit(opcode, 16);
+            String hex = new NumberBuilder().hexToNbit(opcode, 16);
             System.out.println("testing [IFID.fetch] " + hex);
             this.PC = hex;
             this.NPC = hex;
@@ -81,8 +81,8 @@ public class IFID {
         System.out.println("testing [IFID.refetch]... ");
         this.IR = ct.getOtc().geOpcodeRow(this.ins.getInsNumber()).getOpcode();
         try {
-            this.PC = new Usable().hexToNbit(ct.getCtc().getCodeLine(this.ins.getInsNumber() + 1).getAddress().toString(), 16);
-            this.NPC = new Usable().hexToNbit(ct.getCtc().getCodeLine(this.ins.getInsNumber() + 1).getAddress().toString(), 16);
+            this.PC = new NumberBuilder().hexToNbit(ct.getCtc().getCodeLine(this.ins.getInsNumber() + 1).getAddress().toString(), 16);
+            this.NPC = new NumberBuilder().hexToNbit(ct.getCtc().getCodeLine(this.ins.getInsNumber() + 1).getAddress().toString(), 16);
             System.out.println("testing [IFID.refetch] pc/npc: " + this.NPC);
         } catch (Exception e) {
             long templong = Long.parseLong(ct.getCtc().getCodeLine(this.ins.getInsNumber()).getAddress().toString(), 16) + 4;
@@ -90,7 +90,7 @@ public class IFID {
             String tempaddress = Long.toBinaryString(templong);
             BigInteger binaryOpcode = new BigInteger(tempaddress, 2);
             String opcode = binaryOpcode.toString(16);
-            String hex = new Usable().hexToNbit(opcode, 16);
+            String hex = new NumberBuilder().hexToNbit(opcode, 16);
             System.out.println("testing [IFID.refetch] " + hex);
             this.PC = hex;
             this.NPC = hex;

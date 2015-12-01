@@ -2,12 +2,9 @@ package Instruction.RType;
 
 import Table.CachedTables;
 import java.math.BigInteger;
-import javax.swing.table.DefaultTableModel;
-import Helper.Usable;
+import Helper.NumberBuilder;
 
 public class SLT extends RType {
-
-    private Usable usable = new Usable();
 
     public SLT(String addr, int rd, int rs, int rt) {
         super(addr, rd, rs, rt);
@@ -26,9 +23,6 @@ public class SLT extends RType {
     public String ALU(CachedTables ct) {
         String rd = "0";
         String sRS, sRT;
-        //Long rs, rt;
-        //rs = Long.parseLong(ct.getRtc().getRegisterRow(this.getRs()), 16);
-        //rt = Long.parseLong(ct.getRtc().getRegisterRow(this.getRt()), 16);
 
         BigInteger rs, rt;
 
@@ -54,25 +48,8 @@ public class SLT extends RType {
                 rd = "1";
             }
         }
-        rd = usable.hexToNbit(rd, 16);
-
-        /*    String rs, rt;
-         rs = usable.hexStringToNBitBinary(ct.getRtc().getRegisterRow(this.getRs()), 64);
-         rt = usable.hexStringToNBitBinary(ct.getRtc().getRegisterRow(this.getRt()), 64);
+        rd = NumberBuilder.hexToNbit(rd, 16);
         
-         BigInteger rsbin = new BigInteger(rs, 2);
-         BigInteger rtbin = new BigInteger(rt, 2);
-        
-         System.out.println("RS - " + rs);
-         System.out.println("RT - " + rt);
-        
-         if(rsbin.compareTo(rtbin)==-1){
-         rd = "1";
-         }
-            
-         rd = usable.hexToNbit(rd, 16);
-         System.out.println("RD - "+rd);
-         */
         return rd;
     }
 

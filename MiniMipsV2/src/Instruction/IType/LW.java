@@ -2,14 +2,11 @@ package Instruction.IType;
 
 import Table.CachedTables;
 import java.math.BigInteger;
-import javax.swing.table.DefaultTableModel;
-import Helper.Usable;
+import Helper.NumberBuilder;
 import UI.MipsUI;
 import javax.swing.JOptionPane;
 
 public class LW extends IType {
-
-    private Usable usable = new Usable();
 
     public LW(String addr, int rd, int rs, int rt, String immORoffset) {
         super(addr, rd, rs, rt, immORoffset);
@@ -29,19 +26,16 @@ public class LW extends IType {
         String offsetTemp = null;
         long rs, rt, offset, ans;
         int value;
-        // int address;
 
         offsetTemp = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
         offset = Long.parseLong(offsetTemp, 2);
         rs = Long.parseLong(ct.getRtc().getRegisterRow(this.rs), 16);
         offset = offset + rs;
-        System.out.println("ans: " + offset);
 
         offsetTemp = Long.toBinaryString(offset);
         BigInteger binaryOp = new BigInteger(offsetTemp, 2);
         offsetTemp = binaryOp.toString(16).toUpperCase();
 
-        System.out.println("hex: " + offsetTemp);
         if (new MipsUI().isINVALIDinLW(offsetTemp)) {
             JOptionPane.showMessageDialog(new MipsUI(), "LOADING ADDRESS IS NOT AVAILABLE!", "Error", JOptionPane.ERROR_MESSAGE);
 
@@ -49,23 +43,20 @@ public class LW extends IType {
 
             value = ct.getDtc().findAddrLocation(offsetTemp);
             lALU = ct.getDtc().getMemoryCacheContents(value);
-            System.out.println("valueh: " + lALU);
 
             ans = Long.parseLong(lALU, 16);
             lALU = Long.toBinaryString(ans);
             binaryOp = new BigInteger(lALU, 2);
-            lALU = usable.hexToNbit(lALU, 32);
-            System.out.println("valueb: " + lALU);
+            lALU = NumberBuilder.hexToNbit(lALU, 32);
 
             if (lALU.charAt(0) == '0') {
                 lALU = binaryOp.toString(16).toUpperCase();
-                lALU = usable.hexToNbit(lALU, 16);
+                lALU = NumberBuilder.hexToNbit(lALU, 16);
             } else {
                 lALU = binaryOp.toString(16).toUpperCase();
-                lALU = usable.binaryToNbitSigned(lALU, 16);
+                lALU = NumberBuilder.binaryToNbitSigned(lALU, 16);
             }
         }
-        System.out.println("value: " + lALU);
 
         return lALU;
     }
@@ -75,7 +66,6 @@ public class LW extends IType {
         ct.getRtc().saveRegisterValueToCache(this.getRd(), this.ALU(ct).toUpperCase());
         ct.getRtc().drawToRegisterTable();
         return -1;
-//    
     }
 
 }

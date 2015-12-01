@@ -1,13 +1,11 @@
 package Instruction.IType;
 
 import Table.CachedTables;
-import Helper.Usable;
+import Helper.NumberBuilder;
 import java.math.BigInteger;
 
 public class DSLL extends IType {
     
-    private Usable usable = new Usable();
-
     public DSLL(String addr, int rd, int rs, int rt, String immORoffset) {
         super(addr, rd, rs, rt, immORoffset);
     }
@@ -22,16 +20,12 @@ public class DSLL extends IType {
         //Long rs;
 
         rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()),16);
-        System.out.println("RS = "+rs);
         sIMM = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
-        System.out.println("temp IMM 1 = "+sIMM);
         sIMM = sIMM.substring(5, 10);
-        System.out.println("temp IMM 2 = "+sIMM);
         imm = Integer.parseInt(sIMM,2);
-        System.out.println("IMM = "+imm);
         ans = rs.shiftLeft(imm);
         
-        rd = usable.hexToNbit(ans.toString(16), 16);
+        rd = NumberBuilder.hexToNbit(ans.toString(16), 16);
         return rd;
     }
 

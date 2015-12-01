@@ -1,14 +1,13 @@
 package Helper;
 
-import java.awt.event.ItemEvent;
 import java.math.BigDecimal;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
-public class Usable {
+public class NumberBuilder {
 
-    public String chopHexStringToBinary(String hex, int N1, int N2) {
+    public static String chopHexStringToBinary(String hex, int N1, int N2) {
         String result = "";
         hex = hexStringToNBitBinary(hex, 32);
         for (int i = N1; i <= N2; i++) {
@@ -17,22 +16,7 @@ public class Usable {
         return result;
     }
 
-    public class MyInputVerifier extends InputVerifier {
-
-        @Override
-        public boolean verify(JComponent input) {
-            //boolean match = text.matches("[a-zA-Z0-9]+");
-            String text = ((JTextField) input).getText();
-            try {
-                BigDecimal value = new BigDecimal(text);
-                return (value.scale() <= Math.abs(4));
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-    }
-
-    public String hexToNbit(String hex, int N) {
+    public static String hexToNbit(String hex, int N) {
         int i;
         int length = hex.length();
         if (length == N) {
@@ -50,7 +34,7 @@ public class Usable {
     }
 
     
-    public String binaryToNbitSigned(String hex, int N) {
+    public static String binaryToNbitSigned(String hex, int N) {
         int i;
         int length = hex.length();
         if (length == N) {
@@ -67,7 +51,7 @@ public class Usable {
         return hex;
     }
     
-    public String binaryToNbit(String binary, int N) {
+    public static String binaryToNbit(String binary, int N) {
         int i;
         int length = binary.length();
         if (length == N) {
@@ -84,10 +68,9 @@ public class Usable {
         return binary;
     }
     
-   public String toBinary(long decimalResult, int N) {
+   public static String toBinary(long decimalResult, int N) {
         int i;
         String binary = Long.toBinaryString(decimalResult); //gives us a binary string, but is missing leading zeros
-        //System.out.println("#testing2" + binary);
         int length = binary.length();
         if (length == N) {
             return binary;
@@ -104,7 +87,7 @@ public class Usable {
         }
     }
    
-    public String hexStringToNBitBinary(String hexString, int N) {
+    public static String hexStringToNBitBinary(String hexString, int N) {
         long decimalResult = 0;
         int length = hexString.length(); //store the length in memory
         int i;
@@ -130,4 +113,16 @@ public class Usable {
         }
     }
 
+    public class MyInputVerifier extends InputVerifier {
+        @Override
+        public boolean verify(JComponent input) {
+            String text = ((JTextField) input).getText();
+            try {
+                BigDecimal value = new BigDecimal(text);
+                return (value.scale() <= Math.abs(4));
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+    }
 }

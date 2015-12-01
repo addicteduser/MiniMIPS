@@ -14,15 +14,12 @@ import Instruction.IType.DSLL;
 import Instruction.IType.SW;
 import Instruction.Instruction;
 import Instruction.JType.J;
-import Instruction.RType.AND;
 import Instruction.RType.DADDU;
 import Instruction.RType.DMULT;
-import Instruction.RType.DSRLV;
-import Instruction.RType.DSUBU;
 import Instruction.RType.OR;
 import Instruction.RType.SLT;
 import Helper.PipelineMap;
-import Helper.Usable;
+import Helper.NumberBuilder;
 import Instruction.IType.LS;
 import Instruction.IType.SS;
 import Instruction.RType.ADDS;
@@ -49,7 +46,7 @@ public class MipsUI extends javax.swing.JFrame {
     private DataTableCache datatablecache;
     private CachedTables cachedtables;
 
-    Usable usable = new Usable();
+    NumberBuilder usable = new NumberBuilder();
     private String hex;
     private int nIndex = -1;
     private ArrayList<String> labelSA = new ArrayList<String>();
@@ -387,7 +384,7 @@ public class MipsUI extends javax.swing.JFrame {
         });
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel18.setText("Step 2 - OPCODE TABLE");
+        jLabel18.setText("OPCODE");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("ADD");
@@ -409,7 +406,7 @@ public class MipsUI extends javax.swing.JFrame {
         });
 
         lblGroup7.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        lblGroup7.setText("GROUP 7 - PIPELINE FLUSH");
+        lblGroup7.setText("MiniMIPS [NO FWD, FREEZE]");
         lblGroup7.setPreferredSize(new java.awt.Dimension(100, 100));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -430,7 +427,7 @@ public class MipsUI extends javax.swing.JFrame {
         jLabel2.setText("(OPTIONAL) LABEL");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Step 1 - INPUT CODE");
+        jLabel3.setText("INPUT MIPS CODE");
 
         panel2.setLayout(new java.awt.CardLayout());
 
@@ -850,7 +847,6 @@ public class MipsUI extends javax.swing.JFrame {
 
         jScrollPane3.setAutoscrolls(true);
 
-        jTable2.setFont(new java.awt.Font("Castellar", 0, 11)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -896,7 +892,7 @@ public class MipsUI extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jScrollPane1);
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel20.setText("Step 3 - PIPELINE MAP");
+        jLabel20.setText("PIPELINE MAP");
 
         panel3.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -1024,7 +1020,7 @@ public class MipsUI extends javax.swing.JFrame {
         jLabel17.setText("Code Segment");
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel19.setText("Data");
+        jLabel19.setText("Data Segment");
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel30.setText("GO TO");
@@ -1060,7 +1056,7 @@ public class MipsUI extends javax.swing.JFrame {
                     .addGroup(panel3Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addGroup(panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane6)
                             .addGroup(panel3Layout.createSequentialGroup()
                                 .addComponent(jLabel19)
                                 .addGap(89, 89, 89)
@@ -1068,10 +1064,10 @@ public class MipsUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(panel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                        .addComponent(jScrollPane7))))
         );
         panel3Layout.setVerticalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1138,7 +1134,7 @@ public class MipsUI extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jTable6);
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel21.setText("CLOCK CYCLE VALUES / TRACING");
+        jLabel21.setText("PIPELINE TRACING");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1146,7 +1142,7 @@ public class MipsUI extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 347, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jScrollPane8)
         );
         jPanel4Layout.setVerticalGroup(

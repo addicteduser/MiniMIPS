@@ -2,7 +2,7 @@ package PipelineStage;
 
 import Table.CachedTables;
 import Instruction.Instruction;
-import Helper.Usable;
+import Helper.NumberBuilder;
 import java.awt.Point;
 import java.math.BigInteger;
 import javax.swing.table.DefaultTableModel;
@@ -87,7 +87,7 @@ public class IDEX {
         this.IMM = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getImm().toString();
         BigInteger binaryOp = new BigInteger(this.IMM, 2);
         this.IMM = binaryOp.toString(16);
-        this.IMM = new Usable().hexToNbit(this.IMM, 16);
+        this.IMM = new NumberBuilder().hexToNbit(this.IMM, 16);
     }
 
     public void reDecode( CachedTables ct) {
@@ -105,7 +105,7 @@ public class IDEX {
         this.IMM = ct.getOtc().geOpcodeRow(ins.getInsNumber()).getImm().toString();
         BigInteger binaryOp = new BigInteger(this.IMM, 2);
         this.IMM = binaryOp.toString(16);
-        this.IMM = new Usable().hexToNbit(this.IMM, 16);
+        this.IMM = new NumberBuilder().hexToNbit(this.IMM, 16);
     }
     
     public void drawToMap(DefaultTableModel pipelinemapmodel) {

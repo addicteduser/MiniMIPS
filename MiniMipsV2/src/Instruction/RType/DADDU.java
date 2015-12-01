@@ -1,7 +1,7 @@
 package Instruction.RType;
 
 import Table.CachedTables;
-import Helper.Usable;
+import Helper.NumberBuilder;
 import java.math.BigInteger;
 
 public class DADDU extends RType {
@@ -13,7 +13,6 @@ public class DADDU extends RType {
     @Override
     public String ALU(CachedTables ct) {
         String rd = "";
-        //long rs, rt, rd3;
         
         BigInteger rs, rt, rd3;
         
@@ -26,8 +25,7 @@ public class DADDU extends RType {
         BigInteger binaryOp = new BigInteger(rd, 2);
         String result = "";
         result = binaryOp.toString(16);
-        result = new Usable().hexToNbit(result, 16); //don't forget to instantiate the Usable class
-        System.out.println(result + "ALU DADDU");
+        result = NumberBuilder.hexToNbit(result, 16);
         return result;
     }
 

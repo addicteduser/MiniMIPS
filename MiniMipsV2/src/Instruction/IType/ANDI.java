@@ -1,11 +1,10 @@
 package Instruction.IType;
 
 import Table.CachedTables;
-import Helper.Usable;
+import Helper.NumberBuilder;
 import java.math.BigInteger;
 
 public class ANDI extends IType {
-    private Usable usable = new Usable();
     
     public ANDI(String addr, int rd, int rs, int rt, String immORoffset) {
         super(addr, rd, rs, rt, immORoffset);
@@ -18,13 +17,11 @@ public class ANDI extends IType {
         BigInteger rs, imm, ans;
         
         rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()),16);
-        System.out.println("RS = "+rs);
         sIMM = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
-        System.out.println("temp IMM 1 = "+sIMM);
         imm = new BigInteger(sIMM, 2);      
         
         ans = rs.and(imm);
-        rd = usable.hexToNbit(ans.toString(16), 16);
+        rd = NumberBuilder.hexToNbit(ans.toString(16), 16);
         
         return rd;
     }
@@ -44,5 +41,4 @@ public class ANDI extends IType {
             return false;
         }
     }
-
 }

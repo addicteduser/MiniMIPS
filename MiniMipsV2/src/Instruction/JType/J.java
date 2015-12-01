@@ -2,16 +2,14 @@ package Instruction.JType;
 
 import Table.CachedTables;
 import Instruction.Instruction;
-import Helper.Usable;
+import Helper.NumberBuilder;
 import java.math.BigInteger;
 
 public class J extends Instruction {
 
-    private Usable usable = new Usable();
     private String destLabel;
 
     public J(String addr, String destlabel) {
-      
         this.destLabel = destlabel;
     }
 
@@ -29,7 +27,7 @@ public class J extends Instruction {
         result = sIMM.substring(2); //remove first two "00"
         BigInteger binaryOp2 = new BigInteger(result, 2);
         result = binaryOp2.toString(16);
-        result = usable.hexToNbit(result, 16);
+        result = NumberBuilder.hexToNbit(result, 16);
         return result;
     }
 
