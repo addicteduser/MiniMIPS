@@ -22,7 +22,9 @@ public class SS extends IType{
         BigInteger rs, rt, imm, alu;
         
         rs = new BigInteger(ct.getRtc().getRegisterRow(this.getRs()),16);
-        rt = new BigInteger(ct.getRtc().getRegisterRow(this.getRt()),16);
+        System.out.println("RS "+rs);
+        rt = new BigInteger(ct.getRtc().getFRegisterRow(this.getRt()),16);
+        System.out.println("RT "+rs);
         sIMM = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
         imm = new BigInteger(sIMM, 2);//to make binary to decimal
         alu = imm.add(rs);
@@ -38,8 +40,8 @@ public class SS extends IType{
     public int specialFunction(CachedTables ct) {
         int start = 0;
         start = ct.getDtc().findAddrLocation(this.ALU(ct).substring(12));
-        ct.getRtc().getRegisterRow(this.getRt());
-        ct.getDtc().writeToMemoryCache(ct.getRtc().getRegisterRow(this.getRt()), start); //rt
+        ct.getRtc().getFRegisterRow(this.getRt());
+        ct.getDtc().writeToMemoryCache(ct.getRtc().getFRegisterRow(this.getRt()), start); //rt
         //ct.getDtc().drawToTable();
         return -1;
     }

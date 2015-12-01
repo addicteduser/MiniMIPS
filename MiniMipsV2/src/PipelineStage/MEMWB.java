@@ -87,12 +87,15 @@ public class MEMWB {
             ins.specialFunction(ct);
         }
         if (ins instanceof SW || ins instanceof SS) {
-            int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB().toString(), 2);
+            int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB(), 2);
 //                Long temp = Long.parseLong(ct.getRtc().getRegisterRow(b).toString(),16);
 //                String sTemp = temp.toString();
 //                BigInteger binaryOp = new BigInteger(sTemp, 2);
 //                this.MEM_ALUOUTPUT= new Usable().hexToNbit(binaryOp.toString(), 16);
-            this.MEM_ALUOUTPUT = ct.getRtc().getRegisterRow(b).toString();
+            if(ins instanceof SS)
+                this.MEM_ALUOUTPUT = ct.getRtc().getFRegisterRow(b);
+            else
+                this.MEM_ALUOUTPUT = ct.getRtc().getRegisterRow(b);
         } else {
             this.MEM_ALUOUTPUT = "N/A";
         }
@@ -107,12 +110,15 @@ public class MEMWB {
             ins.specialFunction(ct);
         }
         if (ins instanceof SW || ins instanceof SS) {
-            int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB().toString(), 2);
+            int b = Integer.parseInt(ct.getOtc().geOpcodeRow(ins.getInsNumber()).getB(), 2);
 //                Long temp = Long.parseLong(ct.getRtc().getRegisterRow(b).toString(),16);
 //                String sTemp = temp.toString();
 //                BigInteger binaryOp = new BigInteger(sTemp, 2);
 //                this.MEM_ALUOUTPUT= new Usable().hexToNbit(binaryOp.toString(), 16);
-            this.MEM_ALUOUTPUT = ct.getRtc().getRegisterRow(b).toString();
+            if(ins instanceof SS)
+                this.MEM_ALUOUTPUT = ct.getRtc().getFRegisterRow(b);
+            else
+                this.MEM_ALUOUTPUT = ct.getRtc().getRegisterRow(b);
         } else {
             this.MEM_ALUOUTPUT = "N/A";
         }
