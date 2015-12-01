@@ -3,6 +3,7 @@ package PipelineStage;
 import Table.CachedTables;
 import Instruction.IType.BEQ;
 import Instruction.IType.IType;
+import Instruction.IType.LS;
 import Instruction.IType.SS;
 import Instruction.IType.SW;
 import Instruction.Instruction;
@@ -45,12 +46,12 @@ public class WB {
         }
         else{
             try{
-                if(ins instanceof ADDS || ins instanceof MULS)
+                if(ins instanceof ADDS || ins instanceof MULS || ins instanceof LS)
                     this.affectedRegister="F"+((RType)ins).getRd()+"= "+ins.ALU(ct);
                 else
                     this.affectedRegister="R"+((RType)ins).getRd()+"= "+ins.ALU(ct);
             }catch(Exception e){
-                if(ins instanceof ADDS || ins instanceof MULS)
+                if(ins instanceof ADDS || ins instanceof MULS || ins instanceof LS)
                     this.affectedRegister="F"+((RType)ins).getRd()+"= "+ins.ALU(ct);
                 else
                     this.affectedRegister="R"+((RType)ins).getRd()+"= "+ins.ALU(ct);
@@ -72,12 +73,12 @@ public class WB {
         }
         else{
             try{
-                if(ins instanceof ADDS || ins instanceof MULS)
+                if(ins instanceof ADDS || ins instanceof MULS || ins instanceof LS)
                     this.affectedRegister="F"+((RType)ins).getRd()+"= "+ins.ALU(ct);
                 else
                     this.affectedRegister="R"+((RType)ins).getRd()+"= "+ins.ALU(ct);
             }catch(Exception e){
-                if(ins instanceof ADDS || ins instanceof MULS)
+                if(ins instanceof ADDS || ins instanceof MULS || ins instanceof LS)
                     this.affectedRegister="F"+((RType)ins).getRd()+"= "+ins.ALU(ct);
                 else
                     this.affectedRegister="R"+((RType)ins).getRd()+"= "+ins.ALU(ct);

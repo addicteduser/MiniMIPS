@@ -54,7 +54,7 @@ public class LS extends IType {
 
     @Override
     public int specialFunction(CachedTables ct) {
-        ct.getRtc().saveRegisterValueToCache(this.getRd(), this.ALU(ct).toUpperCase());
+        ct.getRtc().saveFRegisterValueToCache(this.getRd(), this.ALU(ct).toUpperCase());
         ct.getRtc().drawToRegisterTable();
         return -1;
     }
