@@ -1,35 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Instruction.IType;
 
-import Table.CachedTables;
-import java.math.BigInteger;
-import javax.swing.table.DefaultTableModel;
 import Helper.Usable;
+import Table.CachedTables;
 import UI.MipsUI;
+import java.math.BigInteger;
 import javax.swing.JOptionPane;
 
-public class LW extends IType {
+/**
+ *
+ * @author addicteduser
+ */
+public class LS extends IType {
 
     private Usable usable = new Usable();
-
-    public LW(String addr, int rd, int rs, int rt, String immORoffset) {
+    
+    public LS(String addr, int rd, int rs, int rt, String immORoffset) {
         super(addr, rd, rs, rt, immORoffset);
     }
 
     @Override
-    public boolean haveDataHazard(int rd) {
-        if (this.getRs() == rd) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public String ALU(CachedTables ct) {
         String lALU = null;
         String offsetTemp = null;
         long rs, rt, offset, ans;
         int value;
-        // int address;
+       // int address;
 
         offsetTemp = ct.getOtc().geOpcodeRow(this.insNumber).getImm();
         offset = Long.parseLong(offsetTemp, 2);
@@ -42,6 +42,7 @@ public class LW extends IType {
         offsetTemp = binaryOp.toString(16).toUpperCase();
 
         System.out.println("hex: " + offsetTemp);
+
         if (new MipsUI().isINVALIDinLW(offsetTemp)) {
             JOptionPane.showMessageDialog(new MipsUI(), "LOADING ADDRESS IS NOT AVAILABLE!", "Error", JOptionPane.ERROR_MESSAGE);
 
@@ -51,19 +52,9 @@ public class LW extends IType {
             lALU = ct.getDtc().getMemoryCacheContents(value);
             System.out.println("valueh: " + lALU);
 
-            ans = Long.parseLong(lALU, 16);
-            lALU = Long.toBinaryString(ans);
-            binaryOp = new BigInteger(lALU, 2);
-            lALU = usable.hexToNbit(lALU, 32);
-            System.out.println("valueb: " + lALU);
+            lALU = lALU.toUpperCase();
+            lALU = usable.hexToNbit(lALU, 16);
 
-            if (lALU.charAt(0) == '0') {
-                lALU = binaryOp.toString(16).toUpperCase();
-                lALU = usable.hexToNbit(lALU, 16);
-            } else {
-                lALU = binaryOp.toString(16).toUpperCase();
-                lALU = usable.binaryToNbitSigned(lALU, 16);
-            }
         }
         System.out.println("value: " + lALU);
 
@@ -75,7 +66,15 @@ public class LW extends IType {
         ct.getRtc().saveRegisterValueToCache(this.getRd(), this.ALU(ct).toUpperCase());
         ct.getRtc().drawToRegisterTable();
         return -1;
-//    
     }
 
+    @Override
+    public boolean haveDataHazard(int rd) {
+        if (this.getRs() == rd) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
